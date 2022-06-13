@@ -100,7 +100,7 @@
     <div class="e-content article-entry" itemprop="articleBody">
       
         <p>MapReduce</p>
-<p><img src="https://app.yinxiang.com/shard/s10/res/e6ecd184-343c-4258-9e78-cc9bf5e72bb7/mapreduce.jpg" alt="img"></p>
+<p><img src="/.io//szq/f9d89b69-9fc5-4779-aa4b-e0a0cb31cd76/test/github/zhenqiangshi.github.io/source/_posts/About-hadoop.assets/mapreduce.jpg"></p>
 <p>​       在整个MapReduce的生命周期中，纯粹的Map阶段和过程的reduce过程，其实只占了很小的一部分，整个MapReduce的核心其实是Shuffle过程，也被称为奇迹发生的地方。之前那张Word Count过程图对shuffle这个过程体现的并不是很明显，因为那张图主要是想让大家用Word Count这个实际的列子，对MapReduce整个过程能有一个感性的认识，真正的MapReduce过程，应该像这张图所展示的一样，从map task输出到reduce task输入的这段过程都是shuffle，用一句话概括一下Shuffle做了什么事情就是，把map输出端的结果有序的传递给reduce的输入端。</p>
 <p>​      从上面这个图可以看出，整个shuffle阶段，横跨了Map过程与Reduce过程，所以shuffle阶段又可分为map阶段的shuffle， map-shuffle 和 reduce 阶段的shuffle， reduce-shuffle， 在map-shuffle阶段主要完成了spill这个过程，在reduce-shuffle阶段，主要完成了copy和sort这个过程。 下面我们来详细的看一下shuffle阶段是如何通过spill，copy，sort这个三个过程，把map输出端的结果有序的传递给reduce的输入端。</p>
 <p><strong>spill 过程</strong></p>
@@ -112,7 +112,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shizhenqiang.github.io/2022/06/13/About-hadoop/" data-id="cl4cizy0p00007ngp1rkyclmy" data-title="About hadoop" class="article-share-link">Share</a>
+      <a data-url="https://shizhenqiang.github.io/2022/06/13/About-hadoop/" data-id="cl4cjbmdt0000segp2u29fvi6" data-title="About hadoop" class="article-share-link">Share</a>
       
       
       
@@ -154,7 +154,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shizhenqiang.github.io/2022/06/13/hello-world/" data-id="cl4cizy0s00017ngpghqah63v" data-title="Step One" class="article-share-link">Share</a>
+      <a data-url="https://shizhenqiang.github.io/2022/06/13/hello-world/" data-id="cl4cjbmdx0001segp9pwv1bih" data-title="Step One" class="article-share-link">Share</a>
       
       
       
