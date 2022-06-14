@@ -109,7 +109,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shizhenqiang.github.io/2022/06/13/hello-world/" data-id="cl4dkec7c0001rkgpd60x8vcu" data-title="Quick Know" class="article-share-link">Share</a>
+      <a data-url="https://shizhenqiang.github.io/2022/06/13/hello-world/" data-id="cl4dluixt0004hvgpbys105u3" data-title="Quick Know" class="article-share-link">Share</a>
       
       
       
@@ -143,19 +143,31 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <img src="/2018/07/16/About-hadoop/mapreduce.jpg" class title="MapReduce asset_img">
+        <h1 id="hadoop浅谈"><a href="#hadoop浅谈" class="headerlink" title="hadoop浅谈"></a>hadoop浅谈</h1><h2 id="一、什么是hadoop"><a href="#一、什么是hadoop" class="headerlink" title="一、什么是hadoop"></a><strong>一、什么是hadoop</strong></h2><p>​    hadoop是一个开源的分布式计算和存储的框架。</p>
+<h2 id="二、什么是mapreduce？"><a href="#二、什么是mapreduce？" class="headerlink" title="二、什么是mapreduce？"></a><strong>二、什么是mapreduce？</strong></h2><p>​    从总体上来讲，MapReduce主要包括三个阶段，map阶段， shuffle阶段， reduce阶段，如果大家对我前面讲的HDFS还有印象，应该能知道split这个过程，其实是HDFS帮我们做了，下面我从map的输入开始，剖析一下整个MapReduce的过程<img src="/2018/07/16/About-hadoop/529698-20180708160630717-1928465583.png" class title="MAPREDUCE asset_img"></p>
+<p>   Map 函数拿到数据以后，会根据用户自定义的逻辑对数据进行处理，然后产生输出。</p>
+<h2 id="三、什么是shuttle？"><a href="#三、什么是shuttle？" class="headerlink" title="三、什么是shuttle？"></a><strong>三、什么是shuttle？</strong></h2><p>​    <strong>Shuffle：MapReduce的“心脏”，是奇迹发生的地方。</strong> </p>
+<img src="/2018/07/16/About-hadoop/529698-20180708163222772-1584131492.png" class title="shuttle asset_img">     
 
-<p>​        先上一张图：</p>
-<p>​       在整个MapReduce的生命周期中，纯粹的Map阶段和过程的reduce过程，其实只占了很小的一部分，整个MapReduce的核心其实是Shuffle过程，也被称为奇迹发生的地方。之前那张Word Count过程图对shuffle这个过程体现的并不是很明显，因为那张图主要是想让大家用Word Count这个实际的列子，对MapReduce整个过程能有一个感性的认识，真正的MapReduce过程，应该像这张图所展示的一样，从map task输出到reduce task输入的这段过程都是shuffle，用一句话概括一下Shuffle做了什么事情就是，把map输出端的结果有序的传递给reduce的输入端。</p>
-<p>​      从上面这个图可以看出，<strong>整个shuffle阶段</strong>，横跨了Map过程与Reduce过程，所以shuffle阶段又可分为map阶段的shuffle， map-shuffle 和 reduce 阶段的shuffle， reduce-shuffle， 在map-shuffle阶段主要完成了spill这个过程，在reduce-shuffle阶段，主要完成了copy和sort这个过程。 下面我们来详细的看一下shuffle阶段是如何通过spill，copy，sort这个三个过程，把map输出端的结果有序的传递给reduce的输入端。</p>
-<p><strong>spill 过程</strong></p>
-<p>​       Spill过程简单来说就是把Map任务输出的中间结果写到本地磁盘上。以后供Reduce调用，做为Reduce端的输入。</p>
-<p>​       但是怎么把中间结果写到磁盘上就比较有讲究了，不是随随便便一写就完事儿了，因为写磁盘的过程中既要考虑到写入的性能，因为不能出一个结果就写一次磁盘，出一个结果就写一次磁盘，这样效率会很低，又要考虑到为后续传递给reduce做准备。因为在实际使用中，一般会不止一个Reduce，而一个Map的输出，最后通常会传递给多个Reduce，如果我们能事先对Map的输出进行分区（这里讲一下partition的概念），或者说的更通俗一点就是把将来要传递给同一个reduce数据都有序的放在一起，这样就可以大大提升接下来从Map输出端拷贝输出结果到Reduce输入端的效率，整个shuffle阶段由spill过程，copy过程，sort过程组成，</p>
+<p>在整个MapReduce的生命周期中，纯粹的Map阶段和过程的reduce过程，其实只占了很小的一部分，整个MapReduce的核心其实是Shuffle过程，也被称为奇迹发生的地方。之前那张Word Count过程图对shuffle这个过程体现的并不是很明显，因为那张图主要是想让大家用Word Count这个实际的列子，对MapReduce整个过程能有一个感性的认识，真正的MapReduce过程，应该像这张图所展示的一样，从map task输出到reduce task输入的这段过程都是shuffle，用一句话概括一下Shuffle做了什么事情就是，把map输出端的结果有序的传递给reduce的输入端。 从上面这个图可以看出，整个shuffle阶段，横跨了Map过程与Reduce过程，所以shuffle阶段又可分为map阶段的shuffle， map-shuffle 和 reduce 阶段的shuffle， reduce-shuffle， 在map-shuffle阶段主要完成了spill这个过程，在reduce-shuffle阶段，主要完成了copy和sort这个过程。 下面我们来详细的看一下shuffle阶段是如何通过spill，copy，sort这个三个过程，把map输出端的结果有序的传递给reduce的输入端。 先来看map-shuffle 阶段的 spill 过程 Spill过程简单来说就是把Map任务输出的中间结果写到本地磁盘上。以后供Reduce调用，做为Reduce端的输入。 但是怎么把中间结果写到磁盘上就比较有讲究了，不是随随便便一写就完事儿了，因为写磁盘的过程中既要考虑到写入的性能，因为不能出一个结果就写一次磁盘，出一个结果就写一次磁盘，这样效率会很低，又要考虑到为后续传递给reduce做准备。因为在实际使用中，一般会不止一个Reduce，而一个Map的输出，最后通常会传递给多个Reduce，如果我们能事先对Map的输出进行分区（这里讲一下partition的概念），或者说的更通俗一点就是把将来要传递给同一个reduce数据都有序的放在一起，这样就可以大大提升接下来从Map输出端拷贝输出结果到Reduce输入端的效率， 纯粹的map和存粹的reduce都只是很小的一部分，在map产生输出的时候，其实就已经的进入到了MapReduce的核心阶段，整个shuffle阶段由spill过程，copy过程，sort过程组成。</p>
+<h2 id="四、-什么是YARN？"><a href="#四、-什么是YARN？" class="headerlink" title="四、 什么是YARN？"></a><strong>四、 什么是YARN？</strong></h2><p>​    Yarn的定义是 Yet Another Resource Negotiator，另一种资源协调者。 因为在Hadoop刚出来的时候，那时候还没有Yarn，Hadoop的工作调度都是由JobTracker和TaskTracker来做的，但是JobTracker和TaskTracker在设计上存在缺陷，主要问题是，单点压力过大最多只能支持近4000台机器，而且容易造成单点故障问题，所以慢慢的被弃用了，后来就出现了Yarn，Yarn在设计上更具有一般性，实际上MapReduce只是Yarn上的一个应用而已，Yarn上不但能支撑MapReduce，还能支撑自打出生以来就火的不要不要的内存计算并行计算框架Saprk，流式计算框架Storm 等等 … Yarn 由五个独立的实体组成。</p>
+<ul>
+<li><p>​    <strong>Client：用来提交（ MapReduce ）Job；</strong></p>
+</li>
+<li><p>​    <strong>ResourcesManager：用来管理协调分配集群中的资源；</strong></p>
+</li>
+<li><p>​    <strong>NodeManager：用来启动和监控本地计算机资源单位Container的利用情况；</strong></p>
+</li>
+<li><p>​    <strong>Application Master：用来协调（ MapReduce ）Job下的Task的运行；</strong></p>
+</li>
+<li><p>​    <strong>HDFS：用来在其他实体之间共享作业文件。</strong></p>
+</li>
+</ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shizhenqiang.github.io/2018/07/16/About-hadoop/" data-id="cl4dkec780000rkgp7b2s8xht" data-title="About hadoop" class="article-share-link">Share</a>
+      <a data-url="https://shizhenqiang.github.io/2018/07/16/About-hadoop/" data-id="cl4dluixm0000hvgp4icf5k31" data-title="About hadoop" class="article-share-link">Share</a>
       
       
       
@@ -212,7 +224,62 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shizhenqiang.github.io/2018/03/20/Random-Forests/" data-id="cl4dkec7e0003rkgp1ypuenxn" data-title="Random Forests" class="article-share-link">Share</a>
+      <a data-url="https://shizhenqiang.github.io/2018/03/20/Random-Forests/" data-id="cl4dluixs0003hvgp13mg2dni" data-title="Random Forests" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/machine-learning/" rel="tag">machine learning</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-GBDT" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2017/07/10/GBDT/" class="article-date">
+  <time class="dt-published" datetime="2017-07-10T08:22:54.000Z" itemprop="datePublished">2017-07-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2017/07/10/GBDT/">GBDT</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><a target="_blank" rel="noopener" href="http://blog.csdn.net/yangtrees/article/details/7506052">机器学习——Gradient Boost Decision Tree(&amp;Treelink)</a></p>
+<p><a target="_blank" rel="noopener" href="http://wenku.baidu.com/link?url=dmoD5irL8vAV5NnBmoz69M4J_tm-EZg8yGIcfEkTp_ApblW52F6LEv9GdJzusCCaTafPX5HxDObAtwJH77NmxOSp106W-kHCffX8KwC_YG7">greedy_function_approximation_a_gradient_boosting_machine</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.jianshu.com/p/005a4e6ac775">简书上很好的一个关于GBDT的例子</a></p>
+<h1 id="GBDT"><a href="#GBDT" class="headerlink" title="GBDT"></a>GBDT</h1><h2 id="一、Regression-Decision-Tree"><a href="#一、Regression-Decision-Tree" class="headerlink" title="一、Regression Decision Tree"></a>一、Regression Decision Tree</h2><p>​    回归树总体流程类似于分类树，区别在于，回归树的每一个节点都会得一个预测值，以年龄为例，该预测值等于属于这个节点的所有人年龄的平均值。分枝时穷举每一个feature的每个阈值找最好的分割点，但<strong>衡量最好的标准不再是最大熵，而是最小化平方误差</strong>。也就是被预测出错的人数越多，错的越离谱，平方误差就越大，通过最小化平方误差能够找到最可靠的分枝依据。分枝直到每个叶子节点上人的年龄都唯一或者达到预设的终止条件(如叶子个数上限)，若最终叶子节点上人的年龄不唯一，则以该节点上所有人的<em><strong>平均</strong></em>年龄做为该叶子节点的预测年龄。</p>
+<h2 id="二、Boosting-Decision-Tree"><a href="#二、Boosting-Decision-Tree" class="headerlink" title="二、Boosting Decision Tree"></a>二、Boosting Decision Tree</h2><p>​    提升树是迭代多颗回归树来共同决策。每一棵决策树学习的是之前所有树的结论和残差(采用平方误差损失函数时)，拟合得到一个当前的残差回归树。残差的意义：<strong>残差 &#x3D; 真实值 - 预测值</strong>；提升树，即整个迭代过程生成的回归树的累加。预测值等于所有树值的累加。</p>
+<img src="/2017/07/10/GBDT/1241" class title="model complex asset_img">
+
+
+
+<p>​                                                                                                           提升树算法</p>
+<h2 id="三、Gradient-Boosting-Decision-Tree"><a href="#三、Gradient-Boosting-Decision-Tree" class="headerlink" title="三、Gradient Boosting Decision Tree"></a>三、Gradient Boosting Decision Tree</h2><p>提升树利用加法模型和前向分类算法实现学习的优化过程。当损失函数平方损失和指数损失函数时，每一步的优化很简单，如平方损失函数学习残差回归树。</p>
+<p>但对于一般的损失函数，往往每一步优化没那么容易，如上图中的绝对值损失函数和Huber损失函数。针对这一问题，Freidman提出了梯度提升算法： 利用最速下降的近似方法，即利用损失函数的负梯度在当前模型的值，作为回归问题中提升树算法的残差的近似值，拟合一个回归树。</p>
+<img src="/2017/07/10/GBDT/1240" class title="model complex asset_img">
+
+<p>​    当模型越复杂时，拟合的程度就越高，模型的训练偏差就越小。但此时如果换一组数据可能模型的变化就会很大，即模型的方差很大。所以模型过于复杂的时候会导致过拟合。<br>  当模型越简单时，即使我们再换一组数据，最后得出的学习器和之前的学习器的差别就不那么大，模型的方差很小。还是因为模型简单，所以偏差会很大。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://shizhenqiang.github.io/2017/07/10/GBDT/" data-id="cl4dluixq0001hvgp89ab2w6x" data-title="GBDT" class="article-share-link">Share</a>
       
       
       
@@ -249,7 +316,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/machine-learning/" style="font-size: 10px;">machine learning</a>
+      <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/machine-learning/" style="font-size: 20px;">machine learning</a>
     </div>
   </div>
 
@@ -258,7 +325,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li></ul>
     </div>
   </div>
 
@@ -280,6 +347,10 @@
         
           <li>
             <a href="/2018/03/20/Random-Forests/">Random Forests</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/10/GBDT/">GBDT</a>
           </li>
         
       </ul>

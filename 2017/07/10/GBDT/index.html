@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>GBDT | Shizhenqiang&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="机器学习——Gradient Boost Decision Tree(&amp;Treelink) greedy_function_approximation_a_gradient_boosting_machine 简书上很好的一个关于GBDT的例子 GBDT一、Regression Decision Tree​    回归树总体流程类似于分类树，区别在于，回归树的每一个节点都会得一个预测值，以年">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GBDT">
+<meta property="og:url" content="https://shizhenqiang.github.io/2017/07/10/GBDT/index.html">
+<meta property="og:site_name" content="Shizhenqiang&#39;s Blog">
+<meta property="og:description" content="机器学习——Gradient Boost Decision Tree(&amp;Treelink) greedy_function_approximation_a_gradient_boosting_machine 简书上很好的一个关于GBDT的例子 GBDT一、Regression Decision Tree​    回归树总体流程类似于分类树，区别在于，回归树的每一个节点都会得一个预测值，以年">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://shizhenqiang.github.io/2017/07/10/GBDT/1241">
+<meta property="og:image" content="https://shizhenqiang.github.io/2017/07/10/GBDT/1240">
+<meta property="article:published_time" content="2017-07-10T08:22:54.000Z">
+<meta property="article:modified_time" content="2022-06-14T03:10:29.932Z">
+<meta property="article:author" content="Shizhenqiang">
+<meta property="article:tag" content="machine learning">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://shizhenqiang.github.io/2017/07/10/GBDT/1241">
+  
+    <link rel="alternate" href="/atom.xml" title="Shizhenqiang's Blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Shizhenqiang&#39;s Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Record it</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://shizhenqiang.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-GBDT" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2017/07/10/GBDT/" class="article-date">
+  <time class="dt-published" datetime="2017-07-10T08:22:54.000Z" itemprop="datePublished">2017-07-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      GBDT
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><a target="_blank" rel="noopener" href="http://blog.csdn.net/yangtrees/article/details/7506052">机器学习——Gradient Boost Decision Tree(&amp;Treelink)</a></p>
+<p><a target="_blank" rel="noopener" href="http://wenku.baidu.com/link?url=dmoD5irL8vAV5NnBmoz69M4J_tm-EZg8yGIcfEkTp_ApblW52F6LEv9GdJzusCCaTafPX5HxDObAtwJH77NmxOSp106W-kHCffX8KwC_YG7">greedy_function_approximation_a_gradient_boosting_machine</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.jianshu.com/p/005a4e6ac775">简书上很好的一个关于GBDT的例子</a></p>
+<h1 id="GBDT"><a href="#GBDT" class="headerlink" title="GBDT"></a>GBDT</h1><h2 id="一、Regression-Decision-Tree"><a href="#一、Regression-Decision-Tree" class="headerlink" title="一、Regression Decision Tree"></a>一、Regression Decision Tree</h2><p>​    回归树总体流程类似于分类树，区别在于，回归树的每一个节点都会得一个预测值，以年龄为例，该预测值等于属于这个节点的所有人年龄的平均值。分枝时穷举每一个feature的每个阈值找最好的分割点，但<strong>衡量最好的标准不再是最大熵，而是最小化平方误差</strong>。也就是被预测出错的人数越多，错的越离谱，平方误差就越大，通过最小化平方误差能够找到最可靠的分枝依据。分枝直到每个叶子节点上人的年龄都唯一或者达到预设的终止条件(如叶子个数上限)，若最终叶子节点上人的年龄不唯一，则以该节点上所有人的<em><strong>平均</strong></em>年龄做为该叶子节点的预测年龄。</p>
+<h2 id="二、Boosting-Decision-Tree"><a href="#二、Boosting-Decision-Tree" class="headerlink" title="二、Boosting Decision Tree"></a>二、Boosting Decision Tree</h2><p>​    提升树是迭代多颗回归树来共同决策。每一棵决策树学习的是之前所有树的结论和残差(采用平方误差损失函数时)，拟合得到一个当前的残差回归树。残差的意义：<strong>残差 &#x3D; 真实值 - 预测值</strong>；提升树，即整个迭代过程生成的回归树的累加。预测值等于所有树值的累加。</p>
+<img src="/2017/07/10/GBDT/1241" class title="model complex asset_img">
+
+
+
+<p>​                                                                                                           提升树算法</p>
+<h2 id="三、Gradient-Boosting-Decision-Tree"><a href="#三、Gradient-Boosting-Decision-Tree" class="headerlink" title="三、Gradient Boosting Decision Tree"></a>三、Gradient Boosting Decision Tree</h2><p>提升树利用加法模型和前向分类算法实现学习的优化过程。当损失函数平方损失和指数损失函数时，每一步的优化很简单，如平方损失函数学习残差回归树。</p>
+<p>但对于一般的损失函数，往往每一步优化没那么容易，如上图中的绝对值损失函数和Huber损失函数。针对这一问题，Freidman提出了梯度提升算法： 利用最速下降的近似方法，即利用损失函数的负梯度在当前模型的值，作为回归问题中提升树算法的残差的近似值，拟合一个回归树。</p>
+<img src="/2017/07/10/GBDT/1240" class title="model complex asset_img">
+
+<p>​    当模型越复杂时，拟合的程度就越高，模型的训练偏差就越小。但此时如果换一组数据可能模型的变化就会很大，即模型的方差很大。所以模型过于复杂的时候会导致过拟合。<br>  当模型越简单时，即使我们再换一组数据，最后得出的学习器和之前的学习器的差别就不那么大，模型的方差很小。还是因为模型简单，所以偏差会很大。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://shizhenqiang.github.io/2017/07/10/GBDT/" data-id="cl4dluixq0001hvgp89ab2w6x" data-title="GBDT" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/machine-learning/" rel="tag">machine learning</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/03/20/Random-Forests/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Random Forests
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/machine-learning/" rel="tag">machine learning</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/machine-learning/" style="font-size: 20px;">machine learning</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/06/13/hello-world/">Quick Know</a>
+          </li>
+        
+          <li>
+            <a href="/2018/07/16/About-hadoop/">About hadoop</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/20/Random-Forests/">Random Forests</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/10/GBDT/">GBDT</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 Shizhenqiang<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
