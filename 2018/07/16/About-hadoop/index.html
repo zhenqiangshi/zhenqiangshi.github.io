@@ -6,20 +6,20 @@
   
   <title>About hadoop | Shizhenqiang&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="MapReduce  ​       在整个MapReduce的生命周期中，纯粹的Map阶段和过程的reduce过程，其实只占了很小的一部分，整个MapReduce的核心其实是Shuffle过程，也被称为奇迹发生的地方。之前那张Word Count过程图对shuffle这个过程体现的并不是很明显，因为那张图主要是想让大家用Word Count这个实际的列子，对MapReduce整个过程能有一个感性">
+  <meta name="description" content="​        先上一张图： ​       在整个MapReduce的生命周期中，纯粹的Map阶段和过程的reduce过程，其实只占了很小的一部分，整个MapReduce的核心其实是Shuffle过程，也被称为奇迹发生的地方。之前那张Word Count过程图对shuffle这个过程体现的并不是很明显，因为那张图主要是想让大家用Word Count这个实际的列子，对MapReduce整个过">
 <meta property="og:type" content="article">
 <meta property="og:title" content="About hadoop">
-<meta property="og:url" content="https://shizhenqiang.github.io/2022/06/13/About-hadoop/index.html">
+<meta property="og:url" content="https://shizhenqiang.github.io/2018/07/16/About-hadoop/index.html">
 <meta property="og:site_name" content="Shizhenqiang&#39;s Blog">
-<meta property="og:description" content="MapReduce  ​       在整个MapReduce的生命周期中，纯粹的Map阶段和过程的reduce过程，其实只占了很小的一部分，整个MapReduce的核心其实是Shuffle过程，也被称为奇迹发生的地方。之前那张Word Count过程图对shuffle这个过程体现的并不是很明显，因为那张图主要是想让大家用Word Count这个实际的列子，对MapReduce整个过程能有一个感性">
+<meta property="og:description" content="​        先上一张图： ​       在整个MapReduce的生命周期中，纯粹的Map阶段和过程的reduce过程，其实只占了很小的一部分，整个MapReduce的核心其实是Shuffle过程，也被称为奇迹发生的地方。之前那张Word Count过程图对shuffle这个过程体现的并不是很明显，因为那张图主要是想让大家用Word Count这个实际的列子，对MapReduce整个过">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://shizhenqiang.github.io/.io//szq/f9d89b69-9fc5-4779-aa4b-e0a0cb31cd76/test/github/zhenqiangshi.github.io/source/_posts/About-hadoop.assets/mapreduce.jpg">
-<meta property="article:published_time" content="2022-06-13T09:06:57.000Z">
-<meta property="article:modified_time" content="2022-06-13T09:30:00.930Z">
+<meta property="og:image" content="https://shizhenqiang.github.io/2018/07/16/About-hadoop/mapreduce.jpg">
+<meta property="article:published_time" content="2018-07-16T09:06:57.000Z">
+<meta property="article:modified_time" content="2022-06-14T02:42:42.886Z">
 <meta property="article:author" content="Shizhenqiang">
 <meta property="article:tag" content="Hadoop">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://shizhenqiang.github.io/.io//szq/f9d89b69-9fc5-4779-aa4b-e0a0cb31cd76/test/github/zhenqiangshi.github.io/source/_posts/About-hadoop.assets/mapreduce.jpg">
+<meta name="twitter:image" content="https://shizhenqiang.github.io/2018/07/16/About-hadoop/mapreduce.jpg">
   
     <link rel="alternate" href="/atom.xml" title="Shizhenqiang's Blog" type="application/atom+xml">
   
@@ -53,7 +53,7 @@
       </h1>
       
         <h2 id="subtitle-wrap">
-          <a href="/" id="subtitle">write</a>
+          <a href="/" id="subtitle">Record it</a>
         </h2>
       
     </div>
@@ -82,8 +82,8 @@
       <div class="outer">
         <section id="main"><article id="post-About-hadoop" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2022/06/13/About-hadoop/" class="article-date">
-  <time class="dt-published" datetime="2022-06-13T09:06:57.000Z" itemprop="datePublished">2022-06-13</time>
+    <a href="/2018/07/16/About-hadoop/" class="article-date">
+  <time class="dt-published" datetime="2018-07-16T09:06:57.000Z" itemprop="datePublished">2018-07-16</time>
 </a>
     
   </div>
@@ -102,20 +102,19 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>MapReduce</p>
-<p><img src="/.io//szq/f9d89b69-9fc5-4779-aa4b-e0a0cb31cd76/test/github/zhenqiangshi.github.io/source/_posts/About-hadoop.assets/mapreduce.jpg"></p>
+        <img src="/2018/07/16/About-hadoop/mapreduce.jpg" class title="MapReduce asset_img">
+
+<p>​        先上一张图：</p>
 <p>​       在整个MapReduce的生命周期中，纯粹的Map阶段和过程的reduce过程，其实只占了很小的一部分，整个MapReduce的核心其实是Shuffle过程，也被称为奇迹发生的地方。之前那张Word Count过程图对shuffle这个过程体现的并不是很明显，因为那张图主要是想让大家用Word Count这个实际的列子，对MapReduce整个过程能有一个感性的认识，真正的MapReduce过程，应该像这张图所展示的一样，从map task输出到reduce task输入的这段过程都是shuffle，用一句话概括一下Shuffle做了什么事情就是，把map输出端的结果有序的传递给reduce的输入端。</p>
-<p>​      从上面这个图可以看出，整个shuffle阶段，横跨了Map过程与Reduce过程，所以shuffle阶段又可分为map阶段的shuffle， map-shuffle 和 reduce 阶段的shuffle， reduce-shuffle， 在map-shuffle阶段主要完成了spill这个过程，在reduce-shuffle阶段，主要完成了copy和sort这个过程。 下面我们来详细的看一下shuffle阶段是如何通过spill，copy，sort这个三个过程，把map输出端的结果有序的传递给reduce的输入端。</p>
+<p>​      从上面这个图可以看出，<strong>整个shuffle阶段</strong>，横跨了Map过程与Reduce过程，所以shuffle阶段又可分为map阶段的shuffle， map-shuffle 和 reduce 阶段的shuffle， reduce-shuffle， 在map-shuffle阶段主要完成了spill这个过程，在reduce-shuffle阶段，主要完成了copy和sort这个过程。 下面我们来详细的看一下shuffle阶段是如何通过spill，copy，sort这个三个过程，把map输出端的结果有序的传递给reduce的输入端。</p>
 <p><strong>spill 过程</strong></p>
 <p>​       Spill过程简单来说就是把Map任务输出的中间结果写到本地磁盘上。以后供Reduce调用，做为Reduce端的输入。</p>
-<p>​       但是怎么把中间结果写到磁盘上就比较有讲究了，不是随随便便一写就完事儿了，因为写磁盘的过程中既要考虑到写入的性能，因为不能出一个结果就写一次磁盘，出一个结果就写一次磁盘，这样效率会很低，又要考虑到为后续传递给reduce做准备。因为在实际使用中，一般会不止一个Reduce，而一个Map的输出，最后通常会传递给多个Reduce，如果我们能事先对Map的输出进行分区（这里讲一下partition的概念），或者说的更通俗一点就是把将来要传递给同一个reduce数据都有序的放在一起，这样就可以大大提升接下来从Map输出端拷贝输出结果到Reduce输入端的效率，</p>
-<p>纯粹的map和存粹的reduce都只是很小的一部分，在map产生输出的时候，其实就已经的进入到了MapReduce的核心阶段，Shuffle阶段，Shuffle阶段又被称之为“奇迹发生的地方”</p>
-<p>整个shuffle阶段由spill过程，copy过程，sort过程组成，</p>
+<p>​       但是怎么把中间结果写到磁盘上就比较有讲究了，不是随随便便一写就完事儿了，因为写磁盘的过程中既要考虑到写入的性能，因为不能出一个结果就写一次磁盘，出一个结果就写一次磁盘，这样效率会很低，又要考虑到为后续传递给reduce做准备。因为在实际使用中，一般会不止一个Reduce，而一个Map的输出，最后通常会传递给多个Reduce，如果我们能事先对Map的输出进行分区（这里讲一下partition的概念），或者说的更通俗一点就是把将来要传递给同一个reduce数据都有序的放在一起，这样就可以大大提升接下来从Map输出端拷贝输出结果到Reduce输入端的效率，整个shuffle阶段由spill过程，copy过程，sort过程组成，</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shizhenqiang.github.io/2022/06/13/About-hadoop/" data-id="cl4cjbmdt0000segp2u29fvi6" data-title="About hadoop" class="article-share-link">Share</a>
+      <a data-url="https://shizhenqiang.github.io/2018/07/16/About-hadoop/" data-id="cl4dkec780000rkgp7b2s8xht" data-title="About hadoop" class="article-share-link">Share</a>
       
       
       
@@ -127,10 +126,19 @@
     
 <nav id="article-nav">
   
+    <a href="/2022/06/13/hello-world/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Quick Know
+        
+      </div>
+    </a>
   
-    <a href="/2022/06/13/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+  
+    <a href="/2018/03/20/Random-Forests/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Step One</div>
+      <div class="article-nav-title">Random Forests</div>
     </a>
   
 </nav>
@@ -150,7 +158,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/machine-learning/" rel="tag">machine learning</a></li></ul>
     </div>
   </div>
 
@@ -160,7 +168,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a>
+      <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/machine-learning/" style="font-size: 10px;">machine learning</a>
     </div>
   </div>
 
@@ -169,7 +177,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li></ul>
     </div>
   </div>
 
@@ -182,11 +190,15 @@
       <ul>
         
           <li>
-            <a href="/2022/06/13/About-hadoop/">About hadoop</a>
+            <a href="/2022/06/13/hello-world/">Quick Know</a>
           </li>
         
           <li>
-            <a href="/2022/06/13/hello-world/">Step One</a>
+            <a href="/2018/07/16/About-hadoop/">About hadoop</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/20/Random-Forests/">Random Forests</a>
           </li>
         
       </ul>
