@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Airflow | Shizhenqiang&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="一、 什么是airflow?它是一个具有（DAG）工作流调度器，并可视化其作业流程的一个平台。Documentation&gt;&gt;  Airflow is a platform to programmatically author, schedule and monitor workflows.  二、什么是celery？它是一个简单、灵活且可靠的,处理大量消息的分布式系统,专注于实时处理的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Airflow">
+<meta property="og:url" content="https://shizhenqiang.github.io/2022/05/17/Airflow/index.html">
+<meta property="og:site_name" content="Shizhenqiang&#39;s Blog">
+<meta property="og:description" content="一、 什么是airflow?它是一个具有（DAG）工作流调度器，并可视化其作业流程的一个平台。Documentation&gt;&gt;  Airflow is a platform to programmatically author, schedule and monitor workflows.  二、什么是celery？它是一个简单、灵活且可靠的,处理大量消息的分布式系统,专注于实时处理的">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://shizhenqiang.github.io/2022/05/17/Airflow/graphviz-91fd3ca4f3dc01a69b3f84fbcd6b5c7975945ba4.png">
+<meta property="article:published_time" content="2022-05-17T09:10:46.000Z">
+<meta property="article:modified_time" content="2022-06-20T01:32:12.015Z">
+<meta property="article:author" content="Shizhenqiang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://shizhenqiang.github.io/2022/05/17/Airflow/graphviz-91fd3ca4f3dc01a69b3f84fbcd6b5c7975945ba4.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Shizhenqiang's Blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Shizhenqiang&#39;s Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">To let your hair down</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://shizhenqiang.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Airflow" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/05/17/Airflow/" class="article-date">
+  <time class="dt-published" datetime="2022-05-17T09:10:46.000Z" itemprop="datePublished">2022-05-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Airflow
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="一、-什么是airflow"><a href="#一、-什么是airflow" class="headerlink" title="一、 什么是airflow?"></a>一、 什么是airflow?</h2><p>它是一个具有（DAG）工作流调度器，并可视化其作业流程的一个平台。<a target="_blank" rel="noopener" href="https://airflow.apache.org/docs/"><strong>Documentation&gt;&gt;</strong></a></p>
+<blockquote>
+<p><em>Airflow is a platform to programmatically author, schedule and monitor workflows.</em></p>
+</blockquote>
+<h2 id="二、什么是celery？"><a href="#二、什么是celery？" class="headerlink" title="二、什么是celery？"></a>二、什么是celery？</h2><p>它是一个简单、灵活且可靠的,处理大量消息的<strong>分布式</strong>系统,专注于实时处理的<strong>异步任务队列</strong>,同时也支持<strong>任务调度</strong>。 <a target="_blank" rel="noopener" href="https://docs.celeryq.dev/en/stable/"><strong>Documentation&gt;&gt;</strong></a></p>
+<blockquote>
+<p><em>Celery is a simple, flexible and reliable distributed system to process vast amounts of messages, while providing operations with the tools required to maintain such a system.</em></p>
+</blockquote>
+<h2 id="三、什么是Executor"><a href="#三、什么是Executor" class="headerlink" title="三、什么是Executor?"></a>三、什么是Executor?</h2><p>那些可以运行任务的执行者。例如：</p>
+<p><strong>Local Executors</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://airflow.apache.org/docs/apache-airflow/stable/executor/debug.html">Debug Executor</a></li>
+<li><a target="_blank" rel="noopener" href="https://airflow.apache.org/docs/apache-airflow/stable/executor/local.html">Local Executor</a></li>
+<li><a target="_blank" rel="noopener" href="https://airflow.apache.org/docs/apache-airflow/stable/executor/sequential.html">Sequential Executor</a></li>
+</ul>
+<p><strong>Remote Executors</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://airflow.apache.org/docs/apache-airflow/stable/executor/celery.html">Celery Executor</a></li>
+<li><a target="_blank" rel="noopener" href="https://airflow.apache.org/docs/apache-airflow/stable/executor/celery_kubernetes.html">CeleryKubernetes Executor</a></li>
+<li><a target="_blank" rel="noopener" href="https://airflow.apache.org/docs/apache-airflow/stable/executor/dask.html">Dask Executor</a></li>
+<li><a target="_blank" rel="noopener" href="https://airflow.apache.org/docs/apache-airflow/stable/executor/kubernetes.html">Kubernetes Executor</a></li>
+<li><a target="_blank" rel="noopener" href="https://airflow.apache.org/docs/apache-airflow/stable/executor/local_kubernetes.html">LocalKubernetes Executor</a></li>
+</ul>
+<p>这里主要说明一下celery作为excutor的一个架构及流程。</p>
+<img src="/2022/05/17/Airflow/graphviz-91fd3ca4f3dc01a69b3f84fbcd6b5c7975945ba4.png" class title="Architecture asset_img">
+
+<ul>
+<li><p><strong>Workers</strong> - Execute the assigned tasks</p>
+</li>
+<li><p><strong>Scheduler</strong> - Responsible for adding the necessary tasks to the queue</p>
+</li>
+<li><p><strong>Web server</strong> - HTTP Server provides access to DAG&#x2F;task status information</p>
+</li>
+<li><p><strong>Database</strong> - Contains information about the status of tasks, DAGs, Variables, connections, etc.</p>
+</li>
+<li><p><strong>Celery</strong> - Queue mechanism</p>
+</li>
+<li><p><strong>Broker</strong> - Stores commands for execution</p>
+</li>
+<li><p><strong>Result backend</strong> - Stores status of completed commands</p>
+</li>
+</ul>
+<p>其中各个组件的联系如下：</p>
+<ul>
+<li>[1] <strong>Web server</strong> –&gt; <strong>Workers</strong> - Fetches task execution logs</li>
+<li>[2] <strong>Web server</strong> –&gt; <strong>DAG files</strong> - Reveal the DAG structure</li>
+<li>[3] <strong>Web server</strong> –&gt; <strong>Database</strong> - Fetch the status of the tasks</li>
+<li>[4] <strong>Workers</strong> –&gt; <strong>DAG files</strong> - Reveal the DAG structure and execute the tasks</li>
+<li>[5] <strong>Workers</strong> –&gt; <strong>Database</strong> - Gets and stores information about connection configuration, variables and XCOM.</li>
+<li>[6] <strong>Workers</strong> –&gt; <strong>Celery’s result backend</strong> - Saves the status of tasks</li>
+<li>[7] <strong>Workers</strong> –&gt; <strong>Celery’s broker</strong> - Stores commands for execution</li>
+<li>[8] <strong>Scheduler</strong> –&gt; <strong>DAG files</strong> - Reveal the DAG structure and execute the tasks</li>
+<li>[9] <strong>Scheduler</strong> –&gt; <strong>Database</strong> - Store a DAG run and related tasks</li>
+<li>[10] <strong>Scheduler</strong> –&gt; <strong>Celery’s result backend</strong> - Gets information about the status of completed tasks</li>
+<li>[11] <strong>Scheduler</strong> –&gt; <strong>Celery’s broker</strong> - Put the commands to be executed</li>
+</ul>
+<p>总结，webserver可视化DAG，获取任务状态，捕捉日志。Worker是执行任务的，同时存储相应的状态。scheduler是调度任务的，并将DAG存储下来。</p>
+<p>如上，使用celeryExcutor，得运行scheduler，worker。其中-D使用守护进程运行。当然你可以启动flower来监控celeryExcutor的执行状况。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">airflow scheduler -D</span><br><span class="line">airflow celery worker -D</span><br><span class="line">airflow webserver -D</span><br><span class="line"></span><br><span class="line"># airflow celery flower #</span><br></pre></td></tr></table></figure>
+
+<h2 id="四、什么是backfill？"><a href="#四、什么是backfill？" class="headerlink" title="四、什么是backfill？"></a>四、什么是backfill？</h2><p>可以在一定的时间范围内，运行一些DAG。</p>
+<blockquote>
+<p>Run subsections of a DAG for a specified date range.</p>
+</blockquote>
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">airflow dags backfill -s 2022-06-11 -e 2022-06-12 --reset-dagruns tutorial</span><br></pre></td></tr></table></figure>
+
+<p>其中，reset_dag_run如果设置，那么他会提示是是否清除之前的DAG运行实例，重新运行。而rerun_failed_tasks则会自动的之情在这个时间范围内的执行错误的任务。</p>
+<h2 id="五、有何依赖？"><a href="#五、有何依赖？" class="headerlink" title="五、有何依赖？"></a>五、有何依赖？</h2><p>airflow安装：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">AIRFLOW_VERSION=2.3.2</span><br><span class="line">PYTHON_VERSION=&quot;$(python --version | cut -d &quot; &quot; -f 2 | cut -d &quot;.&quot; -f 1-2)&quot;</span><br><span class="line">CONSTRAINT_URL=&quot;https://raw.githubusercontent.com/apache/airflow/constraints-$&#123;AIRFLOW_VERSION&#125;/constraints-$&#123;PYTHON_VERSION&#125;.txt&quot;</span><br><span class="line">pip install &quot;apache-airflow[async,postgres,google]==$&#123;AIRFLOW_VERSION&#125;&quot; --constraint &quot;$&#123;CONSTRAINT_URL&#125;&quot;</span><br></pre></td></tr></table></figure>
+
+<p>你可以从文档中查看安装步骤，比如利用pypip安装，升级。<strong>注意版本</strong>。</p>
+<p>mysql安装</p>
+<p>如果用mysql作为元数据库，那么请注意版本以及配置编码等事宜。比如其中：</p>
+<blockquote>
+<p><em>In addition, you also should pay particular attention to MySQL’s encoding. Although the utf8mb4 character set is more and more popular for MySQL (actually, utf8mb4 becomes default character set in MySQL8.0), using the utf8mb4 encoding requires additional setting in Airflow 2+ (See more details in #7570.). If you use utf8mb4 as character set, you should also set sql_engine_collation_for_ids&#x3D;utf8mb3_bin.</em></p>
+</blockquote>
+<p>celery安装</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install &quot;apache-airflow[celery]==2.3.2&quot; --constraint &quot;https://raw.githubusercontent.com/apache/airflow/constraints-2.3.2/constraints-3.7.txt&quot;</span><br></pre></td></tr></table></figure>
+
+<p>redis作为celery的backend时，还要安装redis，<strong>注意版本</strong>。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://shizhenqiang.github.io/2022/05/17/Airflow/" data-id="cl4m2g4670001v2gp2eev21sf" data-title="Airflow" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/06/13/hello-world/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Quick Know
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/07/16/About-hadoop/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">About hadoop</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/machine-learning/" rel="tag">machine learning</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/machine-learning/" style="font-size: 20px;">machine learning</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/06/13/hello-world/">Quick Know</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/17/Airflow/">Airflow</a>
+          </li>
+        
+          <li>
+            <a href="/2018/07/16/About-hadoop/">About hadoop</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/20/Random-Forests/">Random Forests</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/09/Apriori/">Apriori</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 Shizhenqiang<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
