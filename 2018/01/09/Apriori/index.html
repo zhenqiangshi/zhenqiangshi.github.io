@@ -15,7 +15,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://shizhenqiang.github.io/2018/01/09/Apriori/529698-20180109140825019-1205577597.png">
 <meta property="article:published_time" content="2018-01-09T06:16:43.000Z">
-<meta property="article:modified_time" content="2022-06-20T01:27:48.308Z">
+<meta property="article:modified_time" content="2022-06-20T01:46:04.839Z">
 <meta property="article:author" content="Shizhenqiang">
 <meta property="article:tag" content="machine learning">
 <meta name="twitter:card" content="summary">
@@ -166,14 +166,14 @@
 <li>利用频繁项集生成所需要的关联规则，根据用户设定的最小可信度筛选出强关联规则。</li>
 </ol>
 <p>目前研究人员主要针对第一个问题进行研究，找出频繁集是比较困难的，而有了频繁集再生成强关联规则就相对容易了。</p>
-<h1 id="二、-理论基础"><a href="#二、-理论基础" class="headerlink" title="二、****理论基础"></a><strong>二、****理论基础</strong></h1><p>首先来看一个频繁集的性质。</p>
+<h1 id="二、理论基础"><a href="#二、理论基础" class="headerlink" title="二、理论基础"></a>二、理论基础</h1><p>首先来看一个频繁集的性质。</p>
 <p>定理：<strong>如果项目集X是频繁集，那么它的非空子集都是频繁集</strong>。</p>
 <p>根据定理，已知一个k-频繁集的项集X，X的所有k-1阶子集都肯定是频繁集，也就肯定可以找到两个k-1频繁集的项集，它们只有一项不同，且连接后等于X。这证明了通过连接k-1频繁集产生的k-候选集覆盖了k-频繁集。同时，如果k-候选集中的项集Y，包含有某个k-1阶子集不属于k-1频繁集，那么Y就不可能是频繁集，应该从候选集中裁剪掉。Apriori算法就是利用了频繁集的这个性质。</p>
 <h1 id="三、算法步骤："><a href="#三、算法步骤：" class="headerlink" title="三、算法步骤："></a><strong>三、算法步骤：</strong></h1><p>首先是测试数据：</p>
 <table>
 <thead>
 <tr>
-<th><strong>交易****ID</strong></th>
+<th>交易ID</th>
 <th><strong>商品<strong><strong>ID</strong></strong>列表</strong></th>
 </tr>
 </thead>
@@ -248,7 +248,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shizhenqiang.github.io/2018/01/09/Apriori/" data-id="cl4m2pe3l000371gpcflkgtht" data-title="Apriori" class="article-share-link">Share</a>
+      <a data-url="https://shizhenqiang.github.io/2018/01/09/Apriori/" data-id="cl4m2tkkf0008odgp1zeo3waa" data-title="Apriori" class="article-share-link">Share</a>
       
       
       
