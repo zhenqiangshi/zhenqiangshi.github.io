@@ -109,7 +109,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shizhenqiang.github.io/2022/06/13/hello-world/" data-id="cl4m2g46c0005v2gp0sxgfwlu" data-title="Quick Know" class="article-share-link">Share</a>
+      <a data-url="https://shizhenqiang.github.io/2022/06/13/hello-world/" data-id="cl4m2n56o0008q1gp45lec6xe" data-title="Quick Know" class="article-share-link">Share</a>
       
       
       
@@ -200,7 +200,7 @@
 <li>[11] <strong>Scheduler</strong> –&gt; <strong>Celery’s broker</strong> - Put the commands to be executed</li>
 </ul>
 <p>总结，webserver可视化DAG，获取任务状态，捕捉日志。Worker是执行任务的，同时存储相应的状态。scheduler是调度任务的，并将DAG存储下来。</p>
-<p>如上，使用celeryExcutor，得运行scheduler，worker。其中-D使用守护进程运行。当然你可以启动flower来监控celeryExcutor的执行状况。</p>
+<p>如上，使用<a target="_blank" rel="noopener" href="https://airflow.apache.org/docs/apache-airflow/stable/executor/celery.html">Celery Executor</a>，得运行scheduler，worker。其中-D使用守护进程运行。当然你可以启动flower来监控<a target="_blank" rel="noopener" href="https://airflow.apache.org/docs/apache-airflow/stable/executor/celery.html">Celery Executor</a>的执行状况。</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">airflow scheduler -D</span><br><span class="line">airflow celery worker -D</span><br><span class="line">airflow webserver -D</span><br><span class="line"></span><br><span class="line"># airflow celery flower #</span><br></pre></td></tr></table></figure>
 
 <h2 id="四、什么是backfill？"><a href="#四、什么是backfill？" class="headerlink" title="四、什么是backfill？"></a>四、什么是backfill？</h2><p>可以在一定的时间范围内，运行一些DAG。</p>
@@ -228,7 +228,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shizhenqiang.github.io/2022/05/17/Airflow/" data-id="cl4m2g4670001v2gp2eev21sf" data-title="Airflow" class="article-share-link">Share</a>
+      <a data-url="https://shizhenqiang.github.io/2022/05/17/Airflow/" data-id="cl4m2n56i0001q1gpddct7ckg" data-title="Airflow" class="article-share-link">Share</a>
       
       
       
@@ -286,7 +286,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shizhenqiang.github.io/2018/07/16/About-hadoop/" data-id="cl4m2g4620000v2gpecsfaewq" data-title="About hadoop" class="article-share-link">Share</a>
+      <a data-url="https://shizhenqiang.github.io/2018/07/16/About-hadoop/" data-id="cl4m2n56e0000q1gp3bxn7lz6" data-title="About hadoop" class="article-share-link">Share</a>
       
       
       
@@ -343,7 +343,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shizhenqiang.github.io/2018/03/20/Random-Forests/" data-id="cl4m2g46d0008v2gphh79epp1" data-title="Random Forests" class="article-share-link">Share</a>
+      <a data-url="https://shizhenqiang.github.io/2018/03/20/Random-Forests/" data-id="cl4m2n56n0005q1gpaufv2lae" data-title="Random Forests" class="article-share-link">Share</a>
       
       
       
@@ -525,7 +525,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shizhenqiang.github.io/2018/01/09/Apriori/" data-id="cl4m2g46a0003v2gpb1ztd9m6" data-title="Apriori" class="article-share-link">Share</a>
+      <a data-url="https://shizhenqiang.github.io/2018/01/09/Apriori/" data-id="cl4m2n56l0003q1gp6pee81z8" data-title="Apriori" class="article-share-link">Share</a>
       
       
       
@@ -580,7 +580,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shizhenqiang.github.io/2017/07/10/GBDT/" data-id="cl4m2g46b0004v2gpd8cxclg2" data-title="GBDT" class="article-share-link">Share</a>
+      <a data-url="https://shizhenqiang.github.io/2017/07/10/GBDT/" data-id="cl4m2n56m0004q1gp4otkhr9p" data-title="GBDT" class="article-share-link">Share</a>
       
       
       
