@@ -75,52 +75,6 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2022/06/13/hello-world/" class="article-date">
-  <time class="dt-published" datetime="2022-06-13T08:27:43.227Z" itemprop="datePublished">2022-06-13</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2022/06/13/hello-world/">Quick Know</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><ul>
-<li>石振强</li>
-<li>男，92 生人</li>
-<li>山东科技大学计算机本硕</li>
-<li>机器学习、大数据</li>
-<li>python、shell、java</li>
-<li>已婚现居青岛</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://shizhenqiang.github.io/2022/06/13/hello-world/" data-id="cl4m3uj7h0008h2gp7o3chni9" data-title="Quick Know" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
     <article id="post-Airflow" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2022/05/17/Airflow/" class="article-date">
@@ -210,7 +164,7 @@
 <p>例如：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">airflow dags backfill -s 2022-06-11 -e 2022-06-12 --reset-dagruns tutorial</span><br></pre></td></tr></table></figure>
 
-<p>其中，reset_dag_run如果设置，那么他会提示是是否清除之前的DAG运行实例，重新运行。而rerun_failed_tasks则会自动的之情在这个时间范围内的执行错误的任务。</p>
+<p>其中，reset_dag_run如果设置，那么他会提示是是否清除之前的DAG运行实例，重新运行。而rerun_failed_tasks则会自动执行在这个时间范围内的错误任务。</p>
 <h2 id="五、有何依赖？"><a href="#五、有何依赖？" class="headerlink" title="五、有何依赖？"></a>五、有何依赖？</h2><p>airflow安装：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">AIRFLOW_VERSION=2.3.2</span><br><span class="line">PYTHON_VERSION=&quot;$(python --version | cut -d &quot; &quot; -f 2 | cut -d &quot;.&quot; -f 1-2)&quot;</span><br><span class="line">CONSTRAINT_URL=&quot;https://raw.githubusercontent.com/apache/airflow/constraints-$&#123;AIRFLOW_VERSION&#125;/constraints-$&#123;PYTHON_VERSION&#125;.txt&quot;</span><br><span class="line">pip install &quot;apache-airflow[async,postgres,google]==$&#123;AIRFLOW_VERSION&#125;&quot; --constraint &quot;$&#123;CONSTRAINT_URL&#125;&quot;</span><br></pre></td></tr></table></figure>
 
@@ -228,7 +182,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shizhenqiang.github.io/2022/05/17/Airflow/" data-id="cl4m3uj7c0001h2gp3tfw1s8d" data-title="Airflow" class="article-share-link">Share</a>
+      <a data-url="https://shizhenqiang.github.io/2022/05/17/Airflow/" data-id="cl4nhgg2v0001p4gp2huu9xu9" data-title="Airflow" class="article-share-link">Share</a>
       
       
       
@@ -286,7 +240,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shizhenqiang.github.io/2018/07/16/About-hadoop/" data-id="cl4m3uj770000h2gpan2u9m0f" data-title="About hadoop" class="article-share-link">Share</a>
+      <a data-url="https://shizhenqiang.github.io/2018/07/16/About-hadoop/" data-id="cl4nhgg2p0000p4gp1ddp83m3" data-title="About hadoop" class="article-share-link">Share</a>
       
       
       
@@ -343,7 +297,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shizhenqiang.github.io/2018/03/20/Random-Forests/" data-id="cl4m3uj7g0005h2gpbu9ab862" data-title="Random Forests" class="article-share-link">Share</a>
+      <a data-url="https://shizhenqiang.github.io/2018/03/20/Random-Forests/" data-id="cl4nhgg300005p4gp5g5vgxgb" data-title="Random Forests" class="article-share-link">Share</a>
       
       
       
@@ -525,7 +479,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shizhenqiang.github.io/2018/01/09/Apriori/" data-id="cl4m3uj7e0003h2gpfl9m9j4k" data-title="Apriori" class="article-share-link">Share</a>
+      <a data-url="https://shizhenqiang.github.io/2018/01/09/Apriori/" data-id="cl4nhgg2z0004p4gp11r797hk" data-title="Apriori" class="article-share-link">Share</a>
       
       
       
@@ -580,12 +534,64 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shizhenqiang.github.io/2017/07/10/GBDT/" data-id="cl4m3uj7f0004h2gp1eim4ghh" data-title="GBDT" class="article-share-link">Share</a>
+      <a data-url="https://shizhenqiang.github.io/2017/07/10/GBDT/" data-id="cl4nhgg2y0003p4gphx7jbpys" data-title="GBDT" class="article-share-link">Share</a>
       
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/machine-learning/" rel="tag">machine learning</a></li></ul>
 
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2017/07/10/hello-world/" class="article-date">
+  <time class="dt-published" datetime="2017-07-10T08:22:54.000Z" itemprop="datePublished">2017-07-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2017/07/10/hello-world/">Quick Know</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><p>石振强</p>
+</li>
+<li><p>男，92 生人</p>
+</li>
+<li><p>山东科技大学计算机本硕</p>
+</li>
+<li><p>机器学习、大数据、数据挖掘</p>
+</li>
+<li><p>python、java、shell</p>
+</li>
+<li><p>已婚，现居青岛</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://shizhenqiang.github.io/2017/07/10/hello-world/" data-id="cl4nhgg310008p4gpfq626o7m" data-title="Quick Know" class="article-share-link">Share</a>
+      
+      
+      
     </footer>
   </div>
   
@@ -626,7 +632,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li></ul>
     </div>
   </div>
 
@@ -637,10 +643,6 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
-        
-          <li>
-            <a href="/2022/06/13/hello-world/">Quick Know</a>
-          </li>
         
           <li>
             <a href="/2022/05/17/Airflow/">Airflow</a>
@@ -656,6 +658,10 @@
         
           <li>
             <a href="/2018/01/09/Apriori/">Apriori</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/10/GBDT/">GBDT</a>
           </li>
         
       </ul>
