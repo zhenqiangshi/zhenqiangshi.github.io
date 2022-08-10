@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Flink 初探 | Yes is Strong</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="一、什么是Flink？Apache Flink 是一个框架和分布式处理引擎，用于在无边界和有边界数据流上进行有状态的计算。Flink 能在所有常见集群环境中运行，并能以内存速度和任意规模进行计算。  Apache Flink is a framework and distributed processing engine for stateful computations over unbound">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flink 初探">
+<meta property="og:url" content="https://shizhenqiang.github.io/2021/07/18/Flink/index.html">
+<meta property="og:site_name" content="Yes is Strong">
+<meta property="og:description" content="一、什么是Flink？Apache Flink 是一个框架和分布式处理引擎，用于在无边界和有边界数据流上进行有状态的计算。Flink 能在所有常见集群环境中运行，并能以内存速度和任意规模进行计算。  Apache Flink is a framework and distributed processing engine for stateful computations over unbound">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://shizhenqiang.github.io/2021/07/18/Flink/event_processing_time.svg">
+<meta property="og:image" content="https://shizhenqiang.github.io/2021/07/18/Flink/processes.svg">
+<meta property="article:published_time" content="2021-07-18T07:36:12.000Z">
+<meta property="article:modified_time" content="2022-07-22T08:47:08.447Z">
+<meta property="article:author" content="JenKing">
+<meta property="article:tag" content="Flink">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://shizhenqiang.github.io/2021/07/18/Flink/event_processing_time.svg">
+  
+    <link rel="alternate" href="/atom.xml" title="Yes is Strong" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Yes is Strong</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">To let your hair down</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://shizhenqiang.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Flink" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/07/18/Flink/" class="article-date">
+  <time class="dt-published" datetime="2021-07-18T07:36:12.000Z" itemprop="datePublished">2021-07-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Flink 初探
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="一、什么是Flink？"><a href="#一、什么是Flink？" class="headerlink" title="一、什么是Flink？"></a>一、什么是Flink？</h2><p>Apache Flink 是一个框架和分布式处理引擎，用于在无边界和有边界数据流上进行有状态的计算。Flink 能在所有常见集群环境中运行，并能以内存速度和任意规模进行计算。</p>
+<blockquote>
+<p><strong>Apache Flink</strong> is a framework and distributed processing engine for stateful computations over <em>unbounded</em> and <em>bounded</em> data streams. Flink has been designed to run in <em>all common cluster environments</em> perform computations at <em>in-memory</em> speed and at <em>any scale</em>.</p>
+</blockquote>
+<h2 id="二、-时间的概念"><a href="#二、-时间的概念" class="headerlink" title="二、 时间的概念"></a>二、 时间的概念</h2><p> <strong>Processing time:</strong> 执行各自操作的系统时间</p>
+<p><strong>Event time:</strong> 各自事件的时间，发生在推送机器上的时间，在进入flink前的汇总信息的时间。使用时，必须指定如何生成<em>Event Time Watermarks</em>。</p>
+<img src="/2021/07/18/Flink/event_processing_time.svg" class title="event processing time asset_img">
+
+<h2 id="三、状态"><a href="#三、状态" class="headerlink" title="三、状态"></a>三、状态</h2><p>​      &#x2F;* TODO *&#x2F;</p>
+<h2 id="四、窗口的类型"><a href="#四、窗口的类型" class="headerlink" title="四、窗口的类型"></a>四、窗口的类型</h2><ol>
+<li><strong>Keyed Windows</strong></li>
+<li><strong>Non-Keyed Windows</strong></li>
+</ol>
+<ul>
+<li>滑动窗口</li>
+<li>滚动窗口</li>
+<li>全局窗口</li>
+<li>会话窗口</li>
+</ul>
+<h2 id="五、定时器"><a href="#五、定时器" class="headerlink" title="五、定时器"></a>五、定时器</h2><p><a target="_blank" rel="noopener" href="https://github.com/apache/flink-training/blob/master/long-ride-alerts/README_zh.md">练习: <code>ProcessFunction</code> 及定时器（长车程警报）</a></p>
+<p>尤其带状态的定时器一定要注意：</p>
+<ol>
+<li>状态什么时候clear？</li>
+<li>定时器什么时候delete？</li>
+</ol>
+<h3 id="底线"><a href="#底线" class="headerlink" title="底线"></a>底线</h3><p>不管如何聪明地处理保持什么样的状态，以及选择保持多长时间，我们最终都应该清除它——否则状态将以无限的方式增长。 如果丢失了这些信息，我们将冒着延迟事件导致错误或重复结果的风险。</p>
+<p>在永久地保持状态与在事件延迟时偶尔出错之间的权衡是有状态流处理中固有的挑战。</p>
+<h3 id="如果你想走得更远"><a href="#如果你想走得更远" class="headerlink" title="如果你想走得更远"></a>如果你想走得更远</h3><p>对于下列的每一项，添加测试以检查所需的行为。</p>
+<ul>
+<li>扩展解决方案，使其永远不会泄漏状态。</li>
+<li>定义事件丢失的含义，检测丢失的 START 和 END 事件，并将一些通知发送到旁路输出。</li>
+</ul>
+<h2 id="六、广播"><a href="#六、广播" class="headerlink" title="六、广播"></a>六、广播</h2><ul>
+<li><p>if that is <strong>keyed</strong>, then the function is a <code>KeyedBroadcastProcessFunction</code>.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">KeyedBroadcastProcessFunction</span>&lt;KS, IN1, IN2, OUT&gt; &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">processElement</span><span class="params">(IN1 value, ReadOnlyContext ctx, Collector&lt;OUT&gt; out)</span> <span class="keyword">throws</span> Exception;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">processBroadcastElement</span><span class="params">(IN2 value, Context ctx, Collector&lt;OUT&gt; out)</span> <span class="keyword">throws</span> Exception;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onTimer</span><span class="params">(<span class="type">long</span> timestamp, OnTimerContext ctx, Collector&lt;OUT&gt; out)</span> <span class="keyword">throws</span> Exception;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>if it is <strong>non-keyed</strong>, the function is a <code>BroadcastProcessFunction</code>.</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">BroadcastProcessFunction</span>&lt;IN1, IN2, OUT&gt; <span class="keyword">extends</span> <span class="title class_">BaseBroadcastProcessFunction</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">processElement</span><span class="params">(IN1 value, ReadOnlyContext ctx, Collector&lt;OUT&gt; out)</span> <span class="keyword">throws</span> Exception;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">processBroadcastElement</span><span class="params">(IN2 value, Context ctx, Collector&lt;OUT&gt; out)</span> <span class="keyword">throws</span> Exception;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    如上，都包含两个方法，分别是processElement()和 processBroadcastElement()，而这两个方法本身也有不同，非广播流方法（processElement）是一个 ReadOnlyContext而广播流（processBroadcastElement）方法是<strong>read-write access</strong>的，因为flink本身不具备cross-task通信，为了保证所有任务修改广播任务内容状态都会以同样的方式传到接下来每一个的输入元素，仅把broadcast设为可读可写。</p>
+<p>​    除了以上说明还有几点重要的考虑：</p>
+<ul>
+<li><strong>There is no cross-task communication</strong> </li>
+<li><strong>Order of events in Broadcast State may differ across tasks</strong> </li>
+<li><strong>All tasks checkpoint their broadcast state</strong> </li>
+<li><strong>No RocksDB state backend</strong></li>
+</ul>
+<h2 id="七、架构"><a href="#七、架构" class="headerlink" title="七、架构"></a>七、架构</h2><p>主要包含两种类型：</p>
+<p>a <em>JobManager</em> and one or more <em>TaskManagers</em>.</p>
+<img src="/2021/07/18/Flink/processes.svg" class title="processes asset_img">
+
+<ol>
+<li><h3 id="JobManager"><a href="#JobManager" class="headerlink" title="JobManager"></a>JobManager</h3></li>
+<li><h3 id="TaskManagers"><a href="#TaskManagers" class="headerlink" title="TaskManagers"></a>TaskManagers</h3></li>
+</ol>
+<h2 id="八、Task-Slots-？"><a href="#八、Task-Slots-？" class="headerlink" title="八、Task Slots ？"></a>八、Task Slots ？</h2><p>TaskManager</p>
+<p><strong>实践出真知</strong></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ggHmSc86mN3I7r6snjqxWQ">https://mp.weixin.qq.com/s/ggHmSc86mN3I7r6snjqxWQ</a></li>
+<li><a target="_blank" rel="noopener" href="https://nightlies.apache.org/flink/flink-docs-release-1.12/concepts/flink-architecture.html">https://nightlies.apache.org/flink/flink-docs-release-1.12/concepts/flink-architecture.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/apache/flink-training/">https://github.com/apache/flink-training/</a></li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://shizhenqiang.github.io/2021/07/18/Flink/" data-id="cl6nb9f5y000482gp7udi9moi" data-title="Flink 初探" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Flink/" rel="tag">Flink</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/05/17/Airflow/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Airflow
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/07/19/hbase/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">hbase 初探</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flink/" rel="tag">Flink</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MQ/" rel="tag">MQ</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hbase/" rel="tag">hbase</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/machine-learning/" rel="tag">machine learning</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Flink/" style="font-size: 10px;">Flink</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/MQ/" style="font-size: 10px;">MQ</a> <a href="/tags/hbase/" style="font-size: 10px;">hbase</a> <a href="/tags/machine-learning/" style="font-size: 20px;">machine learning</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/06/20/hello-world/">Quick Know</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/17/Airflow/">Airflow</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/18/Flink/">Flink 初探</a>
+          </li>
+        
+          <li>
+            <a href="/2019/07/19/hbase/">hbase 初探</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/19/kafka/">kafka 问题汇总</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 JenKing<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

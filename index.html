@@ -4,17 +4,19 @@
   <meta charset="utf-8">
   
   
-  <title>Shizhenqiang&#39;s Blog</title>
+  <title>Yes is Strong</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Shizhenqiang&#39;s Blog">
+  <meta name="description" content="We used to look up at the sky and wonder at our place in the stars, now we just look down and worry about our place in the dirt.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Yes is Strong">
 <meta property="og:url" content="https://shizhenqiang.github.io/index.html">
-<meta property="og:site_name" content="Shizhenqiang&#39;s Blog">
+<meta property="og:site_name" content="Yes is Strong">
+<meta property="og:description" content="We used to look up at the sky and wonder at our place in the stars, now we just look down and worry about our place in the dirt.">
 <meta property="og:locale" content="en_US">
-<meta property="article:author" content="Shizhenqiang">
+<meta property="article:author" content="JenKing">
 <meta name="twitter:card" content="summary">
   
-    <link rel="alternate" href="/atom.xml" title="Shizhenqiang's Blog" type="application/atom+xml">
+    <link rel="alternate" href="/atom.xml" title="Yes is Strong" type="application/atom+xml">
   
   
     <link rel="shortcut icon" href="/favicon.png">
@@ -42,7 +44,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">Shizhenqiang&#39;s Blog</a>
+        <a href="/" id="logo">Yes is Strong</a>
       </h1>
       
         <h2 id="subtitle-wrap">
@@ -115,7 +117,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shizhenqiang.github.io/2022/06/20/hello-world/" data-id="cl4nhs4ji0008vpgpdtiw7plz" data-title="Quick Know" class="article-share-link">Share</a>
+      <a data-url="https://shizhenqiang.github.io/2022/06/20/hello-world/" data-id="cl6nb9f68000c82gp6abtalk9" data-title="Quick Know" class="article-share-link">Share</a>
       
       
       
@@ -218,7 +220,7 @@
 
 <p>其中，reset_dag_run如果设置，那么他会提示是是否清除之前的DAG运行实例，重新运行。而rerun_failed_tasks则会自动执行在这个时间范围内的错误任务。</p>
 <h2 id="五、有何依赖？"><a href="#五、有何依赖？" class="headerlink" title="五、有何依赖？"></a>五、有何依赖？</h2><p>airflow安装：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">AIRFLOW_VERSION=2.3.2</span><br><span class="line">PYTHON_VERSION=&quot;$(python --version | cut -d &quot; &quot; -f 2 | cut -d &quot;.&quot; -f 1-2)&quot;</span><br><span class="line">CONSTRAINT_URL=&quot;https://raw.githubusercontent.com/apache/airflow/constraints-$&#123;AIRFLOW_VERSION&#125;/constraints-$&#123;PYTHON_VERSION&#125;.txt&quot;</span><br><span class="line">pip install &quot;apache-airflow[async,postgres,google]==$&#123;AIRFLOW_VERSION&#125;&quot; --constraint &quot;$&#123;CONSTRAINT_URL&#125;&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable constant_">AIRFLOW_VERSION</span>=<span class="number">2.3</span><span class="number">.2</span></span><br><span class="line"><span class="variable constant_">PYTHON_VERSION</span>=<span class="string">&quot;$(python --version | cut -d &quot;</span> <span class="string">&quot; -f 2 | cut -d &quot;</span>.<span class="string">&quot; -f 1-2)&quot;</span></span><br><span class="line"><span class="variable constant_">CONSTRAINT_URL</span>=<span class="string">&quot;https://raw.githubusercontent.com/apache/airflow/constraints-$&#123;AIRFLOW_VERSION&#125;/constraints-$&#123;PYTHON_VERSION&#125;.txt&quot;</span></span><br><span class="line">pip install <span class="string">&quot;apache-airflow[async,postgres,google]==$&#123;AIRFLOW_VERSION&#125;&quot;</span> --constraint <span class="string">&quot;$&#123;CONSTRAINT_URL&#125;&quot;</span></span><br></pre></td></tr></table></figure>
 
 <p>你可以从文档中查看安装步骤，比如利用pypip安装，升级。<strong>注意版本</strong>。</p>
 <p>mysql安装</p>
@@ -234,10 +236,233 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shizhenqiang.github.io/2022/05/17/Airflow/" data-id="cl4nhs4jd0001vpgp6gfz1ovv" data-title="Airflow" class="article-share-link">Share</a>
+      <a data-url="https://shizhenqiang.github.io/2022/05/17/Airflow/" data-id="cl6nb9f5p000182gpdb6z1f3n" data-title="Airflow" class="article-share-link">Share</a>
       
       
       
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-Flink" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/07/18/Flink/" class="article-date">
+  <time class="dt-published" datetime="2021-07-18T07:36:12.000Z" itemprop="datePublished">2021-07-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2021/07/18/Flink/">Flink 初探</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="一、什么是Flink？"><a href="#一、什么是Flink？" class="headerlink" title="一、什么是Flink？"></a>一、什么是Flink？</h2><p>Apache Flink 是一个框架和分布式处理引擎，用于在无边界和有边界数据流上进行有状态的计算。Flink 能在所有常见集群环境中运行，并能以内存速度和任意规模进行计算。</p>
+<blockquote>
+<p><strong>Apache Flink</strong> is a framework and distributed processing engine for stateful computations over <em>unbounded</em> and <em>bounded</em> data streams. Flink has been designed to run in <em>all common cluster environments</em> perform computations at <em>in-memory</em> speed and at <em>any scale</em>.</p>
+</blockquote>
+<h2 id="二、-时间的概念"><a href="#二、-时间的概念" class="headerlink" title="二、 时间的概念"></a>二、 时间的概念</h2><p> <strong>Processing time:</strong> 执行各自操作的系统时间</p>
+<p><strong>Event time:</strong> 各自事件的时间，发生在推送机器上的时间，在进入flink前的汇总信息的时间。使用时，必须指定如何生成<em>Event Time Watermarks</em>。</p>
+<img src="/2021/07/18/Flink/event_processing_time.svg" class title="event processing time asset_img">
+
+<h2 id="三、状态"><a href="#三、状态" class="headerlink" title="三、状态"></a>三、状态</h2><p>​      &#x2F;* TODO *&#x2F;</p>
+<h2 id="四、窗口的类型"><a href="#四、窗口的类型" class="headerlink" title="四、窗口的类型"></a>四、窗口的类型</h2><ol>
+<li><strong>Keyed Windows</strong></li>
+<li><strong>Non-Keyed Windows</strong></li>
+</ol>
+<ul>
+<li>滑动窗口</li>
+<li>滚动窗口</li>
+<li>全局窗口</li>
+<li>会话窗口</li>
+</ul>
+<h2 id="五、定时器"><a href="#五、定时器" class="headerlink" title="五、定时器"></a>五、定时器</h2><p><a target="_blank" rel="noopener" href="https://github.com/apache/flink-training/blob/master/long-ride-alerts/README_zh.md">练习: <code>ProcessFunction</code> 及定时器（长车程警报）</a></p>
+<p>尤其带状态的定时器一定要注意：</p>
+<ol>
+<li>状态什么时候clear？</li>
+<li>定时器什么时候delete？</li>
+</ol>
+<h3 id="底线"><a href="#底线" class="headerlink" title="底线"></a>底线</h3><p>不管如何聪明地处理保持什么样的状态，以及选择保持多长时间，我们最终都应该清除它——否则状态将以无限的方式增长。 如果丢失了这些信息，我们将冒着延迟事件导致错误或重复结果的风险。</p>
+<p>在永久地保持状态与在事件延迟时偶尔出错之间的权衡是有状态流处理中固有的挑战。</p>
+<h3 id="如果你想走得更远"><a href="#如果你想走得更远" class="headerlink" title="如果你想走得更远"></a>如果你想走得更远</h3><p>对于下列的每一项，添加测试以检查所需的行为。</p>
+<ul>
+<li>扩展解决方案，使其永远不会泄漏状态。</li>
+<li>定义事件丢失的含义，检测丢失的 START 和 END 事件，并将一些通知发送到旁路输出。</li>
+</ul>
+<h2 id="六、广播"><a href="#六、广播" class="headerlink" title="六、广播"></a>六、广播</h2><ul>
+<li><p>if that is <strong>keyed</strong>, then the function is a <code>KeyedBroadcastProcessFunction</code>.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">KeyedBroadcastProcessFunction</span>&lt;KS, IN1, IN2, OUT&gt; &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">processElement</span><span class="params">(IN1 value, ReadOnlyContext ctx, Collector&lt;OUT&gt; out)</span> <span class="keyword">throws</span> Exception;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">processBroadcastElement</span><span class="params">(IN2 value, Context ctx, Collector&lt;OUT&gt; out)</span> <span class="keyword">throws</span> Exception;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onTimer</span><span class="params">(<span class="type">long</span> timestamp, OnTimerContext ctx, Collector&lt;OUT&gt; out)</span> <span class="keyword">throws</span> Exception;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>if it is <strong>non-keyed</strong>, the function is a <code>BroadcastProcessFunction</code>.</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">BroadcastProcessFunction</span>&lt;IN1, IN2, OUT&gt; <span class="keyword">extends</span> <span class="title class_">BaseBroadcastProcessFunction</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">processElement</span><span class="params">(IN1 value, ReadOnlyContext ctx, Collector&lt;OUT&gt; out)</span> <span class="keyword">throws</span> Exception;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">processBroadcastElement</span><span class="params">(IN2 value, Context ctx, Collector&lt;OUT&gt; out)</span> <span class="keyword">throws</span> Exception;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    如上，都包含两个方法，分别是processElement()和 processBroadcastElement()，而这两个方法本身也有不同，非广播流方法（processElement）是一个 ReadOnlyContext而广播流（processBroadcastElement）方法是<strong>read-write access</strong>的，因为flink本身不具备cross-task通信，为了保证所有任务修改广播任务内容状态都会以同样的方式传到接下来每一个的输入元素，仅把broadcast设为可读可写。</p>
+<p>​    除了以上说明还有几点重要的考虑：</p>
+<ul>
+<li><strong>There is no cross-task communication</strong> </li>
+<li><strong>Order of events in Broadcast State may differ across tasks</strong> </li>
+<li><strong>All tasks checkpoint their broadcast state</strong> </li>
+<li><strong>No RocksDB state backend</strong></li>
+</ul>
+<h2 id="七、架构"><a href="#七、架构" class="headerlink" title="七、架构"></a>七、架构</h2><p>主要包含两种类型：</p>
+<p>a <em>JobManager</em> and one or more <em>TaskManagers</em>.</p>
+<img src="/2021/07/18/Flink/processes.svg" class title="processes asset_img">
+
+<ol>
+<li><h3 id="JobManager"><a href="#JobManager" class="headerlink" title="JobManager"></a>JobManager</h3></li>
+<li><h3 id="TaskManagers"><a href="#TaskManagers" class="headerlink" title="TaskManagers"></a>TaskManagers</h3></li>
+</ol>
+<h2 id="八、Task-Slots-？"><a href="#八、Task-Slots-？" class="headerlink" title="八、Task Slots ？"></a>八、Task Slots ？</h2><p>TaskManager</p>
+<p><strong>实践出真知</strong></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ggHmSc86mN3I7r6snjqxWQ">https://mp.weixin.qq.com/s/ggHmSc86mN3I7r6snjqxWQ</a></li>
+<li><a target="_blank" rel="noopener" href="https://nightlies.apache.org/flink/flink-docs-release-1.12/concepts/flink-architecture.html">https://nightlies.apache.org/flink/flink-docs-release-1.12/concepts/flink-architecture.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/apache/flink-training/">https://github.com/apache/flink-training/</a></li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://shizhenqiang.github.io/2021/07/18/Flink/" data-id="cl6nb9f5y000482gp7udi9moi" data-title="Flink 初探" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Flink/" rel="tag">Flink</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-hbase" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/07/19/hbase/" class="article-date">
+  <time class="dt-published" datetime="2019-07-19T03:02:56.000Z" itemprop="datePublished">2019-07-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/07/19/hbase/">hbase 初探</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>HBase基于LSM树模型实现，所有的数据写入操作首先会顺序写入日志HLog，再写入MemStore，当MemStore中数据大小超过阈值之后再将这些数据批量写入磁盘，生成一个新的HFile文件。LSM树架构有如下几个非常明显的优势：</p>
+<ul>
+<li>这种写入方式将一次随机IO写入转换成一个顺序IO写入（HLog顺序写入）加上一次内存写入（MemStore写入），使得<strong>写入性能</strong>得到极大提升。</li>
+<li>HFile中KeyValue数据需要按照Key排序，排序之后可以在文件级别根据有序的Key建立索引树，极大提升数据<strong>读取性能</strong>。然而HDFS本身只允许顺序读写，不能更新，因此需要数据在落盘生成HFile之前就完成排序工作，<strong>MemStore就是KeyValue数据排序的实际执行者。</strong></li>
+<li>MemStore作为一个缓存级的存储组件，总是缓存着最近写入的数据。</li>
+<li>在数据写入HFile之前，可以在内存中对KeyValue数据进行很多更高级的优化。比如，MemStore在将数据写入HFile之前实际上可以丢弃老版本数据，仅保留最新版本数据。</li>
+</ul>
+<h2 id="RegionServer"><a href="#RegionServer" class="headerlink" title="RegionServer"></a>RegionServer</h2><img src="/2019/07/19/hbase/2022-08-10_11.08.43.png" class title="HBASE WRITE">
+
+<p>一个RegionServer由一个（或多个）HLog、一个BlockCache以及多个Region组成。其中，HLog用来保证数据写入的可靠性；BlockCache可以将数据块缓存在内存中以提升数据读取性能；Region是HBase中数据表的一个数据分片，一个RegionServer上通常会负责多个Region的数据读写。一个Region由多个Store组成，每个Store存放对应列簇的数据，比如一个表中有两个列簇，这个表的所有Region就都会包含两个Store。每个Store包含一个MemStore和多个HFile，用户数据写入时会将对应列簇数据写入相应的MemStore，一旦写入数据的内存大小超过设定阈值，系统就会将MemStore中的数据落盘形成HFile文件。HFile存放在HDFS上，是一种定制化格式的数据存储文件，方便用户进行数据读取。</p>
+<h2 id="一、写"><a href="#一、写" class="headerlink" title="一、写"></a>一、写</h2><img src="/2019/07/19/hbase/image-20220810110112338.png" class title="HBASE WRITE">
+
+<ol>
+<li>客户端处理阶段：客户端将用户的写入请求进行预处理，并根据集群<strong>元数据定位</strong>写入数据所在的RegionServer，将请求发送给对应的RegionServer。</li>
+<li>Region写入阶段：RegionServer接收到写入请求之后将数据解析出来，首先写入WAL，再写入对应Region列簇的MemStore。</li>
+<li>MemStore Flush阶段（异步flush，一个跳表满了之后，另一个跳表接收数据，之前的那个跳表异步flush）：当Region中MemStore容量超过一定阈值，系统会异步执行f lush操作，将内存中的数据写入文件，形成HFile。</li>
+</ol>
+<h3 id="BulkLoad是减少了哪一步？"><a href="#BulkLoad是减少了哪一步？" class="headerlink" title="BulkLoad是减少了哪一步？"></a>BulkLoad是减少了哪一步？</h3><p>BulkLoad首先使用MapReduce将待写入集群数据转换为HFile文件，再直接将这些HFile文件加载到在线集群中。显然，BulkLoad方案没有将写请求发送给RegionServer处理。</p>
+<h2 id="二、读"><a href="#二、读" class="headerlink" title="二、读"></a>二、读</h2><p>HBase读数据的流程更加复杂，主要基于两个方面的原因：一是因为HBase一次范围查询可能会涉及多个Region、多块缓存甚至多个数据存储文件；二是因为HBase中更新操作以及删除操作的实现都很简单，更新操作并没有更新原有数据，而是使用时间戳属性实现了多版本；删除操作也并没有真正删除原有数据，只是插入了一条标记为”deleted”标签的数据，而真正的数据删除发生在系统异步执行Major Compact的时候。很显然，这种实现思路大大简化了数据更新、删除流程，但是对于数据读取来说却意味着套上了层层枷锁：读取过程需要根据版本进行过滤，对已经标记删除的数据也要进行过滤。</p>
+<p>读流程从头到尾可以分为如下4个步骤：</p>
+<p>Client-Server读取交互逻辑 &#x3D;&gt; Server端Scan框架体系 &#x3D;&gt; 过滤淘汰不符合查询条件的HFile &#x3D;&gt; 从HFile中读取待查找Key</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>1、书名：HBase原理与实践作者：胡争，范欣欣出版社：机械工业出版社出版时间：2019-08ISBN：9787111634959</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://shizhenqiang.github.io/2019/07/19/hbase/" data-id="cl6nb9f65000982gpdv5bht7a" data-title="hbase 初探" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hbase/" rel="tag">hbase</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-kafka" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/05/19/kafka/" class="article-date">
+  <time class="dt-published" datetime="2019-05-19T03:02:36.000Z" itemprop="datePublished">2019-05-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/05/19/kafka/">kafka 问题汇总</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="一、为什么用MQ？"><a href="#一、为什么用MQ？" class="headerlink" title="一、为什么用MQ？"></a>一、为什么用MQ？</h2><ul>
+<li>业务场景</li>
+<li>解耦、异步、削峰</li>
+</ul>
+<h2 id="二、leader？"><a href="#二、leader？" class="headerlink" title="二、leader？"></a>二、leader？</h2><p>kafka集群的leader</p>
+<p>每一个分区都有一个leader，leader负责读写，</p>
+<h2 id="三、重复数据？"><a href="#三、重复数据？" class="headerlink" title="三、重复数据？"></a>三、重复数据？</h2><p>offset会定期自动提交给kafkabroker，告诉kafka我已经消费了，但是有可能重启或者kill掉后，offset来不及提交，导致下次消费的时候会重复消费未提交offset的数据。</p>
+<p>具体如何去重，还要根据业务场景具体分析。</p>
+<h2 id="四、数据丢失？"><a href="#四、数据丢失？" class="headerlink" title="四、数据丢失？"></a>四、数据丢失？</h2><p>防止丢数的设置：</p>
+<p>生产者如果设置acks&#x3D;all 并且设置重试次数，就不会丢失。</p>
+<p>消费者要设置副本，防止leader宕机后还有一个follower。</p>
+<h2 id="五、消息顺序？"><a href="#五、消息顺序？" class="headerlink" title="五、消息顺序？"></a>五、消息顺序？</h2><p>如果按照key去划分固定一个partition的话，是顺序性的。否则如果划分到多个个partition就不会具有顺序性。</p>
+<p>消费者如果多线程处理，也有可能让消息顺序混乱。那么一个方案就是建立多个内存队列，按照key去固定的划分到内存队列面，然后一个线程处理一个内存队列。增加处理速度。</p>
+<p>参考</p>
+<p>1、<a target="_blank" rel="noopener" href="https://github.com/doocs/advanced-java?utm_source=gold_browser_extension">https://github.com/doocs/advanced-java?utm_source=gold_browser_extension</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://shizhenqiang.github.io/2019/05/19/kafka/" data-id="cl6nb9f6a000e82gp54tt3rrz" data-title="kafka 问题汇总" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MQ/" rel="tag">MQ</a></li></ul>
+
     </footer>
   </div>
   
@@ -260,7 +485,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2018/07/16/About-hadoop/">About hadoop</a>
+      <a class="p-name article-title" href="/2018/07/16/About-hadoop/">hadoop 浅谈</a>
     </h1>
   
 
@@ -292,7 +517,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shizhenqiang.github.io/2018/07/16/About-hadoop/" data-id="cl4nhs4j90000vpgp8ezr5xot" data-title="About hadoop" class="article-share-link">Share</a>
+      <a data-url="https://shizhenqiang.github.io/2018/07/16/About-hadoop/" data-id="cl6nb9f5a000082gp5odd2xcl" data-title="hadoop 浅谈" class="article-share-link">Share</a>
       
       
       
@@ -349,7 +574,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shizhenqiang.github.io/2018/03/20/Random-Forests/" data-id="cl4nhs4jh0005vpgpdpml91y6" data-title="Random Forests" class="article-share-link">Share</a>
+      <a data-url="https://shizhenqiang.github.io/2018/03/20/Random-Forests/" data-id="cl6nb9f63000882gp6jzybh15" data-title="Random Forests" class="article-share-link">Share</a>
       
       
       
@@ -531,7 +756,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shizhenqiang.github.io/2018/01/09/Apriori/" data-id="cl4nhs4jg0003vpgp1h6s8v89" data-title="Apriori" class="article-share-link">Share</a>
+      <a data-url="https://shizhenqiang.github.io/2018/01/09/Apriori/" data-id="cl6nb9f5v000382gpac83139q" data-title="Apriori" class="article-share-link">Share</a>
       
       
       
@@ -586,7 +811,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shizhenqiang.github.io/2017/07/10/GBDT/" data-id="cl4nhs4jg0004vpgp11fz6zay" data-title="GBDT" class="article-share-link">Share</a>
+      <a data-url="https://shizhenqiang.github.io/2017/07/10/GBDT/" data-id="cl6nb9f60000582gp08d8fj46" data-title="GBDT" class="article-share-link">Share</a>
       
       
       
@@ -613,7 +838,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/machine-learning/" rel="tag">machine learning</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flink/" rel="tag">Flink</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MQ/" rel="tag">MQ</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hbase/" rel="tag">hbase</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/machine-learning/" rel="tag">machine learning</a></li></ul>
     </div>
   </div>
 
@@ -623,7 +848,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/machine-learning/" style="font-size: 20px;">machine learning</a>
+      <a href="/tags/Flink/" style="font-size: 10px;">Flink</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/MQ/" style="font-size: 10px;">MQ</a> <a href="/tags/hbase/" style="font-size: 10px;">hbase</a> <a href="/tags/machine-learning/" style="font-size: 20px;">machine learning</a>
     </div>
   </div>
 
@@ -632,7 +857,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li></ul>
     </div>
   </div>
 
@@ -653,15 +878,15 @@
           </li>
         
           <li>
-            <a href="/2018/07/16/About-hadoop/">About hadoop</a>
+            <a href="/2021/07/18/Flink/">Flink 初探</a>
           </li>
         
           <li>
-            <a href="/2018/03/20/Random-Forests/">Random Forests</a>
+            <a href="/2019/07/19/hbase/">hbase 初探</a>
           </li>
         
           <li>
-            <a href="/2018/01/09/Apriori/">Apriori</a>
+            <a href="/2019/05/19/kafka/">kafka 问题汇总</a>
           </li>
         
       </ul>
@@ -677,7 +902,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       
-      &copy; 2022 Shizhenqiang<br>
+      &copy; 2022 JenKing<br>
       Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

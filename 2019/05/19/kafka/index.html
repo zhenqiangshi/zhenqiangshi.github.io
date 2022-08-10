@@ -4,23 +4,20 @@
   <meta charset="utf-8">
   
   
-  <title>GBDT | Yes is Strong</title>
+  <title>kafka 问题汇总 | Yes is Strong</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="机器学习——Gradient Boost Decision Tree(&amp;Treelink) greedy_function_approximation_a_gradient_boosting_machine 简书上很好的一个关于GBDT的例子 GBDT一、Regression Decision Tree​    回归树总体流程类似于分类树，区别在于，回归树的每一个节点都会得一个预测值，以年">
+  <meta name="description" content="一、为什么用MQ？ 业务场景 解耦、异步、削峰  二、leader？kafka集群的leader 每一个分区都有一个leader，leader负责读写， 三、重复数据？offset会定期自动提交给kafkabroker，告诉kafka我已经消费了，但是有可能重启或者kill掉后，offset来不及提交，导致下次消费的时候会重复消费未提交offset的数据。 具体如何去重，还要根据业务场景具体分析。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="GBDT">
-<meta property="og:url" content="https://shizhenqiang.github.io/2017/07/10/GBDT/index.html">
+<meta property="og:title" content="kafka 问题汇总">
+<meta property="og:url" content="https://shizhenqiang.github.io/2019/05/19/kafka/index.html">
 <meta property="og:site_name" content="Yes is Strong">
-<meta property="og:description" content="机器学习——Gradient Boost Decision Tree(&amp;Treelink) greedy_function_approximation_a_gradient_boosting_machine 简书上很好的一个关于GBDT的例子 GBDT一、Regression Decision Tree​    回归树总体流程类似于分类树，区别在于，回归树的每一个节点都会得一个预测值，以年">
+<meta property="og:description" content="一、为什么用MQ？ 业务场景 解耦、异步、削峰  二、leader？kafka集群的leader 每一个分区都有一个leader，leader负责读写， 三、重复数据？offset会定期自动提交给kafkabroker，告诉kafka我已经消费了，但是有可能重启或者kill掉后，offset来不及提交，导致下次消费的时候会重复消费未提交offset的数据。 具体如何去重，还要根据业务场景具体分析。">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://shizhenqiang.github.io/2017/07/10/GBDT/1241">
-<meta property="og:image" content="https://shizhenqiang.github.io/2017/07/10/GBDT/1240">
-<meta property="article:published_time" content="2017-07-10T08:22:54.000Z">
-<meta property="article:modified_time" content="2022-06-14T03:10:29.932Z">
+<meta property="article:published_time" content="2019-05-19T03:02:36.000Z">
+<meta property="article:modified_time" content="2022-07-22T01:15:28.286Z">
 <meta property="article:author" content="JenKing">
-<meta property="article:tag" content="machine learning">
+<meta property="article:tag" content="MQ">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://shizhenqiang.github.io/2017/07/10/GBDT/1241">
   
     <link rel="alternate" href="/atom.xml" title="Yes is Strong" type="application/atom+xml">
   
@@ -81,10 +78,10 @@
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-GBDT" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+        <section id="main"><article id="post-kafka" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2017/07/10/GBDT/" class="article-date">
-  <time class="dt-published" datetime="2017-07-10T08:22:54.000Z" itemprop="datePublished">2017-07-10</time>
+    <a href="/2019/05/19/kafka/" class="article-date">
+  <time class="dt-published" datetime="2019-05-19T03:02:36.000Z" itemprop="datePublished">2019-05-19</time>
 </a>
     
   </div>
@@ -95,7 +92,7 @@
         
   
     <h1 class="p-name article-title" itemprop="headline name">
-      GBDT
+      kafka 问题汇总
     </h1>
   
 
@@ -103,30 +100,30 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p><a target="_blank" rel="noopener" href="http://blog.csdn.net/yangtrees/article/details/7506052">机器学习——Gradient Boost Decision Tree(&amp;Treelink)</a></p>
-<p><a target="_blank" rel="noopener" href="http://wenku.baidu.com/link?url=dmoD5irL8vAV5NnBmoz69M4J_tm-EZg8yGIcfEkTp_ApblW52F6LEv9GdJzusCCaTafPX5HxDObAtwJH77NmxOSp106W-kHCffX8KwC_YG7">greedy_function_approximation_a_gradient_boosting_machine</a></p>
-<p><a target="_blank" rel="noopener" href="http://www.jianshu.com/p/005a4e6ac775">简书上很好的一个关于GBDT的例子</a></p>
-<h1 id="GBDT"><a href="#GBDT" class="headerlink" title="GBDT"></a>GBDT</h1><h2 id="一、Regression-Decision-Tree"><a href="#一、Regression-Decision-Tree" class="headerlink" title="一、Regression Decision Tree"></a>一、Regression Decision Tree</h2><p>​    回归树总体流程类似于分类树，区别在于，回归树的每一个节点都会得一个预测值，以年龄为例，该预测值等于属于这个节点的所有人年龄的平均值。分枝时穷举每一个feature的每个阈值找最好的分割点，但<strong>衡量最好的标准不再是最大熵，而是最小化平方误差</strong>。也就是被预测出错的人数越多，错的越离谱，平方误差就越大，通过最小化平方误差能够找到最可靠的分枝依据。分枝直到每个叶子节点上人的年龄都唯一或者达到预设的终止条件(如叶子个数上限)，若最终叶子节点上人的年龄不唯一，则以该节点上所有人的<em><strong>平均</strong></em>年龄做为该叶子节点的预测年龄。</p>
-<h2 id="二、Boosting-Decision-Tree"><a href="#二、Boosting-Decision-Tree" class="headerlink" title="二、Boosting Decision Tree"></a>二、Boosting Decision Tree</h2><p>​    提升树是迭代多颗回归树来共同决策。每一棵决策树学习的是之前所有树的结论和残差(采用平方误差损失函数时)，拟合得到一个当前的残差回归树。残差的意义：<strong>残差 &#x3D; 真实值 - 预测值</strong>；提升树，即整个迭代过程生成的回归树的累加。预测值等于所有树值的累加。</p>
-<img src="/2017/07/10/GBDT/1241" class title="model complex asset_img">
-
-
-
-<p>​                                                                                                           提升树算法</p>
-<h2 id="三、Gradient-Boosting-Decision-Tree"><a href="#三、Gradient-Boosting-Decision-Tree" class="headerlink" title="三、Gradient Boosting Decision Tree"></a>三、Gradient Boosting Decision Tree</h2><p>提升树利用加法模型和前向分类算法实现学习的优化过程。当损失函数平方损失和指数损失函数时，每一步的优化很简单，如平方损失函数学习残差回归树。</p>
-<p>但对于一般的损失函数，往往每一步优化没那么容易，如上图中的绝对值损失函数和Huber损失函数。针对这一问题，Freidman提出了梯度提升算法： 利用最速下降的近似方法，即利用损失函数的负梯度在当前模型的值，作为回归问题中提升树算法的残差的近似值，拟合一个回归树。</p>
-<img src="/2017/07/10/GBDT/1240" class title="model complex asset_img">
-
-<p>​    当模型越复杂时，拟合的程度就越高，模型的训练偏差就越小。但此时如果换一组数据可能模型的变化就会很大，即模型的方差很大。所以模型过于复杂的时候会导致过拟合。<br>  当模型越简单时，即使我们再换一组数据，最后得出的学习器和之前的学习器的差别就不那么大，模型的方差很小。还是因为模型简单，所以偏差会很大。</p>
+        <h2 id="一、为什么用MQ？"><a href="#一、为什么用MQ？" class="headerlink" title="一、为什么用MQ？"></a>一、为什么用MQ？</h2><ul>
+<li>业务场景</li>
+<li>解耦、异步、削峰</li>
+</ul>
+<h2 id="二、leader？"><a href="#二、leader？" class="headerlink" title="二、leader？"></a>二、leader？</h2><p>kafka集群的leader</p>
+<p>每一个分区都有一个leader，leader负责读写，</p>
+<h2 id="三、重复数据？"><a href="#三、重复数据？" class="headerlink" title="三、重复数据？"></a>三、重复数据？</h2><p>offset会定期自动提交给kafkabroker，告诉kafka我已经消费了，但是有可能重启或者kill掉后，offset来不及提交，导致下次消费的时候会重复消费未提交offset的数据。</p>
+<p>具体如何去重，还要根据业务场景具体分析。</p>
+<h2 id="四、数据丢失？"><a href="#四、数据丢失？" class="headerlink" title="四、数据丢失？"></a>四、数据丢失？</h2><p>防止丢数的设置：</p>
+<p>生产者如果设置acks&#x3D;all 并且设置重试次数，就不会丢失。</p>
+<p>消费者要设置副本，防止leader宕机后还有一个follower。</p>
+<h2 id="五、消息顺序？"><a href="#五、消息顺序？" class="headerlink" title="五、消息顺序？"></a>五、消息顺序？</h2><p>如果按照key去划分固定一个partition的话，是顺序性的。否则如果划分到多个个partition就不会具有顺序性。</p>
+<p>消费者如果多线程处理，也有可能让消息顺序混乱。那么一个方案就是建立多个内存队列，按照key去固定的划分到内存队列面，然后一个线程处理一个内存队列。增加处理速度。</p>
+<p>参考</p>
+<p>1、<a target="_blank" rel="noopener" href="https://github.com/doocs/advanced-java?utm_source=gold_browser_extension">https://github.com/doocs/advanced-java?utm_source=gold_browser_extension</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shizhenqiang.github.io/2017/07/10/GBDT/" data-id="cl6nb9f60000582gp08d8fj46" data-title="GBDT" class="article-share-link">Share</a>
+      <a data-url="https://shizhenqiang.github.io/2019/05/19/kafka/" data-id="cl6nb9f6a000e82gp54tt3rrz" data-title="kafka 问题汇总" class="article-share-link">Share</a>
       
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/machine-learning/" rel="tag">machine learning</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MQ/" rel="tag">MQ</a></li></ul>
 
     </footer>
   </div>
@@ -134,15 +131,20 @@
     
 <nav id="article-nav">
   
-    <a href="/2018/01/09/Apriori/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2019/07/19/hbase/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          Apriori
+          hbase 初探
         
       </div>
     </a>
   
+  
+    <a href="/2018/07/16/About-hadoop/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">hadoop 浅谈</div>
+    </a>
   
 </nav>
 
