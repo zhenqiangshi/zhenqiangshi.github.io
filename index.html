@@ -117,7 +117,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shizhenqiang.github.io/2022/06/20/hello-world/" data-id="cl6ncvk4v000cv6gp6c5rhhmg" data-title="Quick Know" class="article-share-link">Share</a>
+      <a data-url="https://shizhenqiang.github.io/2022/06/20/hello-world/" data-id="cl6ncysj6000c6xgpfhjcf0dc" data-title="Quick Know" class="article-share-link">Share</a>
       
       
       
@@ -236,7 +236,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shizhenqiang.github.io/2022/05/17/Airflow/" data-id="cl6ncvk4n0001v6gp7u7e2gtg" data-title="Airflow" class="article-share-link">Share</a>
+      <a data-url="https://shizhenqiang.github.io/2022/05/17/Airflow/" data-id="cl6ncysiz00016xgpcx7h1t08" data-title="Airflow" class="article-share-link">Share</a>
       
       
       
@@ -340,7 +340,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shizhenqiang.github.io/2021/07/18/Flink/" data-id="cl6ncvk4r0004v6gp7kz088qg" data-title="Flink 初探" class="article-share-link">Share</a>
+      <a data-url="https://shizhenqiang.github.io/2021/07/18/Flink/" data-id="cl6ncysj300046xgp60i9ascd" data-title="Flink 初探" class="article-share-link">Share</a>
       
       
       
@@ -402,7 +402,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shizhenqiang.github.io/2019/07/19/hbase/" data-id="cl6ncvk4u0009v6gp6p3p8ii2" data-title="hbase 初探" class="article-share-link">Share</a>
+      <a data-url="https://shizhenqiang.github.io/2019/07/19/hbase/" data-id="cl6ncysj500096xgp0wwphk13" data-title="hbase 初探" class="article-share-link">Share</a>
       
       
       
@@ -457,7 +457,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shizhenqiang.github.io/2019/05/19/kafka/" data-id="cl6ncvk4w000ev6gp74409flh" data-title="kafka 问题汇总" class="article-share-link">Share</a>
+      <a data-url="https://shizhenqiang.github.io/2019/05/19/kafka/" data-id="cl6ncysj7000e6xgpfaun0nys" data-title="kafka 问题汇总" class="article-share-link">Share</a>
       
       
       
@@ -471,361 +471,12 @@
 
 
   
-    <article id="post-About-hadoop" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2018/07/16/About-hadoop/" class="article-date">
-  <time class="dt-published" datetime="2018-07-16T09:06:57.000Z" itemprop="datePublished">2018-07-16</time>
-</a>
+
+
+  <nav id="page-nav">
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2018/07/16/About-hadoop/">hadoop 浅谈</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="hadoop浅谈"><a href="#hadoop浅谈" class="headerlink" title="hadoop浅谈"></a>hadoop浅谈</h1><h2 id="一、什么是hadoop"><a href="#一、什么是hadoop" class="headerlink" title="一、什么是hadoop"></a><strong>一、什么是hadoop</strong></h2><p>​    hadoop是一个开源的分布式计算和存储的框架。</p>
-<h2 id="二、什么是mapreduce？"><a href="#二、什么是mapreduce？" class="headerlink" title="二、什么是mapreduce？"></a><strong>二、什么是mapreduce？</strong></h2><p>​    从总体上来讲，MapReduce主要包括三个阶段，map阶段， shuffle阶段， reduce阶段，如果大家对我前面讲的HDFS还有印象，应该能知道split这个过程，其实是HDFS帮我们做了，下面我从map的输入开始，剖析一下整个MapReduce的过程<img src="/2018/07/16/About-hadoop/529698-20180708160630717-1928465583.png" class title="MAPREDUCE asset_img"></p>
-<p>   Map 函数拿到数据以后，会根据用户自定义的逻辑对数据进行处理，然后产生输出。</p>
-<h2 id="三、什么是shuttle？"><a href="#三、什么是shuttle？" class="headerlink" title="三、什么是shuttle？"></a><strong>三、什么是shuttle？</strong></h2><p>​    <strong>Shuffle：MapReduce的“心脏”，是奇迹发生的地方。</strong> </p>
-<img src="/2018/07/16/About-hadoop/529698-20180708163222772-1584131492.png" class title="shuttle asset_img">     
-
-<p>在整个MapReduce的生命周期中，纯粹的Map阶段和过程的reduce过程，其实只占了很小的一部分，整个MapReduce的核心其实是Shuffle过程，也被称为奇迹发生的地方。之前那张Word Count过程图对shuffle这个过程体现的并不是很明显，因为那张图主要是想让大家用Word Count这个实际的列子，对MapReduce整个过程能有一个感性的认识，真正的MapReduce过程，应该像这张图所展示的一样，从map task输出到reduce task输入的这段过程都是shuffle，用一句话概括一下Shuffle做了什么事情就是，把map输出端的结果有序的传递给reduce的输入端。 从上面这个图可以看出，整个shuffle阶段，横跨了Map过程与Reduce过程，所以shuffle阶段又可分为map阶段的shuffle， map-shuffle 和 reduce 阶段的shuffle， reduce-shuffle， 在map-shuffle阶段主要完成了spill这个过程，在reduce-shuffle阶段，主要完成了copy和sort这个过程。 下面我们来详细的看一下shuffle阶段是如何通过spill，copy，sort这个三个过程，把map输出端的结果有序的传递给reduce的输入端。 先来看map-shuffle 阶段的 spill 过程 Spill过程简单来说就是把Map任务输出的中间结果写到本地磁盘上。以后供Reduce调用，做为Reduce端的输入。 但是怎么把中间结果写到磁盘上就比较有讲究了，不是随随便便一写就完事儿了，因为写磁盘的过程中既要考虑到写入的性能，因为不能出一个结果就写一次磁盘，出一个结果就写一次磁盘，这样效率会很低，又要考虑到为后续传递给reduce做准备。因为在实际使用中，一般会不止一个Reduce，而一个Map的输出，最后通常会传递给多个Reduce，如果我们能事先对Map的输出进行分区（这里讲一下partition的概念），或者说的更通俗一点就是把将来要传递给同一个reduce数据都有序的放在一起，这样就可以大大提升接下来从Map输出端拷贝输出结果到Reduce输入端的效率， 纯粹的map和存粹的reduce都只是很小的一部分，在map产生输出的时候，其实就已经的进入到了MapReduce的核心阶段，整个shuffle阶段由spill过程，copy过程，sort过程组成。</p>
-<h2 id="四、-什么是YARN？"><a href="#四、-什么是YARN？" class="headerlink" title="四、 什么是YARN？"></a><strong>四、 什么是YARN？</strong></h2><p>​    Yarn的定义是 Yet Another Resource Negotiator，另一种资源协调者。 因为在Hadoop刚出来的时候，那时候还没有Yarn，Hadoop的工作调度都是由JobTracker和TaskTracker来做的，但是JobTracker和TaskTracker在设计上存在缺陷，主要问题是，单点压力过大最多只能支持近4000台机器，而且容易造成单点故障问题，所以慢慢的被弃用了，后来就出现了Yarn，Yarn在设计上更具有一般性，实际上MapReduce只是Yarn上的一个应用而已，Yarn上不但能支撑MapReduce，还能支撑自打出生以来就火的不要不要的内存计算并行计算框架Saprk，流式计算框架Storm 等等 … Yarn 由五个独立的实体组成。</p>
-<ul>
-<li><p>​    <strong>Client：用来提交（ MapReduce ）Job；</strong></p>
-</li>
-<li><p>​    <strong>ResourcesManager：用来管理协调分配集群中的资源；</strong></p>
-</li>
-<li><p>​    <strong>NodeManager：用来启动和监控本地计算机资源单位Container的利用情况；</strong></p>
-</li>
-<li><p>​    <strong>Application Master：用来协调（ MapReduce ）Job下的Task的运行；</strong></p>
-</li>
-<li><p>​    <strong>HDFS：用来在其他实体之间共享作业文件。</strong></p>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://shizhenqiang.github.io/2018/07/16/About-hadoop/" data-id="cl6ncvk4j0000v6gp76le4yxj" data-title="hadoop 浅谈" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-Random-Forests" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2018/03/20/Random-Forests/" class="article-date">
-  <time class="dt-published" datetime="2018-03-20T07:44:26.000Z" itemprop="datePublished">2018-03-20</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2018/03/20/Random-Forests/">Random Forests</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>顾名思义，是用随机的方式建立一个森林，森林里面有很多的决策树组成，随机森林的每一棵决策树之间是没有关联的。在得到森林之后，当有一个新的输入样本进入的时候，就让森林中的每一棵决策树分别进行一下判断，看看这个样本应该属于哪一类（对于分类算法），然后看看哪一类被选择最多，就预测这个样本为那一类。</p>
-<p>​     其实质是对决策树算法的一种改进，将多个决策树合并在一起，每棵树的建立依赖于一个独立抽取的样品，森林中的每棵树具有相同的分布，分类误差取决于每一棵树的分类能力和它们之间的相关性。特征选择采用随机的方法去分裂每一个节点，然后比较不同情况下产生的误差。能够检测到的内在估计误差、分类能力和相关性决定选择特征的数目。单棵树的分类能力可能很小，<em><strong>但在随机产生大量的决策树后，一个测试样品可以通过每一棵树的分类结果经统计后选择最可能的分类。</strong></em></p>
-<p><em><strong>决策树：</strong></em></p>
-<p>​    决策树（decision tree）是一个树结构（可以是二叉树或非二叉树）。其每个非叶节点表示一个特征属性上的测试，每个分支代表这个特征属性在某个值域上的输出，而每个叶节点存放一个类别。使用决策树进行决策的过程就是从根节点开始，测试待分类项中相应的特征属性，并按照其值选择输出分支，直到到达叶子节点，将叶子节点存放的类别作为决策结果。</p>
-<p>   随机森林是用随机的方式建立一个森林，森林里面有很多的决策树组成，随机森林的每一棵决策树之间是没有关联的。在得到森林之后，当有一个新的输入样本进入的时候，就让森林中的每一棵决策树分别进行一下判断，看看这个样本应该属于哪一类，然后看看哪一类被选择最多，就预测这个样本为那一类。</p>
-<p>​    在建立每一棵决策树的过程中，有两点需要注意采样与完全分裂。首先是两个随机采样的过程，random forest对输入的数据要进行<em><strong>行、列的采样</strong></em>。对于行采样，采用有放回的方式，也就是在采样得到的样本集合中，可能有重复的样本。假设输入样本为N个，那么采样的样本也为N个。这样使得在训练的时候，每一棵树的输入样本都不是全部的样本，使得相对不容易出现over-fitting。然后进行列采样，从M个feature中，选择m个（m &lt;&lt; M）。之后就是对采样之后的数据使用完全分裂的方式建立出决策树，这样决策树的某一个叶子节点要么是无法继续分裂的，要么里面的所有样本的都是指向的同一个分类。一般很多的决策树算法都一个重要的步骤——剪枝，但是这里不这样干，由于之前的两个随机采样的过程保证了随机性，所以就算不剪枝，也不会出现over-fitting。</p>
-<p><em><strong>注意点：</strong></em></p>
-<p><strong>设有N个样本，每个样本有M个features，决策树们其实都是随机地接受n个样本（对行随机取样）的m个feature（对列进行随机取样），每颗决策树的m个feature相同。每颗决策树其实都是对特定的数据进行学习归纳出分类方法，而随机取样可以保证有重复样本被不同决策树分类，这样就可以对不同决策树的分类能力做个评价。</strong></p>
-<p><em><strong>随机森林 的过程：</strong></em></p>
-<p>随机森林中的每一棵分类树为二叉树，其生成遵循<em><strong>自顶向下的递归分裂原则</strong></em>，即从根节点开始依次对训练集进行划分；在二叉树中，根节点包含全部训练数据， 按照节点纯度最小原则，分裂为左节点和右节点，它们分别包含训练数据的一个子集，按照同样的规则节点继续分裂，直到满足分支停止规则而停止生长。若节点n上的分类数据全部来自于同一类别，则此节点的纯度I(n)&#x3D;0，</p>
-<p>纯度度量方法是Gini准则，即假设P(Xj)是节点n上属于Xj 类样本个数占训练。</p>
-<p>具体实现过程如下：</p>
-<p>（1）原始训练集为N，应用bootstrap法<strong>有放回地随机抽取k个新的自助样本集</strong>，并由此构建k棵分类树，每次未被抽到的样本组成了k个袋外数据；</p>
-<p>（2）设有mall个变量，则在每一棵树的每个节点处随机抽取mtry个变量(mtry n mall)，然后在mtry中选择一个最具有分类能力的变量，变量分类的阈值通过检查每一个分类点确定；</p>
-<p>（3）每棵树最大限度地生长, 不做任何修剪；</p>
-<p>（4）将生成的多棵分类树组成随机森林，用随机森林分类器对新的数据进行判别与分类，分类结果按树分类器的投票多少而定。</p>
-<p><a target="_blank" rel="noopener" href="http://blog.csdn.net/u012102306/article/details/52228516">Random Forest (sklearn 参数详解)</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://shizhenqiang.github.io/2018/03/20/Random-Forests/" data-id="cl6ncvk4t0008v6gpgwnlgd07" data-title="Random Forests" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/machine-learning/" rel="tag">machine learning</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-Apriori" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2018/01/09/Apriori/" class="article-date">
-  <time class="dt-published" datetime="2018-01-09T06:16:43.000Z" itemprop="datePublished">2018-01-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2018/01/09/Apriori/">Apriori</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>看了很多博客，关于关联规则的介绍想做一个详细的汇总</p>
-<h1 id="一、概念"><a href="#一、概念" class="headerlink" title="一、概念"></a><strong>一、概念</strong></h1><p>表1 某超市的交易数据库</p>
-<table>
-<thead>
-<tr>
-<th>交易号TID</th>
-<th>顾客购买的商品</th>
-<th>交易号TID</th>
-<th>顾客购买的商品</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>T1</td>
-<td>bread, cream, milk, tea</td>
-<td>T6</td>
-<td>bread, tea</td>
-</tr>
-<tr>
-<td>T2</td>
-<td>bread, cream, milk</td>
-<td>T7</td>
-<td>beer, milk, tea</td>
-</tr>
-<tr>
-<td>T3</td>
-<td>cake, milk</td>
-<td>T8</td>
-<td>bread, tea</td>
-</tr>
-<tr>
-<td>T4</td>
-<td>milk, tea</td>
-<td>T9</td>
-<td>bread, cream, milk, tea</td>
-</tr>
-<tr>
-<td>T5</td>
-<td>bread, cake, milk</td>
-<td>T10</td>
-<td>bread, milk, tea</td>
-</tr>
-</tbody></table>
-<p><strong>定义一</strong>：设I&#x3D;{i1,i2,…,im}，是m个不同的项目的集合，每个ik称为一个<strong>项目</strong>。项目的集合I称为<strong>项集</strong>。其元素的个数称为项集的长度，长度为k的项集称为k-项集。引例中每个商品就是一个项目，项集为I&#x3D;{bread, beer, cake,cream, milk, tea}，I的长度为6。</p>
-<p><strong>定义二</strong>：每笔<strong>交易</strong>T是项集I的一个子集。对应每一个交易有一个唯一标识交易号，记作TID。交易全体构成了<strong>交易数据库</strong>D，|D|等于D中交易的个数。引例中包含10笔交易，因此|D|&#x3D;10。</p>
-<p><strong>定义三</strong>：对于项集X，设定count(X⊆T)为交易集D中包含X的交易的数量，则项集X的<strong>支持度</strong>为：</p>
-<p>support(X)&#x3D;count(X⊆T)&#x2F;|D|</p>
-<p>引例中X&#x3D;{bread, milk}出现在T1，T2，T5，T9和T10中，所以支持度为0.5。</p>
-<p><strong>定义四</strong>：<strong>最小支持度</strong>是项集的最小支持阀值，记为SUPmin，代表了用户关心的关联规则的最低重要性。<strong>支持度不小于SUPmin 的项集称为频繁集</strong>，长度为k的频繁集称为k-频繁集。如果设定SUPmin为0.3，引例中{bread, milk}的支持度是0.5，所以是2-频繁集。</p>
-<p><strong>定义五</strong>：<strong>关联规则</strong>是一个蕴含式：</p>
-<p>R：X⇒Y</p>
-<p>其中X⊂I，Y⊂I，并且X∩Y&#x3D;⌀。表示项集X在某一交易中出现，则导致Y以某一概率也会出现。用户关心的关联规则，可以用两个标准来衡量：支持度和可信度。</p>
-<p><strong>定义六</strong>：关联规则R的<strong>支持度</strong>是交易集同时包含X和Y的交易数与|D|之比。即：</p>
-<p>support(X⇒Y)&#x3D;count(X⋃Y)&#x2F;|D|</p>
-<p>支持度反映了X、Y同时出现的概率。关联规则的支持度等于频繁集的支持度。 </p>
-<p><strong>定义七</strong>：对于关联规则R，<strong>可信度</strong>是指包含X和Y的交易数与包含X的交易数之比。即：</p>
-<p>confidence(X⇒Y)&#x3D;support(X⇒Y)&#x2F;support(X)</p>
-<p>可信度反映了如果交易中包含X，则交易包含Y的概率。一般来说，只有支持度和可信度较高的关联规则才是用户感兴趣的。</p>
-<p><strong>定义八</strong>：设定关联规则的最小支持度和最小可信度为SUPmin和CONFmin。规则R的支持度和可信度均不小于SUPmin和CONFmin ，则称为<strong>强关联规则</strong>。关联规则挖掘的目的就是找出强关联规则，从而指导商家的决策。</p>
-<p>这八个定义包含了关联规则相关的几个重要基本概念，关联规则挖掘主要有两个问题：</p>
-<ol>
-<li>找出交易数据库中所有大于或等于用户指定的最小支持度的频繁项集。</li>
-<li>利用频繁项集生成所需要的关联规则，根据用户设定的最小可信度筛选出强关联规则。</li>
-</ol>
-<p>目前研究人员主要针对第一个问题进行研究，找出频繁集是比较困难的，而有了频繁集再生成强关联规则就相对容易了。</p>
-<h1 id="二、理论基础"><a href="#二、理论基础" class="headerlink" title="二、理论基础"></a>二、理论基础</h1><p>首先来看一个频繁集的性质。</p>
-<p>定理：<strong>如果项目集X是频繁集，那么它的非空子集都是频繁集</strong>。</p>
-<p>根据定理，已知一个k-频繁集的项集X，X的所有k-1阶子集都肯定是频繁集，也就肯定可以找到两个k-1频繁集的项集，它们只有一项不同，且连接后等于X。这证明了通过连接k-1频繁集产生的k-候选集覆盖了k-频繁集。同时，如果k-候选集中的项集Y，包含有某个k-1阶子集不属于k-1频繁集，那么Y就不可能是频繁集，应该从候选集中裁剪掉。Apriori算法就是利用了频繁集的这个性质。</p>
-<h1 id="三、算法步骤："><a href="#三、算法步骤：" class="headerlink" title="三、算法步骤："></a><strong>三、算法步骤：</strong></h1><p>首先是测试数据：</p>
-<table>
-<thead>
-<tr>
-<th>交易ID</th>
-<th><strong>商品<strong><strong>ID</strong></strong>列表</strong></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>T100</td>
-<td>I1，I2，I5</td>
-</tr>
-<tr>
-<td>T200</td>
-<td>I2，I4</td>
-</tr>
-<tr>
-<td>T300</td>
-<td>I2，I3</td>
-</tr>
-<tr>
-<td>T400</td>
-<td>I1，I2，I4</td>
-</tr>
-<tr>
-<td>T500</td>
-<td>I1，I3</td>
-</tr>
-<tr>
-<td>T600</td>
-<td>I2，I3</td>
-</tr>
-<tr>
-<td>T700</td>
-<td>I1，I3</td>
-</tr>
-<tr>
-<td>T800</td>
-<td>I1，I2，I3，I5</td>
-</tr>
-<tr>
-<td>T900</td>
-<td>I1，I2，I3</td>
-</tr>
-</tbody></table>
-<p>算法的步骤图：</p>
-<img src="/2018/01/09/Apriori/529698-20180109140825019-1205577597.png" class title="apriori asset_img"> 
-
-<p>可以看到，第三轮的候选集发生了明显的缩小，这是为什么呢？</p>
-<p>请注意取候选集的两个条件：</p>
-<p>1.两个K项集能够连接的两个条件是，它们有K-1项是相同的。所以，（I2，I4）和（I3，I5）这种是不能够进行连接的。缩小了候选集。</p>
-<p>2.如果一个项集是频繁集，那么它不存在不是子集的频繁集。比如（I1，I2）和（I1，I4）得到（I1，I2，I4），而（I1，I2，I4）存在子集（I1，I4）不是频繁集。缩小了候选集。</p>
-<p>第三轮得到的2个候选集，正好支持度等于最小支持度。所以，都算入频繁集。</p>
-<p>这时再看第四轮的候选集与频繁集结果为空</p>
-<p>可以看到，候选集和频繁集居然为空了！因为通过第三轮得到的频繁集自连接得到{I1，I2，I3，I5}，它拥有子集{I2,I3,I5}，而{I2,I3,I5}不是频繁集，不满足：频繁集的子集也是频繁集这一条件，所以被剪枝剪掉了。所以整个算法终止，取最后一次计算得到的频繁集作为最终的频繁集结果：</p>
-<p>也就是：[‘I1,I2,I3’, ‘I1,I2,I5’]</p>
-<p><strong>四、代码：</strong>                                   </p>
-<p>编写Python代码实现Apriori算法。代码需要注意如下两点：</p>
-<ul>
-<li>由于Apriori算法假定项集中的项是按字典序排序的，而集合本身是无序的，所以我们在必要时需要进行set和list的转换；</li>
-<li>由于要使用字典（support_data）记录项集的支持度，需要用项集作为key，而可变集合无法作为字典的key，因此在合适时机应将项集转为固定集合frozenset。</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">local_data</span>(<span class="params">file_path</span>):</span><br><span class="line">    <span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">    dt = pd.read_excel(file_path)</span><br><span class="line">    data = dt[<span class="string">&#x27;con&#x27;</span>]</span><br><span class="line">    locdata = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> data:</span><br><span class="line">        locdata.append(<span class="built_in">str</span>(i).split(<span class="string">&quot;,&quot;</span>))</span><br><span class="line"></span><br><span class="line">   <span class="comment"># print(locdata)  # change to [[1,2,3],[1,2,3]]</span></span><br><span class="line">    length = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> locdata:</span><br><span class="line">        length.append(<span class="built_in">len</span>(i))  <span class="comment"># 计算长度并存储</span></span><br><span class="line">   <span class="comment"># print(length)</span></span><br><span class="line">    ki = length[length.index(<span class="built_in">max</span>(length))]</span><br><span class="line">   <span class="comment"># print(length[length.index(max(length))])  # length.index(max(length)读取最大值的位置，然后再定位取出最大值</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> locdata,ki</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">create_C1</span>(<span class="params">data_set</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    Create frequent candidate 1-itemset C1 by scaning data set.</span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">        data_set: A list of transactions. Each transaction contains several items.</span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">        C1: A set which contains all frequent candidate 1-itemsets</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    C1 = <span class="built_in">set</span>()</span><br><span class="line">    <span class="keyword">for</span> t <span class="keyword">in</span> data_set:</span><br><span class="line">        <span class="keyword">for</span> item <span class="keyword">in</span> t:</span><br><span class="line">            item_set = <span class="built_in">frozenset</span>([item])</span><br><span class="line">            C1.add(item_set)</span><br><span class="line">    <span class="keyword">return</span> C1</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">is_apriori</span>(<span class="params">Ck_item, Lksub1</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    Judge whether a frequent candidate k-itemset satisfy Apriori property.</span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">        Ck_item: a frequent candidate k-itemset in Ck which contains all frequent</span></span><br><span class="line"><span class="string">                 candidate k-itemsets.</span></span><br><span class="line"><span class="string">        Lksub1: Lk-1, a set which contains all frequent candidate (k-1)-itemsets.</span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">        True: satisfying Apriori property.</span></span><br><span class="line"><span class="string">        False: Not satisfying Apriori property.</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> Ck_item:</span><br><span class="line">        sub_Ck = Ck_item - <span class="built_in">frozenset</span>([item])</span><br><span class="line">        <span class="keyword">if</span> sub_Ck <span class="keyword">not</span> <span class="keyword">in</span> Lksub1:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">create_Ck</span>(<span class="params">Lksub1, k</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    Create Ck, a set which contains all all frequent candidate k-itemsets</span></span><br><span class="line"><span class="string">    by Lk-1&#x27;s own connection operation.</span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">        Lksub1: Lk-1, a set which contains all frequent candidate (k-1)-itemsets.</span></span><br><span class="line"><span class="string">        k: the item number of a frequent itemset.</span></span><br><span class="line"><span class="string">    Return:</span></span><br><span class="line"><span class="string">        Ck: a set which contains all all frequent candidate k-itemsets.</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    Ck = <span class="built_in">set</span>()</span><br><span class="line">    len_Lksub1 = <span class="built_in">len</span>(Lksub1)</span><br><span class="line">    list_Lksub1 = <span class="built_in">list</span>(Lksub1)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(len_Lksub1):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, len_Lksub1):</span><br><span class="line">            l1 = <span class="built_in">list</span>(list_Lksub1[i])</span><br><span class="line">            l2 = <span class="built_in">list</span>(list_Lksub1[j])</span><br><span class="line">            l1.sort()</span><br><span class="line">            l2.sort()</span><br><span class="line">            <span class="keyword">if</span> l1[<span class="number">0</span>:k-<span class="number">2</span>] == l2[<span class="number">0</span>:k-<span class="number">2</span>]:</span><br><span class="line">                Ck_item = list_Lksub1[i] | list_Lksub1[j]</span><br><span class="line">                <span class="comment"># pruning</span></span><br><span class="line">                <span class="keyword">if</span> is_apriori(Ck_item, Lksub1):</span><br><span class="line">                    Ck.add(Ck_item)</span><br><span class="line">    <span class="keyword">return</span> Ck</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">generate_Lk_by_Ck</span>(<span class="params">data_set, Ck, min_support, support_data</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    Generate Lk by executing a delete policy from Ck.</span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">        data_set: A list of transactions. Each transaction contains several items.</span></span><br><span class="line"><span class="string">        Ck: A set which contains all all frequent candidate k-itemsets.</span></span><br><span class="line"><span class="string">        min_support: The minimum support.</span></span><br><span class="line"><span class="string">        support_data: A dictionary. The key is frequent itemset and the value is support.</span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">        Lk: A set which contains all all frequent k-itemsets.</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    Lk = <span class="built_in">set</span>()</span><br><span class="line">    item_count = &#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> t <span class="keyword">in</span> data_set:</span><br><span class="line">        <span class="keyword">for</span> item <span class="keyword">in</span> Ck:</span><br><span class="line">            <span class="keyword">if</span> item.issubset(t):</span><br><span class="line">                <span class="keyword">if</span> item <span class="keyword">not</span> <span class="keyword">in</span> item_count:</span><br><span class="line">                    item_count[item] = <span class="number">1</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    item_count[item] += <span class="number">1</span></span><br><span class="line">    t_num = <span class="built_in">float</span>(<span class="built_in">len</span>(data_set))</span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> item_count:</span><br><span class="line">        <span class="keyword">if</span> (item_count[item] / t_num) &gt;= min_support:</span><br><span class="line">            Lk.add(item)</span><br><span class="line">            support_data[item] = item_count[item] / t_num</span><br><span class="line">    <span class="keyword">return</span> Lk</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">generate_L</span>(<span class="params">data_set, k, min_support</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    Generate all frequent itemsets.</span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">        data_set: A list of transactions. Each transaction contains several items.</span></span><br><span class="line"><span class="string">        k: Maximum number of items for all frequent itemsets.</span></span><br><span class="line"><span class="string">        min_support: The minimum support.</span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">        L: The list of Lk.</span></span><br><span class="line"><span class="string">        support_data: A dictionary. The key is frequent itemset and the value is support.</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    support_data = &#123;&#125;</span><br><span class="line">    C1 = create_C1(data_set)</span><br><span class="line">    L1 = generate_Lk_by_Ck(data_set, C1, min_support, support_data)</span><br><span class="line">    Lksub1 = L1.copy()</span><br><span class="line">    L = []</span><br><span class="line">    L.append(Lksub1)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, k+<span class="number">1</span>):</span><br><span class="line">        Ci = create_Ck(Lksub1, i)</span><br><span class="line">        Li = generate_Lk_by_Ck(data_set, Ci, min_support, support_data)</span><br><span class="line">        Lksub1 = Li.copy()</span><br><span class="line">        L.append(Lksub1)</span><br><span class="line">    <span class="keyword">return</span> L, support_data</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">generate_big_rules</span>(<span class="params">L, support_data, min_conf</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    Generate big rules from frequent itemsets.</span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">        L: The list of Lk.</span></span><br><span class="line"><span class="string">        support_data: A dictionary. The key is frequent itemset and the value is support.</span></span><br><span class="line"><span class="string">        min_conf: Minimal confidence.</span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">        big_rule_list: A list which contains all big rules. Each big rule is represented</span></span><br><span class="line"><span class="string">                       as a 3-tuple.</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    big_rule_list = []</span><br><span class="line">    sub_set_list = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="built_in">len</span>(L)):</span><br><span class="line">        <span class="keyword">for</span> freq_set <span class="keyword">in</span> L[i]:</span><br><span class="line">            <span class="keyword">for</span> sub_set <span class="keyword">in</span> sub_set_list:</span><br><span class="line">                <span class="keyword">if</span> sub_set.issubset(freq_set):</span><br><span class="line">                    conf = support_data[freq_set] / support_data[freq_set - sub_set]</span><br><span class="line">                    big_rule = (freq_set - sub_set, sub_set, conf)</span><br><span class="line">                    <span class="keyword">if</span> conf &gt;= min_conf <span class="keyword">and</span> big_rule <span class="keyword">not</span> <span class="keyword">in</span> big_rule_list:</span><br><span class="line">                        <span class="comment"># print freq_set-sub_set, &quot; =&gt; &quot;, sub_set, &quot;conf: &quot;, conf</span></span><br><span class="line">                        big_rule_list.append(big_rule)</span><br><span class="line">            sub_set_list.append(freq_set)</span><br><span class="line">    <span class="keyword">return</span> big_rule_list</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    Test</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    file_path = <span class="string">&quot;test_aa.xlsx&quot;</span></span><br><span class="line">  </span><br><span class="line">    data_set,k = local_data(file_path)</span><br><span class="line">    L, support_data = generate_L(data_set, k, min_support=<span class="number">0.2</span>)</span><br><span class="line">    big_rules_list = generate_big_rules(L, support_data, min_conf=<span class="number">0.4</span>)</span><br><span class="line">    <span class="built_in">print</span>(L)</span><br><span class="line">    <span class="keyword">for</span> Lk <span class="keyword">in</span> L:</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(<span class="built_in">list</span>(Lk)) == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;=&quot;</span>*<span class="number">50</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;frequent &quot;</span> + <span class="built_in">str</span>(<span class="built_in">len</span>(<span class="built_in">list</span>(Lk)[<span class="number">0</span>])) + <span class="string">&quot;-itemsets\t\tsupport&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;=&quot;</span>*<span class="number">50</span>)</span><br><span class="line">        <span class="keyword">for</span> freq_set <span class="keyword">in</span> Lk:</span><br><span class="line">            <span class="built_in">print</span>(freq_set, support_data[freq_set])</span><br><span class="line">    <span class="built_in">print</span>()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Big Rules&quot;</span>)</span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> big_rules_list:</span><br><span class="line">        <span class="built_in">print</span>(item[<span class="number">0</span>], <span class="string">&quot;=&gt;&quot;</span>, item[<span class="number">1</span>], <span class="string">&quot;conf: &quot;</span>, item[<span class="number">2</span>])</span><br></pre></td></tr></table></figure>
-
-<p> 文件格式：</p>
-<p>test_aa.xlsx</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">name    con</span><br><span class="line">T1     2,3,5</span><br><span class="line">T2     1,2,4</span><br><span class="line">T3     3,5</span><br><span class="line">T5     2,3,4</span><br><span class="line">T6     2,3,5</span><br><span class="line">T7     1,2,4</span><br><span class="line">T8     3,5</span><br><span class="line">T9     2,3,4</span><br><span class="line">T10    1,2,3,4,5</span><br></pre></td></tr></table></figure>
-
-<p><strong>参考相关博客：</strong> 　　　　　　　　　　　　　　　　　　　</p>
-<p><a target="_blank" rel="noopener" href="http://blog.csdn.net/rongyongfeikai2/article/details/40457827">http://blog.csdn.net/rongyongfeikai2/article/details/40457827</a></p>
-<p><a target="_blank" rel="noopener" href="http://blog.csdn.net/opennaive/article/details/7051460">http://blog.csdn.net/opennaive/article/details/7051460</a></p>
-<p><a target="_blank" rel="noopener" href="http://blog.csdn.net/opennaive/article/details/7047823">http://blog.csdn.net/opennaive/article/details/7047823</a></p>
-<p><a target="_blank" rel="noopener" href="http://blog.csdn.net/androidlushangderen/article/details/43059211">http://blog.csdn.net/androidlushangderen/article/details/43059211</a></p>
-<p>代码参考</p>
-<p><a target="_blank" rel="noopener" href="http://blog.csdn.net/qq_32126633/article/details/78351726">http://blog.csdn.net/qq_32126633/article/details/78351726</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://shizhenqiang.github.io/2018/01/09/Apriori/" data-id="cl6ncvk4q0003v6gp4x598281" data-title="Apriori" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/machine-learning/" rel="tag">machine learning</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-GBDT" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2017/07/10/GBDT/" class="article-date">
-  <time class="dt-published" datetime="2017-07-10T08:22:54.000Z" itemprop="datePublished">2017-07-10</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2017/07/10/GBDT/">GBDT</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p><a target="_blank" rel="noopener" href="http://blog.csdn.net/yangtrees/article/details/7506052">机器学习——Gradient Boost Decision Tree(&amp;Treelink)</a></p>
-<p><a target="_blank" rel="noopener" href="http://wenku.baidu.com/link?url=dmoD5irL8vAV5NnBmoz69M4J_tm-EZg8yGIcfEkTp_ApblW52F6LEv9GdJzusCCaTafPX5HxDObAtwJH77NmxOSp106W-kHCffX8KwC_YG7">greedy_function_approximation_a_gradient_boosting_machine</a></p>
-<p><a target="_blank" rel="noopener" href="http://www.jianshu.com/p/005a4e6ac775">简书上很好的一个关于GBDT的例子</a></p>
-<h1 id="GBDT"><a href="#GBDT" class="headerlink" title="GBDT"></a>GBDT</h1><h2 id="一、Regression-Decision-Tree"><a href="#一、Regression-Decision-Tree" class="headerlink" title="一、Regression Decision Tree"></a>一、Regression Decision Tree</h2><p>​    回归树总体流程类似于分类树，区别在于，回归树的每一个节点都会得一个预测值，以年龄为例，该预测值等于属于这个节点的所有人年龄的平均值。分枝时穷举每一个feature的每个阈值找最好的分割点，但<strong>衡量最好的标准不再是最大熵，而是最小化平方误差</strong>。也就是被预测出错的人数越多，错的越离谱，平方误差就越大，通过最小化平方误差能够找到最可靠的分枝依据。分枝直到每个叶子节点上人的年龄都唯一或者达到预设的终止条件(如叶子个数上限)，若最终叶子节点上人的年龄不唯一，则以该节点上所有人的<em><strong>平均</strong></em>年龄做为该叶子节点的预测年龄。</p>
-<h2 id="二、Boosting-Decision-Tree"><a href="#二、Boosting-Decision-Tree" class="headerlink" title="二、Boosting Decision Tree"></a>二、Boosting Decision Tree</h2><p>​    提升树是迭代多颗回归树来共同决策。每一棵决策树学习的是之前所有树的结论和残差(采用平方误差损失函数时)，拟合得到一个当前的残差回归树。残差的意义：<strong>残差 &#x3D; 真实值 - 预测值</strong>；提升树，即整个迭代过程生成的回归树的累加。预测值等于所有树值的累加。</p>
-<img src="/2017/07/10/GBDT/1241" class title="model complex asset_img">
-
-
-
-<p>​                                                                                                           提升树算法</p>
-<h2 id="三、Gradient-Boosting-Decision-Tree"><a href="#三、Gradient-Boosting-Decision-Tree" class="headerlink" title="三、Gradient Boosting Decision Tree"></a>三、Gradient Boosting Decision Tree</h2><p>提升树利用加法模型和前向分类算法实现学习的优化过程。当损失函数平方损失和指数损失函数时，每一步的优化很简单，如平方损失函数学习残差回归树。</p>
-<p>但对于一般的损失函数，往往每一步优化没那么容易，如上图中的绝对值损失函数和Huber损失函数。针对这一问题，Freidman提出了梯度提升算法： 利用最速下降的近似方法，即利用损失函数的负梯度在当前模型的值，作为回归问题中提升树算法的残差的近似值，拟合一个回归树。</p>
-<img src="/2017/07/10/GBDT/1240" class title="model complex asset_img">
-
-<p>​    当模型越复杂时，拟合的程度就越高，模型的训练偏差就越小。但此时如果换一组数据可能模型的变化就会很大，即模型的方差很大。所以模型过于复杂的时候会导致过拟合。<br>  当模型越简单时，即使我们再换一组数据，最后得出的学习器和之前的学习器的差别就不那么大，模型的方差很小。还是因为模型简单，所以偏差会很大。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://shizhenqiang.github.io/2017/07/10/GBDT/" data-id="cl6ncvk4s0005v6gp3yy2d1ej" data-title="GBDT" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/machine-learning/" rel="tag">machine learning</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+  </nav>
 
 </section>
         
