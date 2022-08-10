@@ -6,15 +6,15 @@
   
   <title>kafka 问题汇总 | Yes is Strong</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="一、为什么用MQ？ 业务场景 解耦、异步、削峰  二、leader？kafka集群的leader 每一个分区都有一个leader，leader负责读写， 三、重复数据？offset会定期自动提交给kafkabroker，告诉kafka我已经消费了，但是有可能重启或者kill掉后，offset来不及提交，导致下次消费的时候会重复消费未提交offset的数据。 具体如何去重，还要根据业务场景具体分析。">
+  <meta name="description" content="一、为什么用MQ ？ 业务场景 解耦、异步、削峰  二、Leader &amp; Follower ？ kafka集群的leader，就是controller leader 当broker启动的时候，都会创建KafkaController对象，但是集群中只能有一个leader对外提供服务，这些每个节点上的KafkaController会在指定的zookeeper路径下创建临时节点，只有第一个成功创">
 <meta property="og:type" content="article">
 <meta property="og:title" content="kafka 问题汇总">
 <meta property="og:url" content="https://shizhenqiang.github.io/2019/05/19/kafka/index.html">
 <meta property="og:site_name" content="Yes is Strong">
-<meta property="og:description" content="一、为什么用MQ？ 业务场景 解耦、异步、削峰  二、leader？kafka集群的leader 每一个分区都有一个leader，leader负责读写， 三、重复数据？offset会定期自动提交给kafkabroker，告诉kafka我已经消费了，但是有可能重启或者kill掉后，offset来不及提交，导致下次消费的时候会重复消费未提交offset的数据。 具体如何去重，还要根据业务场景具体分析。">
+<meta property="og:description" content="一、为什么用MQ ？ 业务场景 解耦、异步、削峰  二、Leader &amp; Follower ？ kafka集群的leader，就是controller leader 当broker启动的时候，都会创建KafkaController对象，但是集群中只能有一个leader对外提供服务，这些每个节点上的KafkaController会在指定的zookeeper路径下创建临时节点，只有第一个成功创">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-05-19T03:02:36.000Z">
-<meta property="article:modified_time" content="2022-07-22T01:15:28.286Z">
+<meta property="article:modified_time" content="2022-08-10T09:42:35.429Z">
 <meta property="article:author" content="JenKing">
 <meta property="article:tag" content="MQ">
 <meta name="twitter:card" content="summary">
@@ -100,26 +100,36 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h2 id="一、为什么用MQ？"><a href="#一、为什么用MQ？" class="headerlink" title="一、为什么用MQ？"></a>一、为什么用MQ？</h2><ul>
+        <h2 id="一、为什么用MQ-？"><a href="#一、为什么用MQ-？" class="headerlink" title="一、为什么用MQ ？"></a>一、为什么用MQ ？</h2><ul>
 <li>业务场景</li>
 <li>解耦、异步、削峰</li>
 </ul>
-<h2 id="二、leader？"><a href="#二、leader？" class="headerlink" title="二、leader？"></a>二、leader？</h2><p>kafka集群的leader</p>
-<p>每一个分区都有一个leader，leader负责读写，</p>
-<h2 id="三、重复数据？"><a href="#三、重复数据？" class="headerlink" title="三、重复数据？"></a>三、重复数据？</h2><p>offset会定期自动提交给kafkabroker，告诉kafka我已经消费了，但是有可能重启或者kill掉后，offset来不及提交，导致下次消费的时候会重复消费未提交offset的数据。</p>
+<h2 id="二、Leader-amp-Follower-？"><a href="#二、Leader-amp-Follower-？" class="headerlink" title="二、Leader &amp; Follower ？"></a>二、Leader &amp; Follower ？</h2><ul>
+<li><p>kafka集群的leader，就是controller leader</p>
+<p>当broker启动的时候，都会创建KafkaController对象，但是集群中只能有一个leader对外提供服务，这些每个节点上的KafkaController会在指定的zookeeper路径下创建临时节点，只有第一个成功创建的节点的KafkaController才可以成为leader，其余的都是follower。当leader故障后，所有的follower会收到通知，再次竞争在该路径下创建节点从而选举新的leader</p>
+</li>
+<li><p>对于同一个partition，它所在任何一个broker，都有能扮演两种角色：leader、follower。</p>
+<p>Kafka会动态维护一个与Leader保持一致的同步副本（in-sync replicas （ISR））集合，并且会将最新的同步副本（ISR ）集合持久化到<strong>zookeeper</strong>。如果leader出现问题了，就会从该partition的followers中选举一个作为新的leader。所以在一个partition中扮演leader，在其它的partition中扮演followers。Leader是最繁忙的，要处理读写请求。这样将leader均分到不同的broker上，目的自然是要确保负载均衡。<em>注意：如果有一个broker down，那么它就不会在ISR中出现。</em></p>
+</li>
+</ul>
+<h2 id="三、重复数据-？"><a href="#三、重复数据-？" class="headerlink" title="三、重复数据 ？"></a>三、重复数据 ？</h2><p>1、offset会定期自动提交给kafkabroker，告诉kafka我已经消费了，但是有可能重启或者kill掉后，offset来不及提交，导致下次消费的时候会重复消费未提交offset的数据。</p>
+<p>2、如果消息处理逻辑过重，也即用户线程需要执行很长的时间处理消息，然后再提交offset。如果consumer的消息处理逻辑时长<strong>超过了</strong>max.poll.interval.ms ，那么此consumer提交offset就会失败。更多细节参考： <a target="_blank" rel="noopener" href="https://www.cnblogs.com/hapjin/p/10926882.html">https://www.cnblogs.com/hapjin/p/10926882.html</a> </p>
 <p>具体如何去重，还要根据业务场景具体分析。</p>
-<h2 id="四、数据丢失？"><a href="#四、数据丢失？" class="headerlink" title="四、数据丢失？"></a>四、数据丢失？</h2><p>防止丢数的设置：</p>
+<h2 id="四、数据丢失-？"><a href="#四、数据丢失-？" class="headerlink" title="四、数据丢失 ？"></a>四、数据丢失 ？</h2><p>防止丢数的设置：</p>
 <p>生产者如果设置acks&#x3D;all 并且设置重试次数，就不会丢失。</p>
 <p>消费者要设置副本，防止leader宕机后还有一个follower。</p>
-<h2 id="五、消息顺序？"><a href="#五、消息顺序？" class="headerlink" title="五、消息顺序？"></a>五、消息顺序？</h2><p>如果按照key去划分固定一个partition的话，是顺序性的。否则如果划分到多个个partition就不会具有顺序性。</p>
+<h2 id="五、消息顺序-？"><a href="#五、消息顺序-？" class="headerlink" title="五、消息顺序 ？"></a>五、消息顺序 ？</h2><p>如果按照key去划分固定一个partition的话，是顺序性的。否则如果划分到多个个partition就不会具有顺序性。</p>
 <p>消费者如果多线程处理，也有可能让消息顺序混乱。那么一个方案就是建立多个内存队列，按照key去固定的划分到内存队列面，然后一个线程处理一个内存队列。增加处理速度。</p>
-<p>参考</p>
-<p>1、<a target="_blank" rel="noopener" href="https://github.com/doocs/advanced-java?utm_source=gold_browser_extension">https://github.com/doocs/advanced-java?utm_source=gold_browser_extension</a></p>
+<h2 id="六、Partition-？"><a href="#六、Partition-？" class="headerlink" title="六、Partition ？"></a>六、Partition ？</h2><p>​       Consumer Groups 用于多个Consumer并行消费消息。为了防止两个消费者重复消费一条消息，Kafka不允许同一个Consumer Group中的两个Consumer读取同一个partition。</p>
+<h2 id="七、Consumer-Rebalance-？"><a href="#七、Consumer-Rebalance-？" class="headerlink" title="七、Consumer Rebalance ？"></a>七、Consumer Rebalance ？</h2><p>​       更多细节参考： <a target="_blank" rel="noopener" href="https://www.cnblogs.com/hapjin/p/10926882.html">https://www.cnblogs.com/hapjin/p/10926882.html</a> </p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>1、<a target="_blank" rel="noopener" href="https://github.com/doocs/advanced-java?utm_source=gold_browser_extension">https://github.com/doocs/advanced-java?utm_source=gold_browser_extension</a></p>
+<p>2、<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/SL3P9EK2_7msxIbm2HAAlQ">https://mp.weixin.qq.com/s/SL3P9EK2_7msxIbm2HAAlQ</a></p>
+<p>3、<a target="_blank" rel="noopener" href="https://www.cnblogs.com/hapjin/p/10926882.html">https://www.cnblogs.com/hapjin/p/10926882.html</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shizhenqiang.github.io/2019/05/19/kafka/" data-id="cl6ncysj7000e6xgpfaun0nys" data-title="kafka 问题汇总" class="article-share-link">Share</a>
+      <a data-url="https://shizhenqiang.github.io/2019/05/19/kafka/" data-id="cl6nfcnw0000ewmgp2tez08j9" data-title="kafka 问题汇总" class="article-share-link">Share</a>
       
       
       
