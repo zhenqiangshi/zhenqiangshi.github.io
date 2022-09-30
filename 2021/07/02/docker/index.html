@@ -4,16 +4,19 @@
   <meta charset="utf-8">
   
   
-  <title>Archives: 2017 | Chelf Blog</title>
+  <title>docker 浅知 | Chelf Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="We used to look up at the sky and wonder at our place in the stars, now we just look down and worry about our place in the dirt.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Chelf Blog">
-<meta property="og:url" content="https://shizhenqiang.github.io/archives/2017/index.html">
+  <meta name="description" content="一、docker的核心概念 容器镜像的运行实体，有运行时需要的可写文件层，并且容器中的进程属于运行状态。可初建、运行、停止、暂停和删除。  镜像 一个只读的文件和文件夹组合。可拉取、重命名、构建、删除、查看。一个镜像，可以创建多个容器。  仓库  存储和分发 Docker 镜像。   二、什么是NameSpace？1Namespace 是 Linux 内核的一项功能，该功能对内核资源进行分区，以使">
+<meta property="og:type" content="article">
+<meta property="og:title" content="docker 浅知">
+<meta property="og:url" content="https://shizhenqiang.github.io/2021/07/02/docker/index.html">
 <meta property="og:site_name" content="Chelf Blog">
-<meta property="og:description" content="We used to look up at the sky and wonder at our place in the stars, now we just look down and worry about our place in the dirt.">
+<meta property="og:description" content="一、docker的核心概念 容器镜像的运行实体，有运行时需要的可写文件层，并且容器中的进程属于运行状态。可初建、运行、停止、暂停和删除。  镜像 一个只读的文件和文件夹组合。可拉取、重命名、构建、删除、查看。一个镜像，可以创建多个容器。  仓库  存储和分发 Docker 镜像。   二、什么是NameSpace？1Namespace 是 Linux 内核的一项功能，该功能对内核资源进行分区，以使">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-07-02T08:00:14.000Z">
+<meta property="article:modified_time" content="2022-09-30T07:00:45.946Z">
 <meta property="article:author" content="JenKing">
+<meta property="article:tag" content="docker">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="Chelf Blog" type="application/atom+xml">
@@ -75,39 +78,98 @@
 </header>
 
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/07/10/GBDT/" class="archive-article-date">
-  <time class="dt-published" datetime="2017-07-10T08:22:54.000Z" itemprop="datePublished">Jul 10</time>
+        <section id="main"><article id="post-docker" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/07/02/docker/" class="article-date">
+  <time class="dt-published" datetime="2021-07-02T08:00:14.000Z" itemprop="datePublished">2021-07-02</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/10/GBDT/">GBDT</a>
+    <h1 class="p-name article-title" itemprop="headline name">
+      docker 浅知
     </h1>
   
 
-    </header>
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="一、docker的核心概念"><a href="#一、docker的核心概念" class="headerlink" title="一、docker的核心概念"></a>一、docker的核心概念</h2><ul>
+<li><h2 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h2><p>镜像的运行实体，有运行时需要的可写文件层，并且容器中的进程属于运行状态。可初建、运行、停止、暂停和删除。</p>
+</li>
+<li><p>镜像</p>
+<p>一个只读的文件和文件夹组合。可拉取、重命名、构建、删除、查看。一个镜像，可以创建多个容器。</p>
+</li>
+<li><p>仓库</p>
+<p> 存储和分发 Docker 镜像。</p>
+</li>
+</ul>
+<h2 id="二、什么是NameSpace？"><a href="#二、什么是NameSpace？" class="headerlink" title="二、什么是NameSpace？"></a>二、什么是NameSpace？</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Namespace 是 Linux 内核的一项功能，该功能对内核资源进行分区，以使一组进程看到一组资源，而另一组进程看到另一组资源。Namespace 的工作方式通过为一组资源和进程设置相同的 Namespace 而起作用，但是这些 Namespace 引用了不同的资源。资源可能存在于多个 Namespace 中。这些资源可以是进程 ID、主机名、用户 ID、文件名、与网络访问相关的名称和进程间通信。---维基百科</span><br></pre></td></tr></table></figure>
+
+<p>虽然 Linux 内核提供了8种 Namespace，但是最新版本的 Docker 只使用了其中的前6 种，分别为Mount Namespace、PID Namespace、Net Namespace、IPC Namespace、UTS Namespace、User Namespace。</p>
+<ul>
+<li><p>Mount Namespace</p>
+<p>使用 unshare 命令可以新建 Mount Namespace，并且在新建的 Mount Namespace 内 mount 是和外部完全隔离的。</p>
+</li>
+<li><p>PID Namespace</p>
+<p>隔离进程。</p>
+</li>
+<li><p>Net Namespace</p>
+<p>用来隔离网络设备、IP 地址和端口等信息的。</p>
+</li>
+<li><p>IPC Namespace</p>
+<p>隔离进程间通信的。ipcs -q 命令：用来查看系统间通信队列列表。ipcmk -Q 命令：用来创建系统间通信队列。</p>
+</li>
+<li><p>UTS Namespace</p>
+<p>隔离主机名的，它允许每个 UTS Namespace 拥有一个独立的主机名。</p>
+</li>
+<li><p>User Namespace</p>
+<p> 主要是用来隔离用户和用户组的。</p>
+</li>
+</ul>
+<p>由于使用了namespace的技术，所以才实现了容器的隔离。</p>
+<h2 id="三、什么是cgroups？"><a href="#三、什么是cgroups？" class="headerlink" title="三、什么是cgroups？"></a>三、什么是cgroups？</h2><p>​       cgroups（全称：control groups）是 Linux 内核的一个功能，它可以实现限制进程或者进程组的资源（如 CPU、内存、磁盘 IO 等）。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://shizhenqiang.github.io/2021/07/02/docker/" data-id="cl8o4zm90000ecmgp5nx2csow" data-title="docker 浅知" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/" rel="tag">docker</a></li></ul>
+
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2021/07/18/Flink/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Flink 解读
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/08/12/Python-Tips/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Python Tips</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
 
 
 </section>

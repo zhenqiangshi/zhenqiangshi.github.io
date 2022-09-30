@@ -4,25 +4,26 @@
   <meta charset="utf-8">
   
   
-  <title>hbase 初探 | Yes is Strong</title>
+  <title>hbase 初探 | Chelf Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="HBase基于LSM树模型实现，所有的数据写入操作首先会顺序写入日志HLog，再写入MemStore，当MemStore中数据大小超过阈值之后再将这些数据批量写入磁盘，生成一个新的HFile文件。LSM树架构有如下几个非常明显的优势：  这种写入方式将一次随机IO写入转换成一个顺序IO写入（HLog顺序写入）加上一次内存写入（MemStore写入），使得写入性能得到极大提升。 HFile中KeyV">
 <meta property="og:type" content="article">
 <meta property="og:title" content="hbase 初探">
 <meta property="og:url" content="https://shizhenqiang.github.io/2019/07/19/hbase/index.html">
-<meta property="og:site_name" content="Yes is Strong">
+<meta property="og:site_name" content="Chelf Blog">
 <meta property="og:description" content="HBase基于LSM树模型实现，所有的数据写入操作首先会顺序写入日志HLog，再写入MemStore，当MemStore中数据大小超过阈值之后再将这些数据批量写入磁盘，生成一个新的HFile文件。LSM树架构有如下几个非常明显的优势：  这种写入方式将一次随机IO写入转换成一个顺序IO写入（HLog顺序写入）加上一次内存写入（MemStore写入），使得写入性能得到极大提升。 HFile中KeyV">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://shizhenqiang.github.io/2019/07/19/hbase/2022-08-10_11.08.43.png">
 <meta property="og:image" content="https://shizhenqiang.github.io/2019/07/19/hbase/image-20220810110112338.png">
+<meta property="og:image" content="https://shizhenqiang.github.io/2019/07/19/hbase/read_hbase.png">
 <meta property="article:published_time" content="2019-07-19T03:02:56.000Z">
-<meta property="article:modified_time" content="2022-08-10T07:45:38.666Z">
+<meta property="article:modified_time" content="2022-08-15T02:06:12.111Z">
 <meta property="article:author" content="JenKing">
 <meta property="article:tag" content="hbase">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://shizhenqiang.github.io/2019/07/19/hbase/2022-08-10_11.08.43.png">
   
-    <link rel="alternate" href="/atom.xml" title="Yes is Strong" type="application/atom+xml">
+    <link rel="alternate" href="/atom.xml" title="Chelf Blog" type="application/atom+xml">
   
   
     <link rel="shortcut icon" href="/favicon.png">
@@ -50,7 +51,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">Yes is Strong</a>
+        <a href="/" id="logo">Chelf Blog</a>
       </h1>
       
         <h2 id="subtitle-wrap">
@@ -123,13 +124,25 @@
 <h3 id="BulkLoad是减少了哪一步？"><a href="#BulkLoad是减少了哪一步？" class="headerlink" title="BulkLoad是减少了哪一步？"></a>BulkLoad是减少了哪一步？</h3><p>BulkLoad首先使用MapReduce将待写入集群数据转换为HFile文件，再直接将这些HFile文件加载到在线集群中。显然，BulkLoad方案没有将写请求发送给RegionServer处理。</p>
 <h2 id="二、读"><a href="#二、读" class="headerlink" title="二、读"></a>二、读</h2><p>HBase读数据的流程更加复杂，主要基于两个方面的原因：一是因为HBase一次范围查询可能会涉及多个Region、多块缓存甚至多个数据存储文件；二是因为HBase中更新操作以及删除操作的实现都很简单，更新操作并没有更新原有数据，而是使用时间戳属性实现了多版本；删除操作也并没有真正删除原有数据，只是插入了一条标记为”deleted”标签的数据，而真正的数据删除发生在系统异步执行Major Compact的时候。很显然，这种实现思路大大简化了数据更新、删除流程，但是对于数据读取来说却意味着套上了层层枷锁：读取过程需要根据版本进行过滤，对已经标记删除的数据也要进行过滤。</p>
 <p>读流程从头到尾可以分为如下4个步骤：</p>
-<p>Client-Server读取交互逻辑 &#x3D;&gt; Server端Scan框架体系 &#x3D;&gt; 过滤淘汰不符合查询条件的HFile &#x3D;&gt; 从HFile中读取待查找Key</p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>1、书名：HBase原理与实践作者：胡争，范欣欣出版社：机械工业出版社出版时间：2019-08ISBN：9787111634959</p>
+<ul>
+<li>Client-Server 从 Zookeeper 获取 <code>META</code> 表所在的 Region Server </li>
+<li>Server端Scan框架体系</li>
+<li>过滤淘汰不符合查询条件的HFile </li>
+<li>从HFile中读取待查找Key</li>
+</ul>
+<p>如果再次读取，客户端将从缓存中获取行键所在的 Region Server。这样客户端就不需要再次查询 <code>META</code> 表，除非 Region 移动导致缓存失效，这样的话，则将会重新查询并更新缓存。</p>
+<img src="/2019/07/19/hbase/read_hbase.png" class title="HBASE READ">
+
+<p>注：<code>META</code> 表是 HBase 中一张特殊的表，它保存了所有 Region 的位置信息，META 表自己的位置信息则存储在 ZooKeeper 上。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
+<li>书名：HBase原理与实践作者：胡争，范欣欣出版社：机械工业出版社出版时间：2019-08ISBN：9787111634959</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/heibaiying/BigData-Notes/blob/master/notes/Hbase%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%8F%8A%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.md">https://github.com/heibaiying/BigData-Notes/blob/master/notes/Hbase%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%8F%8A%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.md</a></li>
+</ol>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shizhenqiang.github.io/2019/07/19/hbase/" data-id="cl6nfcnvy0009wmgp5ypbhzw6" data-title="hbase 初探" class="article-share-link">Share</a>
+      <a data-url="https://shizhenqiang.github.io/2019/07/19/hbase/" data-id="cl8o4zm92000hcmgpeavx7a7a" data-title="hbase 初探" class="article-share-link">Share</a>
       
       
       
@@ -141,11 +154,11 @@
     
 <nav id="article-nav">
   
-    <a href="/2021/07/18/Flink/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2020/08/12/Python-Tips/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          Flink 初探
+          Python Tips
         
       </div>
     </a>
@@ -153,7 +166,7 @@
   
     <a href="/2019/05/19/kafka/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">kafka 问题汇总</div>
+      <div class="article-nav-title">kafka 线上问题汇总</div>
     </a>
   
 </nav>
@@ -173,7 +186,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flink/" rel="tag">Flink</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MQ/" rel="tag">MQ</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hbase/" rel="tag">hbase</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/machine-learning/" rel="tag">machine learning</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flink/" rel="tag">Flink</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MQ/" rel="tag">MQ</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hbase/" rel="tag">hbase</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/machine-learning/" rel="tag">machine learning</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
     </div>
   </div>
 
@@ -183,7 +196,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Flink/" style="font-size: 10px;">Flink</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/MQ/" style="font-size: 10px;">MQ</a> <a href="/tags/hbase/" style="font-size: 10px;">hbase</a> <a href="/tags/machine-learning/" style="font-size: 20px;">machine learning</a>
+      <a href="/tags/Flink/" style="font-size: 10px;">Flink</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/MQ/" style="font-size: 10px;">MQ</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/hbase/" style="font-size: 10px;">hbase</a> <a href="/tags/machine-learning/" style="font-size: 20px;">machine learning</a> <a href="/tags/python/" style="font-size: 10px;">python</a>
     </div>
   </div>
 
@@ -192,7 +205,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">February 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li></ul>
     </div>
   </div>
 
@@ -213,15 +226,15 @@
           </li>
         
           <li>
-            <a href="/2021/07/18/Flink/">Flink 初探</a>
+            <a href="/2022/02/12/Deep-learning/">Deep learning</a>
           </li>
         
           <li>
-            <a href="/2019/07/19/hbase/">hbase 初探</a>
+            <a href="/2021/07/18/Flink/">Flink 解读</a>
           </li>
         
           <li>
-            <a href="/2019/05/19/kafka/">kafka 问题汇总</a>
+            <a href="/2021/07/02/docker/">docker 浅知</a>
           </li>
         
       </ul>

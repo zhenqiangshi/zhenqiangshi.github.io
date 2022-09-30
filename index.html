@@ -4,19 +4,19 @@
   <meta charset="utf-8">
   
   
-  <title>Yes is Strong</title>
+  <title>Chelf Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="We used to look up at the sky and wonder at our place in the stars, now we just look down and worry about our place in the dirt.">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Yes is Strong">
+<meta property="og:title" content="Chelf Blog">
 <meta property="og:url" content="https://shizhenqiang.github.io/index.html">
-<meta property="og:site_name" content="Yes is Strong">
+<meta property="og:site_name" content="Chelf Blog">
 <meta property="og:description" content="We used to look up at the sky and wonder at our place in the stars, now we just look down and worry about our place in the dirt.">
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="JenKing">
 <meta name="twitter:card" content="summary">
   
-    <link rel="alternate" href="/atom.xml" title="Yes is Strong" type="application/atom+xml">
+    <link rel="alternate" href="/atom.xml" title="Chelf Blog" type="application/atom+xml">
   
   
     <link rel="shortcut icon" href="/favicon.png">
@@ -44,7 +44,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">Yes is Strong</a>
+        <a href="/" id="logo">Chelf Blog</a>
       </h1>
       
         <h2 id="subtitle-wrap">
@@ -117,7 +117,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shizhenqiang.github.io/2022/06/20/hello-world/" data-id="cl6nfcnvz000cwmgpdsdxe7zv" data-title="Quick Know" class="article-share-link">Share</a>
+      <a data-url="https://shizhenqiang.github.io/2022/06/20/hello-world/" data-id="cl8o4zm93000jcmgpbnr9ecfy" data-title="Quick Know" class="article-share-link">Share</a>
       
       
       
@@ -236,10 +236,50 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shizhenqiang.github.io/2022/05/17/Airflow/" data-id="cl6nfcnvs0001wmgp4swqg88s" data-title="Airflow" class="article-share-link">Share</a>
+      <a data-url="https://shizhenqiang.github.io/2022/05/17/Airflow/" data-id="cl8o4zm8s0001cmgp6e4ofkkm" data-title="Airflow" class="article-share-link">Share</a>
       
       
       
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-Deep-learning" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/02/12/Deep-learning/" class="article-date">
+  <time class="dt-published" datetime="2022-02-12T03:24:56.000Z" itemprop="datePublished">2022-02-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/02/12/Deep-learning/">Deep learning</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://shizhenqiang.github.io/2022/02/12/Deep-learning/" data-id="cl8o4zm8v0004cmgpcei1h8c2" data-title="Deep learning" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/machine-learning/" rel="tag">machine learning</a></li></ul>
+
     </footer>
   </div>
   
@@ -262,7 +302,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2021/07/18/Flink/">Flink 初探</a>
+      <a class="p-name article-title" href="/2021/07/18/Flink/">Flink 解读</a>
     </h1>
   
 
@@ -326,10 +366,13 @@
 <img src="/2021/07/18/Flink/processes.svg" class title="processes asset_img">
 
 <ol>
-<li><h3 id="JobManager"><a href="#JobManager" class="headerlink" title="JobManager"></a>JobManager</h3></li>
+<li><h3 id="JobManager"><a href="#JobManager" class="headerlink" title="JobManager"></a>JobManager</h3><p>作业管理器：负责协调资源分配和作业执行。资源分配完成后，给到TaskManagers.</p>
+<p>但是如果只有一个jobManager的话，很容易不高可用。所以，standalone与Yarn集群配置可实现高可用模式。</p>
+</li>
 <li><h3 id="TaskManagers"><a href="#TaskManagers" class="headerlink" title="TaskManagers"></a>TaskManagers</h3></li>
 </ol>
-<h2 id="八、Task-Slots-？"><a href="#八、Task-Slots-？" class="headerlink" title="八、Task Slots ？"></a>八、Task Slots ？</h2><p>TaskManager</p>
+<p>​       任务管理器：从jobManager那里接受任务后，使用slot（资源的最小抽象）资源，启动线程执行任务，不断的给jobManager报告状态。</p>
+<h2 id="八、Task-Slots-？"><a href="#八、Task-Slots-？" class="headerlink" title="八、Task Slots ？"></a>八、Task Slots ？</h2><p>​       每个slot都可以分配到独立的内存，可以内存管理。但是CPU是共享的。与并行度直接关联 ，实际情况下，并行度可能小于slot的数量。slot可以共享，提供资源利用率。</p>
 <p><strong>实践出真知</strong></p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ggHmSc86mN3I7r6snjqxWQ">https://mp.weixin.qq.com/s/ggHmSc86mN3I7r6snjqxWQ</a></li>
@@ -340,7 +383,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shizhenqiang.github.io/2021/07/18/Flink/" data-id="cl6nfcnvw0004wmgpbrzy0fis" data-title="Flink 初探" class="article-share-link">Share</a>
+      <a data-url="https://shizhenqiang.github.io/2021/07/18/Flink/" data-id="cl8o4zm8w0005cmgp05wfb3ro" data-title="Flink 解读" class="article-share-link">Share</a>
       
       
       
@@ -354,10 +397,10 @@
 
 
   
-    <article id="post-hbase" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-docker" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2019/07/19/hbase/" class="article-date">
-  <time class="dt-published" datetime="2019-07-19T03:02:56.000Z" itemprop="datePublished">2019-07-19</time>
+    <a href="/2021/07/02/docker/" class="article-date">
+  <time class="dt-published" datetime="2021-07-02T08:00:14.000Z" itemprop="datePublished">2021-07-02</time>
 </a>
     
   </div>
@@ -368,7 +411,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/07/19/hbase/">hbase 初探</a>
+      <a class="p-name article-title" href="/2021/07/02/docker/">docker 浅知</a>
     </h1>
   
 
@@ -376,102 +419,50 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>HBase基于LSM树模型实现，所有的数据写入操作首先会顺序写入日志HLog，再写入MemStore，当MemStore中数据大小超过阈值之后再将这些数据批量写入磁盘，生成一个新的HFile文件。LSM树架构有如下几个非常明显的优势：</p>
+        <h2 id="一、docker的核心概念"><a href="#一、docker的核心概念" class="headerlink" title="一、docker的核心概念"></a>一、docker的核心概念</h2><ul>
+<li><h2 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h2><p>镜像的运行实体，有运行时需要的可写文件层，并且容器中的进程属于运行状态。可初建、运行、停止、暂停和删除。</p>
+</li>
+<li><p>镜像</p>
+<p>一个只读的文件和文件夹组合。可拉取、重命名、构建、删除、查看。一个镜像，可以创建多个容器。</p>
+</li>
+<li><p>仓库</p>
+<p> 存储和分发 Docker 镜像。</p>
+</li>
+</ul>
+<h2 id="二、什么是NameSpace？"><a href="#二、什么是NameSpace？" class="headerlink" title="二、什么是NameSpace？"></a>二、什么是NameSpace？</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Namespace 是 Linux 内核的一项功能，该功能对内核资源进行分区，以使一组进程看到一组资源，而另一组进程看到另一组资源。Namespace 的工作方式通过为一组资源和进程设置相同的 Namespace 而起作用，但是这些 Namespace 引用了不同的资源。资源可能存在于多个 Namespace 中。这些资源可以是进程 ID、主机名、用户 ID、文件名、与网络访问相关的名称和进程间通信。---维基百科</span><br></pre></td></tr></table></figure>
+
+<p>虽然 Linux 内核提供了8种 Namespace，但是最新版本的 Docker 只使用了其中的前6 种，分别为Mount Namespace、PID Namespace、Net Namespace、IPC Namespace、UTS Namespace、User Namespace。</p>
 <ul>
-<li>这种写入方式将一次随机IO写入转换成一个顺序IO写入（HLog顺序写入）加上一次内存写入（MemStore写入），使得<strong>写入性能</strong>得到极大提升。</li>
-<li>HFile中KeyValue数据需要按照Key排序，排序之后可以在文件级别根据有序的Key建立索引树，极大提升数据<strong>读取性能</strong>。然而HDFS本身只允许顺序读写，不能更新，因此需要数据在落盘生成HFile之前就完成排序工作，<strong>MemStore就是KeyValue数据排序的实际执行者。</strong></li>
-<li>MemStore作为一个缓存级的存储组件，总是缓存着最近写入的数据。</li>
-<li>在数据写入HFile之前，可以在内存中对KeyValue数据进行很多更高级的优化。比如，MemStore在将数据写入HFile之前实际上可以丢弃老版本数据，仅保留最新版本数据。</li>
+<li><p>Mount Namespace</p>
+<p>使用 unshare 命令可以新建 Mount Namespace，并且在新建的 Mount Namespace 内 mount 是和外部完全隔离的。</p>
+</li>
+<li><p>PID Namespace</p>
+<p>隔离进程。</p>
+</li>
+<li><p>Net Namespace</p>
+<p>用来隔离网络设备、IP 地址和端口等信息的。</p>
+</li>
+<li><p>IPC Namespace</p>
+<p>隔离进程间通信的。ipcs -q 命令：用来查看系统间通信队列列表。ipcmk -Q 命令：用来创建系统间通信队列。</p>
+</li>
+<li><p>UTS Namespace</p>
+<p>隔离主机名的，它允许每个 UTS Namespace 拥有一个独立的主机名。</p>
+</li>
+<li><p>User Namespace</p>
+<p> 主要是用来隔离用户和用户组的。</p>
+</li>
 </ul>
-<h2 id="RegionServer"><a href="#RegionServer" class="headerlink" title="RegionServer"></a>RegionServer</h2><img src="/2019/07/19/hbase/2022-08-10_11.08.43.png" class title="HBASE WRITE">
-
-<p>一个RegionServer由一个（或多个）HLog、一个BlockCache以及多个Region组成。其中，HLog用来保证数据写入的可靠性；BlockCache可以将数据块缓存在内存中以提升数据读取性能；Region是HBase中数据表的一个数据分片，一个RegionServer上通常会负责多个Region的数据读写。一个Region由多个Store组成，每个Store存放对应列簇的数据，比如一个表中有两个列簇，这个表的所有Region就都会包含两个Store。每个Store包含一个MemStore和多个HFile，用户数据写入时会将对应列簇数据写入相应的MemStore，一旦写入数据的内存大小超过设定阈值，系统就会将MemStore中的数据落盘形成HFile文件。HFile存放在HDFS上，是一种定制化格式的数据存储文件，方便用户进行数据读取。</p>
-<h2 id="一、写"><a href="#一、写" class="headerlink" title="一、写"></a>一、写</h2><img src="/2019/07/19/hbase/image-20220810110112338.png" class title="HBASE WRITE">
-
-<ol>
-<li>客户端处理阶段：客户端将用户的写入请求进行预处理，并根据集群<strong>元数据定位</strong>写入数据所在的RegionServer，将请求发送给对应的RegionServer。</li>
-<li>Region写入阶段：RegionServer接收到写入请求之后将数据解析出来，首先写入WAL，再写入对应Region列簇的MemStore。</li>
-<li>MemStore Flush阶段（异步flush，一个跳表满了之后，另一个跳表接收数据，之前的那个跳表异步flush）：当Region中MemStore容量超过一定阈值，系统会异步执行f lush操作，将内存中的数据写入文件，形成HFile。</li>
-</ol>
-<h3 id="BulkLoad是减少了哪一步？"><a href="#BulkLoad是减少了哪一步？" class="headerlink" title="BulkLoad是减少了哪一步？"></a>BulkLoad是减少了哪一步？</h3><p>BulkLoad首先使用MapReduce将待写入集群数据转换为HFile文件，再直接将这些HFile文件加载到在线集群中。显然，BulkLoad方案没有将写请求发送给RegionServer处理。</p>
-<h2 id="二、读"><a href="#二、读" class="headerlink" title="二、读"></a>二、读</h2><p>HBase读数据的流程更加复杂，主要基于两个方面的原因：一是因为HBase一次范围查询可能会涉及多个Region、多块缓存甚至多个数据存储文件；二是因为HBase中更新操作以及删除操作的实现都很简单，更新操作并没有更新原有数据，而是使用时间戳属性实现了多版本；删除操作也并没有真正删除原有数据，只是插入了一条标记为”deleted”标签的数据，而真正的数据删除发生在系统异步执行Major Compact的时候。很显然，这种实现思路大大简化了数据更新、删除流程，但是对于数据读取来说却意味着套上了层层枷锁：读取过程需要根据版本进行过滤，对已经标记删除的数据也要进行过滤。</p>
-<p>读流程从头到尾可以分为如下4个步骤：</p>
-<p>Client-Server读取交互逻辑 &#x3D;&gt; Server端Scan框架体系 &#x3D;&gt; 过滤淘汰不符合查询条件的HFile &#x3D;&gt; 从HFile中读取待查找Key</p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>1、书名：HBase原理与实践作者：胡争，范欣欣出版社：机械工业出版社出版时间：2019-08ISBN：9787111634959</p>
+<p>由于使用了namespace的技术，所以才实现了容器的隔离。</p>
+<h2 id="三、什么是cgroups？"><a href="#三、什么是cgroups？" class="headerlink" title="三、什么是cgroups？"></a>三、什么是cgroups？</h2><p>​       cgroups（全称：control groups）是 Linux 内核的一个功能，它可以实现限制进程或者进程组的资源（如 CPU、内存、磁盘 IO 等）。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shizhenqiang.github.io/2019/07/19/hbase/" data-id="cl6nfcnvy0009wmgp5ypbhzw6" data-title="hbase 初探" class="article-share-link">Share</a>
+      <a data-url="https://shizhenqiang.github.io/2021/07/02/docker/" data-id="cl8o4zm90000ecmgp5nx2csow" data-title="docker 浅知" class="article-share-link">Share</a>
       
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hbase/" rel="tag">hbase</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-kafka" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2019/05/19/kafka/" class="article-date">
-  <time class="dt-published" datetime="2019-05-19T03:02:36.000Z" itemprop="datePublished">2019-05-19</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/05/19/kafka/">kafka 问题汇总</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h2 id="一、为什么用MQ-？"><a href="#一、为什么用MQ-？" class="headerlink" title="一、为什么用MQ ？"></a>一、为什么用MQ ？</h2><ul>
-<li>业务场景</li>
-<li>解耦、异步、削峰</li>
-</ul>
-<h2 id="二、Leader-amp-Follower-？"><a href="#二、Leader-amp-Follower-？" class="headerlink" title="二、Leader &amp; Follower ？"></a>二、Leader &amp; Follower ？</h2><ul>
-<li><p>kafka集群的leader，就是controller leader</p>
-<p>当broker启动的时候，都会创建KafkaController对象，但是集群中只能有一个leader对外提供服务，这些每个节点上的KafkaController会在指定的zookeeper路径下创建临时节点，只有第一个成功创建的节点的KafkaController才可以成为leader，其余的都是follower。当leader故障后，所有的follower会收到通知，再次竞争在该路径下创建节点从而选举新的leader</p>
-</li>
-<li><p>对于同一个partition，它所在任何一个broker，都有能扮演两种角色：leader、follower。</p>
-<p>Kafka会动态维护一个与Leader保持一致的同步副本（in-sync replicas （ISR））集合，并且会将最新的同步副本（ISR ）集合持久化到<strong>zookeeper</strong>。如果leader出现问题了，就会从该partition的followers中选举一个作为新的leader。所以在一个partition中扮演leader，在其它的partition中扮演followers。Leader是最繁忙的，要处理读写请求。这样将leader均分到不同的broker上，目的自然是要确保负载均衡。<em>注意：如果有一个broker down，那么它就不会在ISR中出现。</em></p>
-</li>
-</ul>
-<h2 id="三、重复数据-？"><a href="#三、重复数据-？" class="headerlink" title="三、重复数据 ？"></a>三、重复数据 ？</h2><p>1、offset会定期自动提交给kafkabroker，告诉kafka我已经消费了，但是有可能重启或者kill掉后，offset来不及提交，导致下次消费的时候会重复消费未提交offset的数据。</p>
-<p>2、如果消息处理逻辑过重，也即用户线程需要执行很长的时间处理消息，然后再提交offset。如果consumer的消息处理逻辑时长<strong>超过了</strong>max.poll.interval.ms ，那么此consumer提交offset就会失败。更多细节参考： <a target="_blank" rel="noopener" href="https://www.cnblogs.com/hapjin/p/10926882.html">https://www.cnblogs.com/hapjin/p/10926882.html</a> </p>
-<p>具体如何去重，还要根据业务场景具体分析。</p>
-<h2 id="四、数据丢失-？"><a href="#四、数据丢失-？" class="headerlink" title="四、数据丢失 ？"></a>四、数据丢失 ？</h2><p>防止丢数的设置：</p>
-<p>生产者如果设置acks&#x3D;all 并且设置重试次数，就不会丢失。</p>
-<p>消费者要设置副本，防止leader宕机后还有一个follower。</p>
-<h2 id="五、消息顺序-？"><a href="#五、消息顺序-？" class="headerlink" title="五、消息顺序 ？"></a>五、消息顺序 ？</h2><p>如果按照key去划分固定一个partition的话，是顺序性的。否则如果划分到多个个partition就不会具有顺序性。</p>
-<p>消费者如果多线程处理，也有可能让消息顺序混乱。那么一个方案就是建立多个内存队列，按照key去固定的划分到内存队列面，然后一个线程处理一个内存队列。增加处理速度。</p>
-<h2 id="六、Partition-？"><a href="#六、Partition-？" class="headerlink" title="六、Partition ？"></a>六、Partition ？</h2><p>​       Consumer Groups 用于多个Consumer并行消费消息。为了防止两个消费者重复消费一条消息，Kafka不允许同一个Consumer Group中的两个Consumer读取同一个partition。</p>
-<h2 id="七、Consumer-Rebalance-？"><a href="#七、Consumer-Rebalance-？" class="headerlink" title="七、Consumer Rebalance ？"></a>七、Consumer Rebalance ？</h2><p>​       更多细节参考： <a target="_blank" rel="noopener" href="https://www.cnblogs.com/hapjin/p/10926882.html">https://www.cnblogs.com/hapjin/p/10926882.html</a> </p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>1、<a target="_blank" rel="noopener" href="https://github.com/doocs/advanced-java?utm_source=gold_browser_extension">https://github.com/doocs/advanced-java?utm_source=gold_browser_extension</a></p>
-<p>2、<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/SL3P9EK2_7msxIbm2HAAlQ">https://mp.weixin.qq.com/s/SL3P9EK2_7msxIbm2HAAlQ</a></p>
-<p>3、<a target="_blank" rel="noopener" href="https://www.cnblogs.com/hapjin/p/10926882.html">https://www.cnblogs.com/hapjin/p/10926882.html</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://shizhenqiang.github.io/2019/05/19/kafka/" data-id="cl6nfcnw0000ewmgp2tez08j9" data-title="kafka 问题汇总" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MQ/" rel="tag">MQ</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/" rel="tag">docker</a></li></ul>
 
     </footer>
   </div>
@@ -485,7 +476,7 @@
 
   <nav id="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
   </nav>
 
 </section>
@@ -499,7 +490,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flink/" rel="tag">Flink</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MQ/" rel="tag">MQ</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hbase/" rel="tag">hbase</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/machine-learning/" rel="tag">machine learning</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flink/" rel="tag">Flink</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MQ/" rel="tag">MQ</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hbase/" rel="tag">hbase</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/machine-learning/" rel="tag">machine learning</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
     </div>
   </div>
 
@@ -509,7 +500,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Flink/" style="font-size: 10px;">Flink</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/MQ/" style="font-size: 10px;">MQ</a> <a href="/tags/hbase/" style="font-size: 10px;">hbase</a> <a href="/tags/machine-learning/" style="font-size: 20px;">machine learning</a>
+      <a href="/tags/Flink/" style="font-size: 10px;">Flink</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/MQ/" style="font-size: 10px;">MQ</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/hbase/" style="font-size: 10px;">hbase</a> <a href="/tags/machine-learning/" style="font-size: 20px;">machine learning</a> <a href="/tags/python/" style="font-size: 10px;">python</a>
     </div>
   </div>
 
@@ -518,7 +509,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">February 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li></ul>
     </div>
   </div>
 
@@ -539,15 +530,15 @@
           </li>
         
           <li>
-            <a href="/2021/07/18/Flink/">Flink 初探</a>
+            <a href="/2022/02/12/Deep-learning/">Deep learning</a>
           </li>
         
           <li>
-            <a href="/2019/07/19/hbase/">hbase 初探</a>
+            <a href="/2021/07/18/Flink/">Flink 解读</a>
           </li>
         
           <li>
-            <a href="/2019/05/19/kafka/">kafka 问题汇总</a>
+            <a href="/2021/07/02/docker/">docker 浅知</a>
           </li>
         
       </ul>
