@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"shizhenqiang.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.13.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"shizhenqiang.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.13.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="一、 什么是airflow?它是一个具有（DAG）工作流调度器，并可视化其作业流程的一个平台。Documentation&gt;&gt;  Airflow is a platform to programmatically author, schedule and monitor workflows.  二、什么是celery？它是一个简单、灵活且可靠的,处理大量消息的分布式系统,专注于实时处理的">
 <meta property="og:type" content="article">
@@ -29,7 +29,7 @@
 <meta property="og:locale">
 <meta property="og:image" content="https://shizhenqiang.github.io/2022/05/17/Airflow/graphviz-91fd3ca4f3dc01a69b3f84fbcd6b5c7975945ba4.png">
 <meta property="article:published_time" content="2022-05-17T09:10:46.000Z">
-<meta property="article:modified_time" content="2022-10-13T10:00:32.764Z">
+<meta property="article:modified_time" content="2022-11-02T00:35:02.294Z">
 <meta property="article:author" content="Chelf">
 <meta property="article:tag" content="DO">
 <meta name="twitter:card" content="summary">
@@ -133,7 +133,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives">
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">15</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -219,7 +219,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-13 18:00:32" itemprop="dateModified" datetime="2022-10-13T18:00:32+08:00">2022-10-13</time>
+      <time title="Modified: 2022-11-02 08:35:02" itemprop="dateModified" datetime="2022-11-02T08:35:02+08:00">2022-11-02</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -318,9 +318,10 @@
 
 <p>你可以从文档中查看安装步骤，比如利用pypip安装，升级。<strong>注意版本</strong>。</p>
 <p>mysql安装</p>
-<p>如果用mysql作为元数据库，那么请注意版本以及配置编码等事宜。比如其中：</p>
+<p>如果用mysql作为元数据库，那么请注意版本以及配置编码、时间戳默认值等事宜。比如其中：</p>
 <blockquote>
 <p><em>In addition, you also should pay particular attention to MySQL’s encoding. Although the utf8mb4 character set is more and more popular for MySQL (actually, utf8mb4 becomes default character set in MySQL8.0), using the utf8mb4 encoding requires additional setting in Airflow 2+ (See more details in #7570.). If you use utf8mb4 as character set, you should also set sql_engine_collation_for_ids&#x3D;utf8mb3_bin.</em></p>
+<p>We rely on more strict ANSI SQL settings for MySQL in order to have sane defaults. Make sure to have specified <code>explicit_defaults_for_timestamp=1</code> option under <code>[mysqld]</code> section in your <code>my.cnf</code> file. You can also activate these options with the <code>--explicit-defaults-for-timestamp</code> switch passed to <code>mysqld</code> executable <em><strong><a target="_blank" rel="noopener" href="http://airflow.incubator.apache.org/docs/apache-airflow/2.3.2/howto/set-up-database.html?highlight=utf8mb3_bin#setting-up-a-mysql-database">&gt;&gt;DOC</a></strong></em></p>
 </blockquote>
 <p>celery安装</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip <span class="keyword">install</span> <span class="string">&quot;apache-airflow[celery]==2.3.2&quot;</span> --constraint <span class="string">&quot;https://raw.githubusercontent.com/apache/airflow/constraints-2.3.2/constraints-3.7.txt&quot;</span></span><br></pre></td></tr></table></figure>

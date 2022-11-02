@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"shizhenqiang.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.13.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="个性化推荐是解决信息超载的一个非常有潜力的方法（工具） 推荐系统的关键性技术：用户建模、推荐对象的建模、推荐算法 总结推荐系统的体系结构和性能评价指标 未来推荐系统的研究重点、难点、热点问题  一、推荐系统的概念   推荐系统：“利用电子商务网站向客户提供商品信息和建议，帮助用户决定应该购买什么产品，模拟销售人员帮助客户完成购买过程。”   推荐系统主要包含三个模块：用户建模模块、推荐对象建模模">
+<meta property="og:type" content="article">
+<meta property="og:title" content="个性化推荐系统综述---王国霞，刘贺平 总结">
+<meta property="og:url" content="https://shizhenqiang.github.io/2019/10/25/Recommendation/index.html">
+<meta property="og:site_name" content="Chelf Blog">
+<meta property="og:description" content="个性化推荐是解决信息超载的一个非常有潜力的方法（工具） 推荐系统的关键性技术：用户建模、推荐对象的建模、推荐算法 总结推荐系统的体系结构和性能评价指标 未来推荐系统的研究重点、难点、热点问题  一、推荐系统的概念   推荐系统：“利用电子商务网站向客户提供商品信息和建议，帮助用户决定应该购买什么产品，模拟销售人员帮助客户完成购买过程。”   推荐系统主要包含三个模块：用户建模模块、推荐对象建模模">
+<meta property="og:locale">
+<meta property="og:image" content="https://shizhenqiang.github.io/2019/10/25/Recommendation/gongshi.png">
+<meta property="og:image" content="https://app.yinxiang.com/images/file-generic.png">
+<meta property="article:published_time" content="2019-10-25T03:33:05.000Z">
+<meta property="article:modified_time" content="2022-10-25T03:41:13.273Z">
+<meta property="article:author" content="Chelf">
+<meta property="article:tag" content="machine learning">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://shizhenqiang.github.io/2019/10/25/Recommendation/gongshi.png">
+
+
+<link rel="canonical" href="https://shizhenqiang.github.io/2019/10/25/Recommendation/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-Hans","comments":true,"permalink":"https://shizhenqiang.github.io/2019/10/25/Recommendation/","path":"2019/10/25/Recommendation/","title":"个性化推荐系统综述---王国霞，刘贺平 总结"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>个性化推荐系统综述---王国霞，刘贺平 总结 | Chelf Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Chelf Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">To let your hair down</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-archives"><a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">一、推荐系统的概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E7%94%A8%E6%88%B7%E5%BB%BA%E6%A8%A1%E6%A8%A1%E5%9D%97"><span class="nav-number">2.</span> <span class="nav-text">二、用户建模模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%8E%A8%E8%8D%90%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%A8%A1%E5%9D%97"><span class="nav-number">3.</span> <span class="nav-text">三、推荐对象的模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E6%8E%A8%E8%8D%90%E7%AE%97%E6%B3%95%E6%A8%A1%E5%9D%97"><span class="nav-number">4.</span> <span class="nav-text">四、推荐算法模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E7%9A%84%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="nav-number">5.</span> <span class="nav-text">五、推荐系统的体系结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%80%A7%E8%83%BD%E8%AF%84%E4%BB%B7"><span class="nav-number">6.</span> <span class="nav-text">六、推荐系统的性能评价</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E7%A0%94%E7%A9%B6%E7%9A%84%E9%87%8D%E7%82%B9%E3%80%81%E9%9A%BE%E7%82%B9%E3%80%81%E5%8F%91%E5%B1%95%E6%96%B9%E5%90%91"><span class="nav-number">7.</span> <span class="nav-text">七、推荐系统研究的重点、难点、发展方向</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chelf</p>
+  <div class="site-description" itemprop="description">We used to look up at the sky and wonder at our place in the stars, now we just look down and worry about our place in the dirt.</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives">
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://shizhenqiang.github.io/2019/10/25/Recommendation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chelf">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chelf Blog">
+      <meta itemprop="description" content="We used to look up at the sky and wonder at our place in the stars, now we just look down and worry about our place in the dirt.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="个性化推荐系统综述---王国霞，刘贺平 总结 | Chelf Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          个性化推荐系统综述---王国霞，刘贺平 总结
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-10-25 11:33:05" itemprop="dateCreated datePublished" datetime="2019-10-25T11:33:05+08:00">2019-10-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-25 11:41:13" itemprop="dateModified" datetime="2022-10-25T11:41:13+08:00">2022-10-25</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <ul>
+<li><em><strong>个性化推荐是解决信息超载的一个非常有潜力的方法（工具）</strong></em></li>
+<li><em><strong>推荐系统的关键性技术：用户建模、推荐对象的建模、推荐算法</strong></em></li>
+<li><em><strong>总结推荐系统的体系结构和性能评价指标</strong></em></li>
+<li><em><strong>未来推荐系统的研究重点、难点、热点问题</strong></em></li>
+</ul>
+<h2 id="一、推荐系统的概念"><a href="#一、推荐系统的概念" class="headerlink" title="一、推荐系统的概念"></a><strong>一、推荐系统的概念</strong></h2><p>   推荐系统：“利用电子商务网站向客户提供商品信息和建议，帮助用户决定应该购买什么产品，模拟销售人员帮助客户完成购买过程。”<br>   推荐系统主要包含三个模块：用户建模模块、推荐对象建模模块、推荐算法模块<br>   推荐系统的形式化定义：</p>
+<img src="/2019/10/25/Recommendation/gongshi.png" class title="processes asset_img"> 
+
+<p>C,所有用户的集合<br>S,所有可以推荐给用户的对象的集合<br>u(c,s),对象s对于用户c的推荐度  u:CxS-&gt;R  R是一定范围内的全序的非负实数。<br>S,推荐度R最大的那些对象</p>
+<h2 id="二、用户建模模块"><a href="#二、用户建模模块" class="headerlink" title="二、用户建模模块"></a><strong>二、用户建模模块</strong></h2><p>几个问题<br> （1）模型的输入数据有哪些，如何获取模型的输入数据。<br> （2）如何考虑用户的兴趣及需求的变化。<br> （3）建模的对象是谁。<br> （4）清楚了上述内容后，怎么建模呢。<br> （5）模型的输出是什么。</p>
+<p>输入数据的几种情况：<br>  （1）用户属性：<br>  （2）用户手工输入的信息<br>  （3）用户的浏览行为和浏览内容<br>  （4）推荐对象的属性特征</p>
+<p>一个好的推荐系统要给用户提供个性化的高效的准确的推荐，那么推荐系统应能狗获取用户<strong>多方面的、动态变化的兴趣偏好</strong>。<br>用户的兴趣和需求会随着时间和情景发生变化，用户建模时要考虑到用户长期兴趣偏好和短期兴趣偏好，还要考虑兴趣的变化。<br>用户模型的建模方法主要有遗传算法、基于机器学习的方法，例如TF-IDF、自动聚类、贝叶斯分类器、决策树归纳和神经网络方法等。<br>建模的对象有单用户建模和群组建模之分，单用户建模针对单个用户进行建模，比如基于内容的推荐，群组建模是针对群体用户进行建模，比如协同推荐。<br>用户建模的输出即用户模型的表示方法有很多种，使用用户感兴趣的信息主题表示用户模型的主题表示法，比如Google、Microsoft AOL。多用于协同推荐的用户-项目评价矩阵表示法，并且文献[11-12]提出了多维空间来扩展用户-项目评价矩阵。利用用户检索过的案例或者与案例相关的一组属性值来表示用户兴趣偏好的案例表示法，如CA SPER系统[26]、WebWatcher、TAGUS 系统、BGP-MS 系统、LIRA、Syskill&amp;We-bert 等。基于本体论的表示法用一个本体来表示用户感兴趣的领域，例如Quickstep系统和aceMedia系统。文献[21，23]中提出了容易理解那个方便修改和补充的细粒度模型表示法。</p>
+<h2 id="三、推荐对象的模块"><a href="#三、推荐对象的模块" class="headerlink" title="三、推荐对象的模块"></a><strong>三、推荐对象的模块</strong></h2><p>   几个问题：<br>          （1）提取推荐对象的什么特征，如何提取，提取的特征用于什么目的。<br>          （2）对象的特征描述和用户文件描述之间有关联。<br>          （3）提取到的每个对象特征对推荐结果会有什么影响。<br>          （4）对象的特征描述文件能否自动更新。</p>
+<p><strong>基于内容的推荐方法是从对象本身获取信息来表示对象，使用最广泛的方法是用加权关键词矢量</strong><br> 基于分类的推荐方法是把推荐对象放入不同的类别中，这样可以把同类文档推荐给该类文档感兴趣的用户。(Naive-Bayes,KNN,SVM)。<br>  推荐的对象的相关性和冗余性，认为既要保证推荐的多样性，又不能和用户看过的对象重复或毫不相干。</p>
+<h2 id="四、推荐算法模块"><a href="#四、推荐算法模块" class="headerlink" title="四、推荐算法模块"></a><strong>四、推荐算法模块</strong></h2><ul>
+<li><em><strong>基于内容的推荐</strong></em></li>
+<li><em><strong>协同过滤的推荐</strong></em>*</li>
+<li><em><strong>基于知识的推荐</strong></em></li>
+<li><em><strong>基于网络结构的推荐</strong></em></li>
+<li><em><strong>组合推荐</strong></em></li>
+<li><em><strong>其他推荐</strong></em></li>
+</ul>
+<h2 id="五、推荐系统的体系结构"><a href="#五、推荐系统的体系结构" class="headerlink" title="五、推荐系统的体系结构"></a><strong>五、推荐系统的体系结构</strong></h2><ul>
+<li>基于客户端的推荐</li>
+<li>基于服务器的推荐</li>
+<li>基于代理的推荐</li>
+</ul>
+<h2 id="六、推荐系统的性能评价"><a href="#六、推荐系统的性能评价" class="headerlink" title="六、推荐系统的性能评价"></a><strong>六、推荐系统的性能评价</strong></h2><p>   评价推荐系统性能的好坏通常用推荐的<strong>精确度</strong>和<strong>推荐效率</strong>两个指标进行衡量。<br>   召回率定义为推荐列表中用户喜欢的产品与系统中用户喜欢的所有产品的比率<br>   <strong>准确率：推荐列表中用户喜欢的产品和所有被推荐产品的比率</strong></p>
+<h2 id="七、推荐系统研究的重点、难点、发展方向"><a href="#七、推荐系统研究的重点、难点、发展方向" class="headerlink" title="七、推荐系统研究的重点、难点、发展方向"></a><strong>七、推荐系统研究的重点、难点、发展方向</strong></h2><p>（1）用户兴趣偏好获取方法和推荐对象的特征提取方法的研究<br>（2）推荐系统的安全性研究<br>（3）基于复杂网络理论及图方法的推荐系统研究<br>（4）推荐的多维度研究<br>（5）稀疏性和冷启动研究<br>（6）推荐系统性能评价指标的研究</p>
+<p><a target="_blank" rel="noopener" href="https://app.yinxiang.com/shard/s10/res/090e6140-f03b-47cb-95d1-3a0cbe5aabfd/%E4%B8%AA%E6%80%A7%E5%8C%96%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E7%BB%BC%E8%BF%B0_%E7%8E%8B%E5%9B%BD%E9%9C%9E.caj"><img src="https://app.yinxiang.com/images/file-generic.png" alt="img">个性化推荐系统综述_王国霞.caj<br>1.6 MB
+</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/machine-learning/" rel="tag"># machine learning</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/07/19/hbase/" rel="prev" title="hbase 初探">
+                  <i class="fa fa-chevron-left"></i> hbase 初探
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/08/12/Python-Tips/" rel="next" title="Python Tips">
+                  Python Tips <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chelf</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":true,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

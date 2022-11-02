@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"shizhenqiang.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.13.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"shizhenqiang.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.13.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="We used to look up at the sky and wonder at our place in the stars, now we just look down and worry about our place in the dirt.">
 <meta property="og:type" content="website">
@@ -128,7 +128,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives">
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">15</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -213,7 +213,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-13 18:00:32" itemprop="dateModified" datetime="2022-10-13T18:00:32+08:00">2022-10-13</time>
+      <time title="Modified: 2022-11-02 08:35:02" itemprop="dateModified" datetime="2022-11-02T08:35:02+08:00">2022-11-02</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -312,9 +312,10 @@
 
 <p>你可以从文档中查看安装步骤，比如利用pypip安装，升级。<strong>注意版本</strong>。</p>
 <p>mysql安装</p>
-<p>如果用mysql作为元数据库，那么请注意版本以及配置编码等事宜。比如其中：</p>
+<p>如果用mysql作为元数据库，那么请注意版本以及配置编码、时间戳默认值等事宜。比如其中：</p>
 <blockquote>
 <p><em>In addition, you also should pay particular attention to MySQL’s encoding. Although the utf8mb4 character set is more and more popular for MySQL (actually, utf8mb4 becomes default character set in MySQL8.0), using the utf8mb4 encoding requires additional setting in Airflow 2+ (See more details in #7570.). If you use utf8mb4 as character set, you should also set sql_engine_collation_for_ids&#x3D;utf8mb3_bin.</em></p>
+<p>We rely on more strict ANSI SQL settings for MySQL in order to have sane defaults. Make sure to have specified <code>explicit_defaults_for_timestamp=1</code> option under <code>[mysqld]</code> section in your <code>my.cnf</code> file. You can also activate these options with the <code>--explicit-defaults-for-timestamp</code> switch passed to <code>mysqld</code> executable <em><strong><a target="_blank" rel="noopener" href="http://airflow.incubator.apache.org/docs/apache-airflow/2.3.2/howto/set-up-database.html?highlight=utf8mb3_bin#setting-up-a-mysql-database">&gt;&gt;DOC</a></strong></em></p>
 </blockquote>
 <p>celery安装</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip <span class="keyword">install</span> <span class="string">&quot;apache-airflow[celery]==2.3.2&quot;</span> --constraint <span class="string">&quot;https://raw.githubusercontent.com/apache/airflow/constraints-2.3.2/constraints-3.7.txt&quot;</span></span><br></pre></td></tr></table></figure>
@@ -460,7 +461,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-17 14:27:41" itemprop="dateModified" datetime="2022-10-17T14:27:41+08:00">2022-10-17</time>
+      <time title="Modified: 2022-11-02 09:21:48" itemprop="dateModified" datetime="2022-11-02T09:21:48+08:00">2022-11-02</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -493,9 +494,7 @@
 <h2 id="二、-时间的概念"><a href="#二、-时间的概念" class="headerlink" title="二、 时间的概念"></a>二、 时间的概念</h2><p> <strong>Processing time:</strong> 执行各自操作的系统时间</p>
 <p><strong>Event time:</strong> 各自事件的时间，发生在推送机器上的时间，在进入flink前的汇总信息的时间。使用时，必须指定如何生成<em>Event Time Watermarks</em>。窗口大小等分，水印是防止乱序而生，牺牲了一定的实时性，提高了准确性。</p>
 <p>触发机制：</p>
-<p>1、watermark 时间  &#x3D; 当前到来数据的时间戳 - 乱序容忍时间；</p>
-<p>2、 watermark 时间 &gt;&#x3D; window_end_time；</p>
-<p>3、在 [window_start_time,window_end_time) 中有数据存在，这个窗口是左闭右开的。</p>
+<p>1、watermark 时间  &#x3D; 当前到来数据的时间戳 - 乱序容忍时间；<br>2、 watermark 时间 &gt;&#x3D; window_end_time；<br>3、在 [window_start_time,window_end_time) 中有数据存在，这个窗口是左闭右开的。</p>
 <img src="/2021/07/18/Flink/event_processing_time.svg" class title="event processing time asset_img">
 
 <p>输出水印：</p>
@@ -504,8 +503,7 @@
 <p>输出窗口的起止：</p>
 <img src="/2021/07/18/Flink/image-20221017114927866.png" class title="processes asset_img">
 
-<p>注意前闭后开，源代码中毫秒使用-1。</p>
-<p>这样就可以知道，例如窗口大小为windowsize为2分钟，水印设置1分钟，其实是延迟一分钟进行数据触发  watermark 时间 &gt;&#x3D; window_end_time。</p>
+<p>注意前闭后开，源代码中毫秒使用-1。<br>这样就可以知道，例如窗口大小为windowsize为2分钟，水印设置1分钟，其实是延迟一分钟进行数据触发  watermark 时间 &gt;&#x3D; window_end_time。</p>
 <h2 id="三、窗口的类型"><a href="#三、窗口的类型" class="headerlink" title="三、窗口的类型"></a>三、窗口的类型</h2><ol>
 <li><strong>Keyed Windows</strong></li>
 <li><strong>Non-Keyed Windows</strong></li>
@@ -561,6 +559,12 @@
 </ol>
 <p>​       任务管理器：从jobManager那里接受任务后，使用slot（资源的最小抽象）资源，启动线程执行任务，不断的给jobManager报告状态。</p>
 <h2 id="七、Task-Slots-？"><a href="#七、Task-Slots-？" class="headerlink" title="七、Task Slots ？"></a>七、Task Slots ？</h2><p>​       每个slot都可以分配到独立的内存，可以内存管理。但是CPU是共享的。与并行度直接关联 ，实际情况下，并行度可能小于slot的数量。slot可以共享，提供资源利用率。</p>
+<h2 id="八、反压"><a href="#八、反压" class="headerlink" title="八、反压"></a>八、反压</h2><p>​       简单一说，反压的过程就是解决上游数据生产速率大于下游数据消费，通过动态调整发送速率和消费速率，更好的进行网络流控。Flink1.5之前是采用基于TCP的反压机制，但是基于TCP的反压机制有以下问题：</p>
+<p>1、一个 TaskManager 内通常会有多个Task，它们底层会复用同一个Socket，一旦某个Task反压导致Socket阻塞不可用，即便其它 Task 关联的缓冲池仍然存在空余，但也都无法向 TCP 连接中写入数据或者从中读取数据。<br>2、基于底层TCP流控的反压机制，从 ResultPartition 到 Netty 到 Socket整条链路较长，会导致反压行为不够灵敏，动态反馈过程比较迟钝。</p>
+<p>于是，基于Credit算法的反压机制对上述问题做了优化，解决了两个问题：</p>
+<p>1、可以直接在 ResultPartition 层实现反压，而不用将压力流经过多层传递，层层反馈。提高了反压效率，降低了延迟；<br>2、不会把底层socket打满，从而阻碍网络数据传输，不会让单个 Task 的瓶颈成为整个TaskManager 的瓶颈；</p>
+<p>具体的反压流程可参考：<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg2ODAyNTgyMQ==&mid=2247485234&idx=1&sn=4f25023fc4dd224cc8b4ee25c57ea8ea&chksm=ceb3d380f9c45a964c646a4d2189b08ba24d7a5549e355dd753b4cd34e184957b5936b5f1630&mpshare=1&scene=1&srcid=1031kqX74jmXHqZRFzPWY8dM&sharer_sharetime=1667201424602&sharer_shareid=f59adca26e8157d4646f4becf01a5c87&version=3.1.20.6008&platform=win#rd">Flink反压原理深入浅出及解决思路</a></p>
+<h2 id="九、远程提交YARN"><a href="#九、远程提交YARN" class="headerlink" title="九、远程提交YARN"></a>九、远程提交YARN</h2><p>   注意：指定flink_conf.yaml加载yarn其路径下面的配置文件如yarn_site.yaml</p>
 <p><strong>实践出真知</strong></p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ggHmSc86mN3I7r6snjqxWQ">https://mp.weixin.qq.com/s/ggHmSc86mN3I7r6snjqxWQ</a></li>
@@ -752,7 +756,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-08-15 09:55:39" itemprop="dateModified" datetime="2022-08-15T09:55:39+08:00">2022-08-15</time>
+      <time title="Modified: 2022-10-26 15:30:35" itemprop="dateModified" datetime="2022-10-26T15:30:35+08:00">2022-10-26</time>
     </span>
 
   
@@ -768,6 +772,10 @@
           <h2 id="一、signal"><a href="#一、signal" class="headerlink" title="一、signal"></a>一、signal</h2><p>Python中对信号进行处理的模块主要使用signal模块。</p>
 <p>用途：接受一个进程关闭的信号，然后收到信号后，处理收尾工作，然后再关闭此进程。比如实时处理消息队列的数据，发生异常崩溃后，可以将内存临时数据及时的保存为文件或者入库。</p>
 <h2 id="二、zmq"><a href="#二、zmq" class="headerlink" title="二、zmq"></a>二、zmq</h2><p>使用其一对多的发布订阅模式，可以用于过滤数据。也可以在消费数据时进行数据分发，分发到多个进程进行处理，提高处理性能。</p>
+<h2 id="三、Sklearn"><a href="#三、Sklearn" class="headerlink" title="三、Sklearn"></a>三、Sklearn</h2><ol>
+<li><p>pipeline</p>
+<img src="/2020/08/12/Python-Tips/carbon.png" class title="processes asset_img"></li>
+</ol>
 
       
     </div>

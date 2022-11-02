@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"shizhenqiang.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.13.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"shizhenqiang.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.13.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="HBase基于LSM树模型实现，所有的数据写入操作首先会顺序写入日志HLog，再写入MemStore，当MemStore中数据大小超过阈值之后再将这些数据批量写入磁盘，生成一个新的HFile文件。LSM树架构有如下几个非常明显的优势：  这种写入方式将一次随机IO写入转换成一个顺序IO写入（HLog顺序写入）加上一次内存写入（MemStore写入），使得写入性能得到极大提升。 HFile中KeyV">
 <meta property="og:type" content="article">
@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://shizhenqiang.github.io/2019/07/19/hbase/image-20220810110112338.png">
 <meta property="og:image" content="https://shizhenqiang.github.io/2019/07/19/hbase/read_hbase.png">
 <meta property="article:published_time" content="2019-07-19T03:02:56.000Z">
-<meta property="article:modified_time" content="2022-10-13T09:55:03.202Z">
+<meta property="article:modified_time" content="2022-10-25T07:43:24.625Z">
 <meta property="article:author" content="Chelf">
 <meta property="article:tag" content="hbase">
 <meta name="twitter:card" content="summary">
@@ -135,7 +135,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives">
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">15</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -221,7 +221,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-13 17:55:03" itemprop="dateModified" datetime="2022-10-13T17:55:03+08:00">2022-10-13</time>
+      <time title="Modified: 2022-10-25 15:43:24" itemprop="dateModified" datetime="2022-10-25T15:43:24+08:00">2022-10-25</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -293,13 +293,13 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2019/05/19/kafka/" rel="prev" title="kafka 线上问题汇总">
-                  <i class="fa fa-chevron-left"></i> kafka 线上问题汇总
+                <a href="/2019/07/16/About-hadoop/" rel="prev" title="Mapreduce">
+                  <i class="fa fa-chevron-left"></i> Mapreduce
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2020/08/12/Python-Tips/" rel="next" title="Python Tips">
-                  Python Tips <i class="fa fa-chevron-right"></i>
+                <a href="/2019/10/25/Recommendation/" rel="next" title="个性化推荐系统综述---王国霞，刘贺平 总结">
+                  个性化推荐系统综述---王国霞，刘贺平 总结 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>

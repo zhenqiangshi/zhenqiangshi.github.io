@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"shizhenqiang.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.13.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="一、引言​    所谓数据挖掘,就是从大量无序的数据中发现隐含的、有效的、有价值的、可理解的模式,进而发现有用的知识,并得出时间的趋向和关联,为用户提供问题求解层次的决策支持能力。 二、 DM中的现有的聚类算法   本文以聚类算法所采用的基本思想为依据将它们分为五类,即层次聚类算法、分割聚类算法、基于约束的聚类算法、机器学习中的聚类算法以及用于高维数据的聚类算法。 （1）层次聚类算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="聚类综述">
+<meta property="og:url" content="https://shizhenqiang.github.io/2018/10/25/%E8%81%9A%E7%B1%BB/index.html">
+<meta property="og:site_name" content="Chelf Blog">
+<meta property="og:description" content="一、引言​    所谓数据挖掘,就是从大量无序的数据中发现隐含的、有效的、有价值的、可理解的模式,进而发现有用的知识,并得出时间的趋向和关联,为用户提供问题求解层次的决策支持能力。 二、 DM中的现有的聚类算法   本文以聚类算法所采用的基本思想为依据将它们分为五类,即层次聚类算法、分割聚类算法、基于约束的聚类算法、机器学习中的聚类算法以及用于高维数据的聚类算法。 （1）层次聚类算法">
+<meta property="og:locale">
+<meta property="article:published_time" content="2018-10-25T03:12:49.000Z">
+<meta property="article:modified_time" content="2022-10-25T03:28:21.004Z">
+<meta property="article:author" content="Chelf">
+<meta property="article:tag" content="machine learning">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://shizhenqiang.github.io/2018/10/25/%E8%81%9A%E7%B1%BB/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-Hans","comments":true,"permalink":"https://shizhenqiang.github.io/2018/10/25/%E8%81%9A%E7%B1%BB/","path":"2018/10/25/聚类/","title":"聚类综述"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>聚类综述 | Chelf Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Chelf Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">To let your hair down</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-archives"><a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%BC%95%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">一、引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81-DM%E4%B8%AD%E7%9A%84%E7%8E%B0%E6%9C%89%E7%9A%84%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">二、 DM中的现有的聚类算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E5%B1%82%E6%AC%A1%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 层次聚类算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E5%88%86%E5%89%B2%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 分割聚类算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-%E5%9F%BA%E4%BA%8E%E5%AF%86%E5%BA%A6%E7%9A%84%E8%81%9A%E7%B1%BB"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.2.1 基于密度的聚类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-%E5%9F%BA%E4%BA%8E%E7%BD%91%E6%A0%BC%E7%9A%84%E8%81%9A%E7%B1%BB"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.2.2 基于网格的聚类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-3-%E5%9F%BA%E4%BA%8E%E5%9B%BE%E8%AE%BA%E7%9A%84%E8%81%9A%E7%B1%BB"><span class="nav-number">2.2.3.</span> <span class="nav-text">2.2.3 基于图论的聚类</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E5%9F%BA%E4%BA%8E%E7%BA%A6%E6%9D%9F%E7%9A%84%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 基于约束的聚类算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 机器学习中的聚类算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-%E7%94%A8%E4%BA%8E%E9%AB%98%E7%BB%B4%E6%95%B0%E6%8D%AE%E7%9A%84%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 用于高维数据的聚类算法</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chelf</p>
+  <div class="site-description" itemprop="description">We used to look up at the sky and wonder at our place in the stars, now we just look down and worry about our place in the dirt.</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives">
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://shizhenqiang.github.io/2018/10/25/%E8%81%9A%E7%B1%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chelf">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chelf Blog">
+      <meta itemprop="description" content="We used to look up at the sky and wonder at our place in the stars, now we just look down and worry about our place in the dirt.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="聚类综述 | Chelf Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          聚类综述
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-10-25 11:12:49" itemprop="dateCreated datePublished" datetime="2018-10-25T11:12:49+08:00">2018-10-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-25 11:28:21" itemprop="dateModified" datetime="2022-10-25T11:28:21+08:00">2022-10-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="一、引言"><a href="#一、引言" class="headerlink" title="一、引言"></a>一、引言</h2><p>​    所谓数据挖掘,就是从大量无序的数据中发现隐含的、有效的、有价值的、可理解的模式,进而发现有用的知识,并得出时间的趋向和关联,为用户提供问题求解层次的决策支持能力。</p>
+<h2 id="二、-DM中的现有的聚类算法"><a href="#二、-DM中的现有的聚类算法" class="headerlink" title="二、 DM中的现有的聚类算法"></a>二、 DM中的现有的聚类算法</h2><p>   本文以聚类算法所采用的基本思想为依据将它们分为五类,即<strong>层次聚类算法</strong>、<strong>分割聚类算法</strong>、<strong>基于约束的聚类算法</strong>、<strong>机器学习中的聚类算法</strong>以及用于<strong>高维数据的聚类算法</strong>。</p>
+<p>（1）层次聚类算法<br>         聚合聚类:Single2Link,Complete2Link,Average2Link分解聚类<br>         分割聚类算法基于密度的聚类基于网格的聚类<br>（2）基于图论的聚类<br>         基于平方误差的迭代重分配聚类:概率聚类、最近邻<br>         聚类、K2medoids、K2means<br>（3）基于约束的聚类算法<br>（4）机器学习中的聚类算法<br>         人工神经网络方法<br>         基于进化理论的方法:模拟退火、遗传算法<br>（5）用于高维数据的聚类算法<br>         子空间聚类<br>          联合聚类</p>
+<h3 id="2-1-层次聚类算法"><a href="#2-1-层次聚类算法" class="headerlink" title="2.1 层次聚类算法"></a>2.1 层次聚类算法</h3><p>​    层次聚类算法通过将数据组织成若干组并形成一个相应的树状图来进行聚类,它又可以分为两类,即<strong>自底向上</strong>的聚合层次聚类和<strong>自顶向下</strong>的分解层次聚类。聚合聚类的策略是先将每个对象各自作为一个原子聚类,然后对这些原子聚类逐层进行聚合,直至满足一定的终止条件;后者则与前者相反,它先将所有的对象都看成一个聚类,然后将其不断分解直至满足终止条件。<br>​    对于聚合聚类算法来讲,根据度量两个子类的相似度时所依据的距离不同,又可将其分为基于Single-Link,Complete-Link和Average-Link的聚合聚类。Single-Link在这三者中应用最为广泛,它根据两个聚类中相隔最近的两个点之间的距离来评价这两个类之间的相似程度,而后两者则分别依据两类中数据点之间的最远距离和平均距离来进行相似度评价。<br>​    CURE,ROCK和CHAMELEON算法是聚合聚类中最具代表性的三个方法。<br>​    Guha等人在1998年提出了CURE算法。该方法不用单个中心或对象来代表一个聚类,而是选择数据空间中固定数目的、具有代表性的一些点共同来代表相应的类,这样就可以识别具有复杂形状和不同大小的聚类,从而能很好地过滤孤立点。ROCK算法[2]是对CURE的改进,除了具有CURE算法的一些优良特性之外,它还适用于类别属性的数据。CHAME-LEON算法是Karypis等人于1999年提出来的,它在聚合聚类的过程中利用了动态建模的技术。</p>
+<h3 id="2-2-分割聚类算法"><a href="#2-2-分割聚类算法" class="headerlink" title="2.2 分割聚类算法"></a>2.2 分割聚类算法</h3><p>分割聚类算法是另外一种重要的聚类方法。它先将数据点集分为k个划分,然后从这k个初始划分开始,通过重复的控制策略使某个准则最优化以达到最终的结果。这类方法又可分为基于密度的聚类、基于网格的聚类、基于图论的聚类和基于平方误差的迭代重分配聚类。</p>
+<h4 id="2-2-1-基于密度的聚类"><a href="#2-2-1-基于密度的聚类" class="headerlink" title="2.2.1 基于密度的聚类"></a>2.2.1 基于密度的聚类</h4><p>​    基于密度的聚类算法从数据对象的分布密度出发,将密度足够大的相邻区域连接起来,从而可以发现具有任意形状的聚类,并能有效处理异常数据。它主要用于对空间数据的聚类。<br><strong>DBSCAN是一个典型的基于密度的聚类方法</strong>,它将聚类定义为一组密度连接的点集,然后通过不断生长足够高密度的区域来进行聚类。DENCLUE[5]则根据数据点在属性空间中的密度来进行聚类。从本质上讲,DENCLUE是基于密度的聚类算法与基于网格的预处理的结合,它受目标数据的维度影响较小。此外,Ankerst等人提出的OPTICS,Xu等人提出的DB-CLASD和马帅等人提出的CURD算法也采用了基于密度的聚类思想,它们均针对数据在空间中呈现的不同密度分布对DB-SCAN作了相应的改进。</p>
+<h4 id="2-2-2-基于网格的聚类"><a href="#2-2-2-基于网格的聚类" class="headerlink" title="2.2.2 基于网格的聚类"></a>2.2.2 基于网格的聚类</h4><p>​    基于网格的聚类从对数据空间划分的角度出发,利用属性空间的多维网格数据结构,将空间划分为有限数目的单元以构成一个可以进行聚类分析的网格结构。该方法的主要特点是处理时间与数据对象的数目无关,但与每维空间所划分的单元数相关;而且,基于其间接的处理步骤(数据→网格数据→空间划分→数据划分),该方法还与数据的输入顺序无关。与基于密度的聚类只能处理数值属性的数据所不同的是,基于网格的聚类可以处理任意类型的数据,但以降低聚类的质量和准确性为代价。STING是一个基于网格多分辨率的聚类方法,它将空间划分为方形单元,不同层次的方形单元对应不同层次的分辨率。STING+则对其进行了改进以用于处理动态进化的空间数据。CLIQUE也是一个基于网格的聚类算法,它结合了网格聚类与密度聚类的思想,对于处理大规模高维数据具有较好的效果。除这些算法以外,以信号处理思想为基础的Wave-Cluster算法也属基于网格聚类的范畴。</p>
+<h4 id="2-2-3-基于图论的聚类"><a href="#2-2-3-基于图论的聚类" class="headerlink" title="2.2.3 基于图论的聚类"></a>2.2.3 基于图论的聚类</h4><p>​    基于图论的方法是把聚类转换为一个组合优化问题,并利用图论和相关的启发式算法来解决该问题。其做法一般是先构造数据集的最小生成树(MinimalSpanningTree,MST),然后逐步删除MST中具有最大长度的那些边,从而形成更多的聚类。基于超图的划分和基于光谱的图划分方法是这类算法的两个主要应用形式。该方法的一个优点在于它不需要进行一些相似度的计算,就能把聚类问题映射为图论中的一个组合优化问题。  2.2.4 基于平方误差的迭代重分配聚类<br>​    基于平方误差的重分配聚类方法的主要思想是逐步对聚类结果进行优化、不断将目标数据集向各个聚类中心进行重新分配以获得最优解(判断是否是最优解的目标函数通常通过平方误差计算法得到)。此类方法又可进一步分为概率聚类算法、考虑了最近邻影响的最近邻聚类算法以及K-medoids算法和K-means算法。<br>(1)概率聚类算法的重要代表是Mitchell等人于1997年<br>   提出的期望最大化算法(ExpectationMaximization,EM)[11]。它除了能处理异构数据之外,还具有另外几个重要的特性:</p>
+<p>   ①能处理具有复杂结构的记录;</p>
+<p>   ②能够连续处理成批的数据;</p>
+<p>   ③具有在线处理能力;</p>
+<p>   ④产生的聚类结果易于解释。<br>(2)最近邻距离的计算在聚类过程中起着基础性的作用,这也正是导致产生最近邻聚类算法的直接因素。共享最近邻算法(SharedNearestNeighbor,SNN)就是该类算法的典型代表之一,它把基于密度的方法与ROCK算法的思想结合起来,通过只保留数据点的K个最近邻居从而简化了相似矩阵,并且也保留了与每个数据点相连的最近邻居的个数,但是其时间复杂度也提高到了O(N2)(N为数据点个数)。<br>(3)K2medoids方法用类中的某个点来代表该聚类,这种方法能有效处理异常数据。它的两个最早版本是PAM和CLARA算法,此后又有CLARANS及其一系列的扩展算法。这类方法具有两个优点:它能处理任意类型的属性;它对异常数据不敏感。<br>(4)K2means算法是目前为止应用最为广泛的一种聚类方法,其每个类别均用该类中所有数据的平均值(或加权平均)来表示,这个平均值即被称作聚类中心。该方法虽然不能用于类别属性的数据,但对于数值属性的数据,它能很好地体现聚类在几何和统计学上的意义。 但是,原始K2means算法也存在如下缺陷:</p>
+<p>​    ①聚类结果的好坏依赖于对初始聚类中心的选择;</p>
+<p>​    ②容易陷入局部最优解;</p>
+<p>​    ③对K值的选择没有准则可依循;</p>
+<p>​    ④对异常数据较为敏感;</p>
+<p>​    ⑤只能处理数值属性的数据;</p>
+<p>​    ⑥聚类结果可能不平衡。<br>​    为克服原始K2means算法存在的不足,研究者从各自不同的角度提出了一系列K2means的变体,如Bradley和Fayyad等人从降低聚类结果对初始聚类中心的依赖程度入手对它作了改进,同时也使该算法能适用于大规模的数据集[15];Dhillon等人则通过调整迭代过程中重新计算聚类中心的方法使其性能得到了提高[16];Zhang等人利用权值对数据点进行软分配以调整其迭代优化过程[17];Pelleg等人提出了一个新的X2means算法来加速其迭代过程[18];Sarafis则将遗传算法应用于K2means的目标函数构建中,并提出了一个新的聚类算法[19];为了得到平衡的聚类结果,文献[20]利用图论的划分思想对K2means作了改进;文献[21]则将原始算法中的目标函数对应于一个各向同性的高斯混合模型;Berkhin等人[22]将K2means的应用扩展到了分布式聚类。</p>
+<h3 id="2-3-基于约束的聚类算法"><a href="#2-3-基于约束的聚类算法" class="headerlink" title="2.3 基于约束的聚类算法"></a>2.3 基于约束的聚类算法</h3><p>​    真实世界中的聚类问题往往是具备多种约束条件的,然而由于在处理过程中不能准确表达相应的约束条件、不能很好地利用约束知识进行推理以及不能有效利用动态的约束条件,使得这一方法无法得到广泛的推广和应用。这里的约束可以是对个体对象的约束,也可以是对聚类参数的约束,它们均来自相关领域的经验知识。该方法的一个重要应用在于对存在障碍数据的二维空间数据进行聚类。COD(ClusteringwithOb-structedDistance)就是处理这类问题的典型算法,其主要思想是用两点之间的障碍距离取代了一般的欧氏距离来计算其间的最小距离。得这一方法无法得到广泛的推广和应用。这里的约束可以是对个体对象的约束,也可以是对聚类参数的约束,它们均来自相关领域的经验知识。该方法的一个重要应用在于对存在障碍数据的二维空间数据进行聚类。COD(ClusteringwithOb-structedDistance)就是处理这类问题的典型算法,其主要思想是用两点之间的障碍距离取代了一般的欧氏距离来计算其间的最小距离。更多关于这一聚类算法的总结可参考文献</p>
+<h3 id="2-4-机器学习中的聚类算法"><a href="#2-4-机器学习中的聚类算法" class="headerlink" title="2.4 机器学习中的聚类算法"></a>2.4 机器学习中的聚类算法</h3><p>​    机器学习中的聚类算法是指与机器学习相关、采用了某些机器学习理论的聚类方法,它主要包括人工神经网络方法以及基于进化理论的方法。<br>​    自组织映射(Self2OrganizingMap,SOM)是利用人工神经网络进行聚类的较早尝试,它也是向量量化方法的典型代表之一。</p>
+<p>​    该方法具有两个主要特点:</p>
+<p>​      ①它是一种递增的方法,即所有的数据点是逐一进行处理的;</p>
+<p>​      ②它能将聚类中心点映射到一个二维的平面上,从而实现可视化。</p>
+<p>​     此外,文献[26]中提出的一种基于投影自适应谐振理论的人工神经网络聚类也具有很好的性能。在基于进化理论的聚类方法中,模拟退火的应用较为广泛,SINICC算法就是其中之一。在模拟退火中经常使用到微扰因子,其作用等同于把一个点从当前的聚类重新分配到一个随机选择的新类别中,这与K2means中采用的机制有些类似。遗传算法也可以用于聚类处理,它主要通过选择、交叉和变异这三种遗传算子的运算以不断优化可选方案从而得到最终的聚类结果。<br>​    利用进化理论进行聚类的缺陷在于它依赖于一些经验参数的选取,并且具有较高的计算复杂度。为了克服上述不足之处,有研究者尝试组合利用多种策略,如将遗传算法与K2means结合起来,并且使用变长基因编码,这样不仅能提高K2means算法的效率,还能运行多个K2means算法以确定合适的K值</p>
+<h3 id="2-5-用于高维数据的聚类算法"><a href="#2-5-用于高维数据的聚类算法" class="headerlink" title="2.5 用于高维数据的聚类算法"></a>2.5 用于高维数据的聚类算法</h3><p>​    高维数据聚类是目前多媒体数据挖掘领域面临的重大挑战之一。对高维数据聚类的困难主要来源于以下两个因素:</p>
+<p>​    ①高维属性空间中那些无关属性的出现使得数据失去了聚 类趋势;</p>
+<p>​    ②高维使数据之间的区分界限变得模糊。</p>
+<p>除了降维这一最直接的方法之外,对高维数据的聚类处理还包括子空间聚类以及联合聚类技术等。<br>CACTUS采用了子空间聚类的思想,它基于对原始空间在二维平面上的一个投影处理。CLIQUE也是用于数值属性数据的一个简单的子空间聚类方法,它不仅同时结合了基于密度和基于网格的聚类思想,还借鉴了Apriori算法,并利用MDL(MinimumDescriptionLength)原理选择合适的子空间。联合聚类对数据点和它们的属性同时进行聚类。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/machine-learning/" rel="tag"># machine learning</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/03/20/Random-Forests/" rel="prev" title="Random Forests">
+                  <i class="fa fa-chevron-left"></i> Random Forests
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/10/28/LogisticRegression/" rel="next" title="逻辑回归">
+                  逻辑回归 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chelf</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":true,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>
