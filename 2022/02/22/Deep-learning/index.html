@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"shizhenqiang.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.13.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="卷积神经网络（CNN）卷积神经网络 （Convolutional Neural Network, CNN）是一种结构类似于人类或动物的 视觉系统 的人工神经网络，包含一个或多个卷积层（Convolutional Layer）、池化层（Pooling Layer）和全连接层（Fully-connected Layer）。 概念后面再说，先上代码。 第一步，导包1import tensorflow a">
+<meta property="og:type" content="article">
+<meta property="og:title" content="卷积神经网络简单实现及部署">
+<meta property="og:url" content="https://shizhenqiang.github.io/2022/02/22/Deep-learning/index.html">
+<meta property="og:site_name" content="Chelf Blog">
+<meta property="og:description" content="卷积神经网络（CNN）卷积神经网络 （Convolutional Neural Network, CNN）是一种结构类似于人类或动物的 视觉系统 的人工神经网络，包含一个或多个卷积层（Convolutional Layer）、池化层（Pooling Layer）和全连接层（Fully-connected Layer）。 概念后面再说，先上代码。 第一步，导包1import tensorflow a">
+<meta property="og:locale">
+<meta property="article:published_time" content="2022-02-22T03:24:56.000Z">
+<meta property="article:modified_time" content="2022-11-04T03:50:01.876Z">
+<meta property="article:author" content="Chelf">
+<meta property="article:tag" content="machine learning">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://shizhenqiang.github.io/2022/02/22/Deep-learning/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-Hans","comments":true,"permalink":"https://shizhenqiang.github.io/2022/02/22/Deep-learning/","path":"2022/02/22/Deep-learning/","title":"卷积神经网络简单实现及部署"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>卷积神经网络简单实现及部署 | Chelf Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Chelf Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">To let your hair down</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-archives"><a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88CNN%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">卷积神经网络（CNN）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%8C%E5%AF%BC%E5%8C%85"><span class="nav-number">1.1.</span> <span class="nav-text">第一步，导包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%8C%E6%95%B0%E6%8D%AE%E8%8E%B7%E5%8F%96%E5%8F%8A%E9%A2%84%E5%A4%84%E7%90%86"><span class="nav-number">1.2.</span> <span class="nav-text">第二步，数据获取及预处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%8C%E6%A8%A1%E5%9E%8B%E5%BB%BA%E7%AB%8B"><span class="nav-number">1.3.</span> <span class="nav-text">第三步，模型建立</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5%EF%BC%8C%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83"><span class="nav-number">1.4.</span> <span class="nav-text">第四步，模型训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%94%E6%AD%A5%EF%BC%8C%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0"><span class="nav-number">1.5.</span> <span class="nav-text">第五步，模型评估</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%85%AD%E6%AD%A5%EF%BC%8C-%E6%A8%A1%E5%9E%8B%E5%AF%BC%E5%87%BA"><span class="nav-number">1.6.</span> <span class="nav-text">第六步， 模型导出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%83%E6%AD%A5%EF%BC%8CTensorFlow-Serving-%E6%A8%A1%E5%9E%8B%E9%83%A8%E7%BD%B2"><span class="nav-number">1.7.</span> <span class="nav-text">第七步，TensorFlow Serving 模型部署</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%85%AB%E6%AD%A5%EF%BC%8C%E8%B0%83%E7%94%A8%E6%B5%8B%E8%AF%95"><span class="nav-number">1.8.</span> <span class="nav-text">第八步，调用测试</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E5%BF%B5%E8%AE%A4%E7%9F%A5"><span class="nav-number">2.</span> <span class="nav-text">概念认知</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%A0%E9%87%8F"><span class="nav-number">2.1.</span> <span class="nav-text">张量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B1%A0%E5%8C%96%E5%B1%82"><span class="nav-number">2.2.</span> <span class="nav-text">池化层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%B7%E7%A7%AF%E5%B1%82"><span class="nav-number">2.3.</span> <span class="nav-text">卷积层</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E5%9C%B0%E5%9D%80"><span class="nav-number">3.</span> <span class="nav-text">学习地址</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chelf</p>
+  <div class="site-description" itemprop="description">We used to look up at the sky and wonder at our place in the stars, now we just look down and worry about our place in the dirt.</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives">
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://shizhenqiang.github.io/2022/02/22/Deep-learning/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chelf">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chelf Blog">
+      <meta itemprop="description" content="We used to look up at the sky and wonder at our place in the stars, now we just look down and worry about our place in the dirt.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="卷积神经网络简单实现及部署 | Chelf Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          卷积神经网络简单实现及部署
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-02-22 11:24:56" itemprop="dateCreated datePublished" datetime="2022-02-22T11:24:56+08:00">2022-02-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-11-04 11:50:01" itemprop="dateModified" datetime="2022-11-04T11:50:01+08:00">2022-11-04</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="卷积神经网络（CNN）"><a href="#卷积神经网络（CNN）" class="headerlink" title="卷积神经网络（CNN）"></a>卷积神经网络（CNN）</h1><p><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C">卷积神经网络</a> （Convolutional Neural Network, CNN）是一种结构类似于人类或动物的 <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%A7%86%E8%A7%89%E7%B3%BB%E7%BB%9F">视觉系统</a> 的人工神经网络，包含一个或多个卷积层（Convolutional Layer）、池化层（Pooling Layer）和全连接层（Fully-connected Layer）。</p>
+<p>概念后面再说，先上代码。</p>
+<h2 id="第一步，导包"><a href="#第一步，导包" class="headerlink" title="第一步，导包"></a>第一步，导包</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br></pre></td></tr></table></figure>
+
+<h2 id="第二步，数据获取及预处理"><a href="#第二步，数据获取及预处理" class="headerlink" title="第二步，数据获取及预处理"></a>第二步，数据获取及预处理</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MNISTLoader</span>():</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        mnist = tf.keras.datasets.mnist</span><br><span class="line">        (self.train_data,self.train_label), \</span><br><span class="line">        (self.test_data, self.test_label) = mnist.load_data()</span><br><span class="line">        <span class="comment"># MNIST中的图像默认为uint8（0-255的数字）。以下代码将其归一化到0-1之间的浮点数，并在最后增加一维作为颜色通道</span></span><br><span class="line">        self.train_data = np.expand_dims(self.train_data.astype(np.float32) /</span><br><span class="line">                                         <span class="number">255.0</span>,</span><br><span class="line">                                         axis=-<span class="number">1</span>)  <span class="comment"># [60000, 28, 28, 1]</span></span><br><span class="line">        self.test_data = np.expand_dims(self.test_data.astype(np.float32) /</span><br><span class="line">                                        <span class="number">255.0</span>,</span><br><span class="line">                                        axis=-<span class="number">1</span>)  <span class="comment"># [10000, 28, 28, 1]</span></span><br><span class="line">        self.train_label = self.train_label.astype(np.int32)  <span class="comment"># [60000]</span></span><br><span class="line">        self.test_label = self.test_label.astype(np.int32)  <span class="comment"># [10000]</span></span><br><span class="line">        self.num_train_data, self.num_test_data = self.train_data.shape[</span><br><span class="line">            <span class="number">0</span>], self.test_data.shape[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_batch</span>(<span class="params">self, batch_size</span>):</span><br><span class="line">        <span class="comment"># 从数据集中随机取出batch_size个元素并返回</span></span><br><span class="line">        index = np.random.randint(<span class="number">0</span>, self.num_train_data, batch_size)</span><br><span class="line">        <span class="keyword">return</span> self.train_data[index, :], self.train_label[index]</span><br></pre></td></tr></table></figure>
+
+<h2 id="第三步，模型建立"><a href="#第三步，模型建立" class="headerlink" title="第三步，模型建立"></a>第三步，模型建立</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">CNN</span>(tf.keras.Model):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        self.conv1 = tf.keras.layers.Conv2D(</span><br><span class="line">            filters=<span class="number">32</span>,  <span class="comment"># 卷积层神经元（卷积核）数目</span></span><br><span class="line">            kernel_size=[<span class="number">5</span>, <span class="number">5</span>],  <span class="comment"># 感受野大小</span></span><br><span class="line">            padding=<span class="string">&#x27;same&#x27;</span>,  <span class="comment"># padding策略（vaild 或 same）</span></span><br><span class="line">            activation=tf.nn.relu  <span class="comment"># 激活函数</span></span><br><span class="line">        )</span><br><span class="line">        self.pool1 = tf.keras.layers.MaxPool2D(pool_size=[<span class="number">2</span>, <span class="number">2</span>], strides=<span class="number">2</span>)</span><br><span class="line">        self.conv2 = tf.keras.layers.Conv2D(filters=<span class="number">64</span>,</span><br><span class="line">                                            kernel_size=[<span class="number">5</span>, <span class="number">5</span>],</span><br><span class="line">                                            padding=<span class="string">&#x27;same&#x27;</span>,</span><br><span class="line">                                            activation=tf.nn.relu)</span><br><span class="line">        self.pool2 = tf.keras.layers.MaxPool2D(pool_size=[<span class="number">2</span>, <span class="number">2</span>], strides=<span class="number">2</span>)</span><br><span class="line">        self.flatten = tf.keras.layers.Reshape(target_shape=(<span class="number">7</span> * <span class="number">7</span> * <span class="number">64</span>, ))</span><br><span class="line">        self.dense1 = tf.keras.layers.Dense(units=<span class="number">1024</span>, activation=tf.nn.relu)</span><br><span class="line">        self.dense2 = tf.keras.layers.Dense(units=<span class="number">10</span>)</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    @tf.function 以转化为 SavedModel 支持的计算图</span></span><br><span class="line"><span class="string">    model load完成后，使用modle.call()，由于自定义的模型类里可能有多个方法都需要导出，因此，需要告诉 TensorFlow Serving 每个方法在被客户端调用时分别叫做什么名字</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line"><span class="meta">    @tf.function(<span class="params"></span></span></span><br><span class="line"><span class="params"><span class="meta">        input_signature=[tf.TensorSpec(<span class="params">[<span class="literal">None</span>, <span class="number">28</span>, <span class="number">28</span>, <span class="number">1</span>], tf.float32</span>)]</span>)</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">call</span>(<span class="params">self, inputs</span>):</span><br><span class="line">        x = self.conv1(inputs)  <span class="comment"># [batch_size, 28, 28, 32]</span></span><br><span class="line">        x = self.pool1(x)  <span class="comment"># [batch_size, 14, 14, 32]</span></span><br><span class="line">        x = self.conv2(x)  <span class="comment"># [batch_size, 14, 14, 64]</span></span><br><span class="line">        x = self.pool2(x)  <span class="comment"># [batch_size, 7, 7, 64]</span></span><br><span class="line">        x = self.flatten(x)  <span class="comment"># [batch_size, 7 * 7 * 64]</span></span><br><span class="line">        x = self.dense1(x)  <span class="comment"># [batch_size, 1024]</span></span><br><span class="line">        x = self.dense2(x)  <span class="comment"># [batch_size, 10]</span></span><br><span class="line">        output = tf.nn.softmax(x)</span><br><span class="line">        <span class="keyword">return</span> output</span><br></pre></td></tr></table></figure>
+
+<h2 id="第四步，模型训练"><a href="#第四步，模型训练" class="headerlink" title="第四步，模型训练"></a>第四步，模型训练</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">num_epochs = <span class="number">5</span></span><br><span class="line">batch_size = <span class="number">50</span></span><br><span class="line">learning_rate = <span class="number">0.001</span></span><br><span class="line"></span><br><span class="line">model = CNN()</span><br><span class="line">data_loader = MNISTLoader()</span><br><span class="line"><span class="comment"># 优化器，这里使用常用的 Adam 优化器</span></span><br><span class="line">optimizer = tf.keras.optimizers.Adam(learning_rate=learning_rate)</span><br><span class="line"></span><br><span class="line"><span class="comment"># summaries and tensorboard</span></span><br><span class="line"><span class="comment"># log_dir = &quot;./tensorflow_board&quot;</span></span><br><span class="line"><span class="comment"># summary_writer = tf.summary.create_file_writer(log_dir)  # 实例化记录器</span></span><br><span class="line"><span class="comment"># tf.summary.trace_on(profiler=True)  # 开启Trace（可选）</span></span><br><span class="line"></span><br><span class="line">num_batches = <span class="built_in">int</span>(data_loader.num_train_data // batch_size * num_epochs)</span><br><span class="line"><span class="keyword">for</span> batch_index <span class="keyword">in</span> <span class="built_in">range</span>(num_batches):</span><br><span class="line">    X, y = data_loader.get_batch(batch_size)</span><br><span class="line">    <span class="built_in">print</span>(X.shape)</span><br><span class="line">    <span class="keyword">with</span> tf.GradientTape() <span class="keyword">as</span> tape:</span><br><span class="line">        y_pred = model(X)</span><br><span class="line">        <span class="comment">#交叉熵函数作为损失函数，其中 sparse 的含义是，真实的标签值 y_true 可以直接传入 int 类型的标签类别</span></span><br><span class="line">        loss = tf.keras.losses.sparse_categorical_crossentropy(y_true=y,</span><br><span class="line">                                                               y_pred=y_pred)</span><br><span class="line">        loss = tf.reduce_mean(loss)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;batch %d: loss %f&quot;</span> % (batch_index, loss.numpy()))</span><br><span class="line">        <span class="comment"># with summary_writer.as_default():  # 指定记录器</span></span><br><span class="line">        <span class="comment">#     tf.summary.scalar(&quot;loss&quot;, loss, step=batch_index)</span></span><br><span class="line"></span><br><span class="line">    grads = tape.gradient(loss, model.variables)</span><br><span class="line">    optimizer.apply_gradients(grads_and_vars=<span class="built_in">zip</span>(grads, model.variables))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="第五步，模型评估"><a href="#第五步，模型评估" class="headerlink" title="第五步，模型评估"></a>第五步，模型评估</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#评估器</span></span><br><span class="line">sparse_categorical_accuracy = tf.keras.metrics.SparseCategoricalAccuracy()</span><br><span class="line">num_batches = <span class="built_in">int</span>(data_loader.num_test_data // batch_size)</span><br><span class="line"></span><br><span class="line"><span class="comment"># for loop 评估预测结果与真实结果</span></span><br><span class="line"><span class="keyword">for</span> batch_index <span class="keyword">in</span> <span class="built_in">range</span>(num_batches):</span><br><span class="line">    start_index, end_index = batch_index * batch_size, (batch_index +</span><br><span class="line">                                                        <span class="number">1</span>) * batch_size</span><br><span class="line">    y_pred = model.predict(data_loader.test_data[start_index:end_index])</span><br><span class="line">    sparse_categorical_accuracy.update_state(</span><br><span class="line">        y_true=data_loader.test_label[start_index:end_index], y_pred=y_pred)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;test accuracy: %f&quot;</span> % sparse_categorical_accuracy.result())</span><br></pre></td></tr></table></figure>
+
+<h2 id="第六步，-模型导出"><a href="#第六步，-模型导出" class="headerlink" title="第六步， 模型导出"></a>第六步， 模型导出</h2><figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tf.saved_model.save(<span class="keyword">model</span>,</span><br><span class="line">                    <span class="string">&quot;saved_with_signature/4&quot;</span>,</span><br><span class="line">                    signatures=&#123;<span class="string">&quot;call&quot;</span>: <span class="keyword">model</span>.call&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="第七步，TensorFlow-Serving-模型部署"><a href="#第七步，TensorFlow-Serving-模型部署" class="headerlink" title="第七步，TensorFlow Serving 模型部署"></a>第七步，TensorFlow Serving 模型部署</h2><p>首先得安装tensorflow-model-server，此处不做介绍。启动命令如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">tensorflow_model_server</span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">--rest_api_port=6006</span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">--model_name=test_model</span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">--model_base_path=<span class="string">&quot;your_path/saved_with_signature/&quot;</span> <span class="comment">#绝对地址</span></span></span><br></pre></td></tr></table></figure>
+
+<h2 id="第八步，调用测试"><a href="#第八步，调用测试" class="headerlink" title="第八步，调用测试"></a>第八步，调用测试</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">data_loader = MNISTLoader()</span><br><span class="line"></span><br><span class="line">data = json.dumps(&#123;</span><br><span class="line">    <span class="string">&quot;signature_name&quot;</span>: <span class="string">&quot;call&quot;</span>, <span class="comment"># self</span></span><br><span class="line">    <span class="string">&quot;instances&quot;</span>: data_loader.test_data[<span class="number">0</span>:<span class="number">100</span>].tolist()</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">headers = &#123;<span class="string">&quot;content-type&quot;</span>: <span class="string">&quot;application/json&quot;</span>&#125;</span><br><span class="line"></span><br><span class="line">json_response = requests.post(</span><br><span class="line">    <span class="string">&#x27;http://localhost:6006/v1/models/test_model:predict&#x27;</span>,</span><br><span class="line">    data=data,</span><br><span class="line">    headers=headers)</span><br><span class="line"></span><br><span class="line">predictions = np.array(json.loads(json_response.text)[<span class="string">&#x27;predictions&#x27;</span>])</span><br><span class="line"><span class="built_in">print</span>(np.argmax(predictions, axis=-<span class="number">1</span>)[<span class="number">0</span>:<span class="number">100</span>])</span><br><span class="line"><span class="built_in">print</span>(data_loader.test_label[<span class="number">0</span>:<span class="number">100</span>])</span><br></pre></td></tr></table></figure>
+
+<h1 id="概念认知"><a href="#概念认知" class="headerlink" title="概念认知"></a>概念认知</h1><h2 id="张量"><a href="#张量" class="headerlink" title="张量"></a>张量</h2><p>就像向量是标量的推广，矩阵是向量的推广一样，我们可以构建具有更多轴的数据结构。 张量（本小节中的“张量”指代数对象）为我们提供了描述具有任意数量轴的n维数组的通用方法。 例如，向量是一阶张量，矩阵是二阶张量。</p>
+<h2 id="池化层"><a href="#池化层" class="headerlink" title="池化层"></a>池化层</h2><p>对图像进行降采样的过程，对于每一次滑动窗口中的所有值，输出其中的最大值（MaxPooling）、均值或其他方法产生的值。例如，对于一个三通道的 16×16 图像（即一个 <code>16*16*3</code> 的张量），经过感受野为 2×2，滑动步长为 2 的池化层，则得到一个 <code>8*8*3</code> 的张量。</p>
+<h2 id="卷积层"><a href="#卷积层" class="headerlink" title="卷积层"></a>卷积层</h2><p>卷积层对输入和卷积核权重进行<a target="_blank" rel="noopener" href="https://zh.d2l.ai/chapter_convolutional-neural-networks/conv-layer.html#id2">互相关运算</a>，并在添加标量偏置之后产生输出。 所以，卷积层中的两个被训练的参数是卷积核权重和标量偏置。</p>
+<h1 id="学习地址"><a href="#学习地址" class="headerlink" title="学习地址"></a><strong>学习地址</strong></h1><p><a target="_blank" rel="noopener" href="https://tf.wiki/zh_hans/appendix/tfds.html"><a target="_blank" rel="noopener" href="https://tf.wiki/zh_hans"> 简单粗暴 TensorFlow 2</a></a></p>
+<p><a target="_blank" rel="noopener" href="https://zh.d2l.ai/chapter_preliminaries/index.html">动手学深度学习</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/machine-learning/" rel="tag"># machine learning</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/01/17/Airflow/" rel="prev" title="Airflow">
+                  <i class="fa fa-chevron-left"></i> Airflow
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chelf</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":true,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>
