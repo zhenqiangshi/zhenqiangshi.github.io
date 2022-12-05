@@ -85,7 +85,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-archives"><a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-archives"><a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li>
   </ul>
 </nav>
 
@@ -128,7 +128,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives">
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -139,7 +139,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -168,6 +168,107 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://shizhenqiang.github.io/2022/11/18/Knowledge-Graph/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chelf">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chelf Blog">
+      <meta itemprop="description" content="We used to look up at the sky and wonder at our place in the stars, now we just look down and worry about our place in the dirt.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Chelf Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/11/18/Knowledge-Graph/" class="post-title-link" itemprop="url">Knowledge Graph</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-11-18 09:37:46" itemprop="dateCreated datePublished" datetime="2022-11-18T09:37:46+08:00">2022-11-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-12-05 15:44:23" itemprop="dateModified" datetime="2022-12-05T15:44:23+08:00">2022-12-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="一、什么是知识图谱？"><a href="#一、什么是知识图谱？" class="headerlink" title="一、什么是知识图谱？"></a>一、什么是知识图谱？</h1><blockquote>
+<p><strong>A knowledge graph acquires and integrates information into an ontology and applies a reasoner to derive new knowledge.</strong></p>
+<p>​                                                                              —–<strong>Ehrlinger and WoB</strong></p>
+</blockquote>
+<p>知识图谱会获取信息并将其集成到一个本体中，使用一个推理器产生新的知识。</p>
+<p>知识图谱的概念其实比较多和杂，没有一个固定的统一说法。</p>
+<h1 id="二、图数据库"><a href="#二、图数据库" class="headerlink" title="二、图数据库"></a>二、图数据库</h1><p>用于存储图关系的数据库，下面简单介绍一下neo4j的用法。</p>
+<p>你可以使用doker快速安装并启动一个neo4j数据库。</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="keyword">run</span><span class="language-bash"> --name neo4j \</span></span><br><span class="line"><span class="language-bash">-d \</span></span><br><span class="line"><span class="language-bash">-p 7474:7474 \</span></span><br><span class="line"><span class="language-bash">-p 7687:7687 \</span></span><br><span class="line"><span class="language-bash">-v ./neo4j/data:/data \</span></span><br><span class="line"><span class="language-bash">-v ./neo4j/logs:/logs \</span></span><br><span class="line"><span class="language-bash">-v ./neo4j/conf:/var/lib/neo4j/conf \</span></span><br><span class="line"><span class="language-bash">-v ./neo4j/import:/var/lib/neo4j/import \</span></span><br><span class="line"><span class="language-bash">--<span class="built_in">env</span> NEO4J_AUTH=neo4j/bigdata \</span></span><br><span class="line"><span class="language-bash">neo4j:4.3.21-community</span></span><br></pre></td></tr></table></figure>
+
+<p>注意文件位置的可读可写权限。那么就可以在<a target="_blank" rel="noopener" href="http://localhost:7474/">http://localhost:7474/</a>    访问neo4j。</p>
+<img src="/2022/11/18/Knowledge-Graph/image-20221205153727189.png" class title="demo asset_img">
+
+<p>具体的插入命令，你可以去学习cypher。</p>
+<p>当然也可以学习python的包—py2neo，下面一个简单的例子。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> py2neo <span class="keyword">import</span> Graph, Node, Relationship, NodeMatcher, RelationshipMatcher</span><br><span class="line">graph = Graph(<span class="string">&quot;bolt://127.0.0.1:7687&quot;</span>, auth=(<span class="string">&quot;neo4j&quot;</span>, <span class="string">&quot;password&quot;</span>))</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_rel</span>():</span><br><span class="line">    matcher = NodeMatcher(graph)</span><br><span class="line">    rmatcher = RelationshipMatcher(graph)</span><br><span class="line">    node_model = matcher.match(<span class="string">&quot;Model&quot;</span>, name=<span class="string">&quot;A模型&quot;</span>).first()</span><br><span class="line">    node_feature = matcher.match(<span class="string">&quot;Feature&quot;</span>, name=<span class="string">&quot;C特征&quot;</span>).first()</span><br><span class="line">    r1 = rmatcher.match(&#123;node_model,node_feature&#125;).first() </span><br><span class="line">    <span class="built_in">print</span>(r1)</span><br><span class="line">    </span><br><span class="line">all_nodes = graph.run(<span class="string">&#x27;MATCH (n) RETURN n&#x27;</span>).data()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> nodes <span class="keyword">in</span> all_nodes:</span><br><span class="line">    <span class="built_in">print</span>(nodes)</span><br><span class="line"></span><br><span class="line">get_rel()</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -213,7 +314,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-11-04 11:50:01" itemprop="dateModified" datetime="2022-11-04T11:50:01+08:00">2022-11-04</time>
+      <time title="Modified: 2022-11-04 14:42:55" itemprop="dateModified" datetime="2022-11-04T14:42:55+08:00">2022-11-04</time>
     </span>
 
   
@@ -245,9 +346,15 @@
 
 <h2 id="第八步，调用测试"><a href="#第八步，调用测试" class="headerlink" title="第八步，调用测试"></a>第八步，调用测试</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">data_loader = MNISTLoader()</span><br><span class="line"></span><br><span class="line">data = json.dumps(&#123;</span><br><span class="line">    <span class="string">&quot;signature_name&quot;</span>: <span class="string">&quot;call&quot;</span>, <span class="comment"># self</span></span><br><span class="line">    <span class="string">&quot;instances&quot;</span>: data_loader.test_data[<span class="number">0</span>:<span class="number">100</span>].tolist()</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">headers = &#123;<span class="string">&quot;content-type&quot;</span>: <span class="string">&quot;application/json&quot;</span>&#125;</span><br><span class="line"></span><br><span class="line">json_response = requests.post(</span><br><span class="line">    <span class="string">&#x27;http://localhost:6006/v1/models/test_model:predict&#x27;</span>,</span><br><span class="line">    data=data,</span><br><span class="line">    headers=headers)</span><br><span class="line"></span><br><span class="line">predictions = np.array(json.loads(json_response.text)[<span class="string">&#x27;predictions&#x27;</span>])</span><br><span class="line"><span class="built_in">print</span>(np.argmax(predictions, axis=-<span class="number">1</span>)[<span class="number">0</span>:<span class="number">100</span>])</span><br><span class="line"><span class="built_in">print</span>(data_loader.test_label[<span class="number">0</span>:<span class="number">100</span>])</span><br></pre></td></tr></table></figure>
 
-<h1 id="概念认知"><a href="#概念认知" class="headerlink" title="概念认知"></a>概念认知</h1><h2 id="张量"><a href="#张量" class="headerlink" title="张量"></a>张量</h2><p>就像向量是标量的推广，矩阵是向量的推广一样，我们可以构建具有更多轴的数据结构。 张量（本小节中的“张量”指代数对象）为我们提供了描述具有任意数量轴的n维数组的通用方法。 例如，向量是一阶张量，矩阵是二阶张量。</p>
-<h2 id="池化层"><a href="#池化层" class="headerlink" title="池化层"></a>池化层</h2><p>对图像进行降采样的过程，对于每一次滑动窗口中的所有值，输出其中的最大值（MaxPooling）、均值或其他方法产生的值。例如，对于一个三通道的 16×16 图像（即一个 <code>16*16*3</code> 的张量），经过感受野为 2×2，滑动步长为 2 的池化层，则得到一个 <code>8*8*3</code> 的张量。</p>
-<h2 id="卷积层"><a href="#卷积层" class="headerlink" title="卷积层"></a>卷积层</h2><p>卷积层对输入和卷积核权重进行<a target="_blank" rel="noopener" href="https://zh.d2l.ai/chapter_convolutional-neural-networks/conv-layer.html#id2">互相关运算</a>，并在添加标量偏置之后产生输出。 所以，卷积层中的两个被训练的参数是卷积核权重和标量偏置。</p>
+<h1 id="概念认知"><a href="#概念认知" class="headerlink" title="概念认知"></a>概念认知</h1><h2 id="张量"><a href="#张量" class="headerlink" title="张量"></a>张量</h2><blockquote>
+<p>就像向量是标量的推广，矩阵是向量的推广一样，我们可以构建具有更多轴的数据结构。 张量（本小节中的“张量”指代数对象）为我们提供了描述具有任意数量轴的n维数组的通用方法。 例如，向量是一阶张量，矩阵是二阶张量。</p>
+</blockquote>
+<h2 id="池化层"><a href="#池化层" class="headerlink" title="池化层"></a>池化层</h2><blockquote>
+<p>对图像进行降采样的过程，对于每一次滑动窗口中的所有值，输出其中的最大值（MaxPooling）、均值或其他方法产生的值。例如，对于一个三通道的 16×16 图像（即一个 <code>16*16*3</code> 的张量），经过感受野为 2×2，滑动步长为 2 的池化层，则得到一个 <code>8*8*3</code> 的张量。</p>
+</blockquote>
+<h2 id="卷积层"><a href="#卷积层" class="headerlink" title="卷积层"></a>卷积层</h2><blockquote>
+<p>卷积层对输入和卷积核权重进行<a target="_blank" rel="noopener" href="https://zh.d2l.ai/chapter_convolutional-neural-networks/conv-layer.html#id2">互相关运算</a>，并在添加标量偏置之后产生输出。 所以，卷积层中的两个被训练的参数是卷积核权重和标量偏置。</p>
+</blockquote>
 <h1 id="学习地址"><a href="#学习地址" class="headerlink" title="学习地址"></a><strong>学习地址</strong></h1><p><a target="_blank" rel="noopener" href="https://tf.wiki/zh_hans/appendix/tfds.html"><a target="_blank" rel="noopener" href="https://tf.wiki/zh_hans"> 简单粗暴 TensorFlow 2</a></a></p>
 <p><a target="_blank" rel="noopener" href="https://zh.d2l.ai/chapter_preliminaries/index.html">动手学深度学习</a></p>
 
@@ -482,7 +589,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-11-02 09:21:48" itemprop="dateModified" datetime="2022-11-02T09:21:48+08:00">2022-11-02</time>
+      <time title="Modified: 2022-12-05 15:29:45" itemprop="dateModified" datetime="2022-12-05T15:29:45+08:00">2022-12-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -516,7 +623,8 @@
 <p><strong>Event time:</strong> 各自事件的时间，发生在推送机器上的时间，在进入flink前的汇总信息的时间。使用时，必须指定如何生成<em>Event Time Watermarks</em>。窗口大小等分，水印是防止乱序而生，牺牲了一定的实时性，提高了准确性。</p>
 <p>触发机制：</p>
 <p>1、watermark 时间  &#x3D; 当前到来数据的时间戳 - 乱序容忍时间；<br>2、 watermark 时间 &gt;&#x3D; window_end_time；<br>3、在 [window_start_time,window_end_time) 中有数据存在，这个窗口是左闭右开的。</p>
-<img src="/2021/07/18/Flink/event_processing_time.svg" class title="event processing time asset_img">
+<p>window_start_time:</p>
+<img src="/2021/07/18/Flink/image-20221205095123973.png" class title="window start time % } {% asset_img event_processing_time.svg event processing time asset_img">
 
 <p>输出水印：</p>
 <img src="/2021/07/18/Flink/image-20221017114850730.png" class title="processes asset_img">
@@ -530,10 +638,15 @@
 <li><strong>Non-Keyed Windows</strong></li>
 </ol>
 <ul>
-<li>滑动窗口</li>
-<li>滚动窗口</li>
-<li>全局窗口</li>
-<li>会话窗口</li>
+<li><p>滑动窗口</p>
+</li>
+<li><p>滚动窗口</p>
+</li>
+<li><p>全局窗口</p>
+</li>
+<li><p>会话窗口</p>
+<p> 会话窗口是当前窗口等待一段时间(指定)没有数据进入后,窗口结束进行计算.</p>
+</li>
 </ul>
 <h2 id="四、定时器"><a href="#四、定时器" class="headerlink" title="四、定时器"></a>四、定时器</h2><p><a target="_blank" rel="noopener" href="https://github.com/apache/flink-training/blob/master/long-ride-alerts/README_zh.md">练习: <code>ProcessFunction</code> 及定时器（长车程警报）</a></p>
 <p>尤其带状态的定时器一定要注意：</p>
@@ -586,6 +699,22 @@
 <p>1、可以直接在 ResultPartition 层实现反压，而不用将压力流经过多层传递，层层反馈。提高了反压效率，降低了延迟；<br>2、不会把底层socket打满，从而阻碍网络数据传输，不会让单个 Task 的瓶颈成为整个TaskManager 的瓶颈；</p>
 <p>具体的反压流程可参考：<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg2ODAyNTgyMQ==&mid=2247485234&idx=1&sn=4f25023fc4dd224cc8b4ee25c57ea8ea&chksm=ceb3d380f9c45a964c646a4d2189b08ba24d7a5549e355dd753b4cd34e184957b5936b5f1630&mpshare=1&scene=1&srcid=1031kqX74jmXHqZRFzPWY8dM&sharer_sharetime=1667201424602&sharer_shareid=f59adca26e8157d4646f4becf01a5c87&version=3.1.20.6008&platform=win#rd">Flink反压原理深入浅出及解决思路</a></p>
 <h2 id="九、远程提交YARN"><a href="#九、远程提交YARN" class="headerlink" title="九、远程提交YARN"></a>九、远程提交YARN</h2><p>   注意：指定flink_conf.yaml加载yarn其路径下面的配置文件如yarn_site.yaml</p>
+<h2 id="十、CLI"><a href="#十、CLI" class="headerlink" title="十、CLI"></a>十、CLI</h2><p>SavePoint:</p>
+<p>手动保存，用于重启，更改jar包，并行度等。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flink savepoint -m yarn-cluster &lt;jobId&gt; [savepointDirectory] -yid [yarnAppId]</span><br></pre></td></tr></table></figure>
+
+<p>注意顺序；</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Triggering savepoint <span class="keyword">for</span> job 7aa51e5560905ce0c45e019a0f2772a4.</span><br><span class="line">Waiting <span class="keyword">for</span> response...</span><br><span class="line">Savepoint completed. Path: [savepointDirectory]/savepoint-7aa51e-eb49828b92de</span><br><span class="line">You can resume your program from this savepoint with the run <span class="built_in">command</span>.</span><br></pre></td></tr></table></figure>
+
+<p>启动是从savepoint启动。注意此时savepointPath用上述命令后的Path: [savepointDirectory]&#x2F;savepoint-7aa51e-eb49828b92de.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/flink run -s &lt;savepointPath&gt;</span><br></pre></td></tr></table></figure>
+
+<p>当然你也可以使用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./bin/flink stop [-p targetDirectory] [-d] &lt;jobID&gt; <span class="comment">#推荐</span></span><br><span class="line"></span><br><span class="line">./bin/flink cancel -s [savepointDirectory] &lt;jobID&gt; <span class="comment">#use stop instead</span></span><br></pre></td></tr></table></figure>
+
+<p>checkpoint：</p>
+<p>启动时可以再flink-conf.yml 里面加一个 execution.checkpointing.interval: 10000，也可以在代码中配置。</p>
+<p>当然还要设置相关的state.backend等配置。此时可以实现重启策略（代码或者配置中都可以配置）。</p>
 <p><strong>实践出真知</strong></p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ggHmSc86mN3I7r6snjqxWQ">https://mp.weixin.qq.com/s/ggHmSc86mN3I7r6snjqxWQ</a></li>
@@ -733,90 +862,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://shizhenqiang.github.io/2020/08/12/Python-Tips/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chelf">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chelf Blog">
-      <meta itemprop="description" content="We used to look up at the sky and wonder at our place in the stars, now we just look down and worry about our place in the dirt.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Chelf Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/08/12/Python-Tips/" class="post-title-link" itemprop="url">Python Tips</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2020-08-12 11:24:31" itemprop="dateCreated datePublished" datetime="2020-08-12T11:24:31+08:00">2020-08-12</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-26 15:30:35" itemprop="dateModified" datetime="2022-10-26T15:30:35+08:00">2022-10-26</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="一、signal"><a href="#一、signal" class="headerlink" title="一、signal"></a>一、signal</h2><p>Python中对信号进行处理的模块主要使用signal模块。</p>
-<p>用途：接受一个进程关闭的信号，然后收到信号后，处理收尾工作，然后再关闭此进程。比如实时处理消息队列的数据，发生异常崩溃后，可以将内存临时数据及时的保存为文件或者入库。</p>
-<h2 id="二、zmq"><a href="#二、zmq" class="headerlink" title="二、zmq"></a>二、zmq</h2><p>使用其一对多的发布订阅模式，可以用于过滤数据。也可以在消费数据时进行数据分发，分发到多个进程进行处理，提高处理性能。</p>
-<h2 id="三、Sklearn"><a href="#三、Sklearn" class="headerlink" title="三、Sklearn"></a>三、Sklearn</h2><ol>
-<li><p>pipeline</p>
-<img src="/2020/08/12/Python-Tips/carbon.png" class title="processes asset_img"></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 </div>

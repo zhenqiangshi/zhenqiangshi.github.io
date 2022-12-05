@@ -28,7 +28,7 @@
 <meta property="og:description" content="卷积神经网络（CNN）卷积神经网络 （Convolutional Neural Network, CNN）是一种结构类似于人类或动物的 视觉系统 的人工神经网络，包含一个或多个卷积层（Convolutional Layer）、池化层（Pooling Layer）和全连接层（Fully-connected Layer）。 概念后面再说，先上代码。 第一步，导包1import tensorflow a">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-02-22T03:24:56.000Z">
-<meta property="article:modified_time" content="2022-11-04T03:50:01.876Z">
+<meta property="article:modified_time" content="2022-11-04T06:42:55.950Z">
 <meta property="article:author" content="Chelf">
 <meta property="article:tag" content="machine learning">
 <meta name="twitter:card" content="summary">
@@ -87,7 +87,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-archives"><a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-archives"><a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li>
   </ul>
 </nav>
 
@@ -131,7 +131,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives">
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -142,7 +142,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -217,7 +217,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-11-04 11:50:01" itemprop="dateModified" datetime="2022-11-04T11:50:01+08:00">2022-11-04</time>
+      <time title="Modified: 2022-11-04 14:42:55" itemprop="dateModified" datetime="2022-11-04T14:42:55+08:00">2022-11-04</time>
     </span>
 
   
@@ -249,9 +249,15 @@
 
 <h2 id="第八步，调用测试"><a href="#第八步，调用测试" class="headerlink" title="第八步，调用测试"></a>第八步，调用测试</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">data_loader = MNISTLoader()</span><br><span class="line"></span><br><span class="line">data = json.dumps(&#123;</span><br><span class="line">    <span class="string">&quot;signature_name&quot;</span>: <span class="string">&quot;call&quot;</span>, <span class="comment"># self</span></span><br><span class="line">    <span class="string">&quot;instances&quot;</span>: data_loader.test_data[<span class="number">0</span>:<span class="number">100</span>].tolist()</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">headers = &#123;<span class="string">&quot;content-type&quot;</span>: <span class="string">&quot;application/json&quot;</span>&#125;</span><br><span class="line"></span><br><span class="line">json_response = requests.post(</span><br><span class="line">    <span class="string">&#x27;http://localhost:6006/v1/models/test_model:predict&#x27;</span>,</span><br><span class="line">    data=data,</span><br><span class="line">    headers=headers)</span><br><span class="line"></span><br><span class="line">predictions = np.array(json.loads(json_response.text)[<span class="string">&#x27;predictions&#x27;</span>])</span><br><span class="line"><span class="built_in">print</span>(np.argmax(predictions, axis=-<span class="number">1</span>)[<span class="number">0</span>:<span class="number">100</span>])</span><br><span class="line"><span class="built_in">print</span>(data_loader.test_label[<span class="number">0</span>:<span class="number">100</span>])</span><br></pre></td></tr></table></figure>
 
-<h1 id="概念认知"><a href="#概念认知" class="headerlink" title="概念认知"></a>概念认知</h1><h2 id="张量"><a href="#张量" class="headerlink" title="张量"></a>张量</h2><p>就像向量是标量的推广，矩阵是向量的推广一样，我们可以构建具有更多轴的数据结构。 张量（本小节中的“张量”指代数对象）为我们提供了描述具有任意数量轴的n维数组的通用方法。 例如，向量是一阶张量，矩阵是二阶张量。</p>
-<h2 id="池化层"><a href="#池化层" class="headerlink" title="池化层"></a>池化层</h2><p>对图像进行降采样的过程，对于每一次滑动窗口中的所有值，输出其中的最大值（MaxPooling）、均值或其他方法产生的值。例如，对于一个三通道的 16×16 图像（即一个 <code>16*16*3</code> 的张量），经过感受野为 2×2，滑动步长为 2 的池化层，则得到一个 <code>8*8*3</code> 的张量。</p>
-<h2 id="卷积层"><a href="#卷积层" class="headerlink" title="卷积层"></a>卷积层</h2><p>卷积层对输入和卷积核权重进行<a target="_blank" rel="noopener" href="https://zh.d2l.ai/chapter_convolutional-neural-networks/conv-layer.html#id2">互相关运算</a>，并在添加标量偏置之后产生输出。 所以，卷积层中的两个被训练的参数是卷积核权重和标量偏置。</p>
+<h1 id="概念认知"><a href="#概念认知" class="headerlink" title="概念认知"></a>概念认知</h1><h2 id="张量"><a href="#张量" class="headerlink" title="张量"></a>张量</h2><blockquote>
+<p>就像向量是标量的推广，矩阵是向量的推广一样，我们可以构建具有更多轴的数据结构。 张量（本小节中的“张量”指代数对象）为我们提供了描述具有任意数量轴的n维数组的通用方法。 例如，向量是一阶张量，矩阵是二阶张量。</p>
+</blockquote>
+<h2 id="池化层"><a href="#池化层" class="headerlink" title="池化层"></a>池化层</h2><blockquote>
+<p>对图像进行降采样的过程，对于每一次滑动窗口中的所有值，输出其中的最大值（MaxPooling）、均值或其他方法产生的值。例如，对于一个三通道的 16×16 图像（即一个 <code>16*16*3</code> 的张量），经过感受野为 2×2，滑动步长为 2 的池化层，则得到一个 <code>8*8*3</code> 的张量。</p>
+</blockquote>
+<h2 id="卷积层"><a href="#卷积层" class="headerlink" title="卷积层"></a>卷积层</h2><blockquote>
+<p>卷积层对输入和卷积核权重进行<a target="_blank" rel="noopener" href="https://zh.d2l.ai/chapter_convolutional-neural-networks/conv-layer.html#id2">互相关运算</a>，并在添加标量偏置之后产生输出。 所以，卷积层中的两个被训练的参数是卷积核权重和标量偏置。</p>
+</blockquote>
 <h1 id="学习地址"><a href="#学习地址" class="headerlink" title="学习地址"></a><strong>学习地址</strong></h1><p><a target="_blank" rel="noopener" href="https://tf.wiki/zh_hans/appendix/tfds.html"><a target="_blank" rel="noopener" href="https://tf.wiki/zh_hans"> 简单粗暴 TensorFlow 2</a></a></p>
 <p><a target="_blank" rel="noopener" href="https://zh.d2l.ai/chapter_preliminaries/index.html">动手学深度学习</a></p>
 
@@ -275,6 +281,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2022/11/18/Knowledge-Graph/" rel="next" title="Knowledge Graph">
+                  Knowledge Graph <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>

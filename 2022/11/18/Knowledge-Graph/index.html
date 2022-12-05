@@ -20,31 +20,30 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"shizhenqiang.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.13.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="机器学习——Gradient Boost Decision Tree(&amp;Treelink) greedy_function_approximation_a_gradient_boosting_machine 简书上很好的一个关于GBDT的例子 GBDT一、Regression Decision Tree​    回归树总体流程类似于分类树，区别在于，回归树的每一个节点都会得一个预测值，以年">
+    <meta name="description" content="一、什么是知识图谱？ A knowledge graph acquires and integrates information into an ontology and applies a reasoner to derive new knowledge. ​">
 <meta property="og:type" content="article">
-<meta property="og:title" content="GBDT">
-<meta property="og:url" content="https://shizhenqiang.github.io/2017/07/10/GBDT/index.html">
+<meta property="og:title" content="Knowledge Graph">
+<meta property="og:url" content="https://shizhenqiang.github.io/2022/11/18/Knowledge-Graph/index.html">
 <meta property="og:site_name" content="Chelf Blog">
-<meta property="og:description" content="机器学习——Gradient Boost Decision Tree(&amp;Treelink) greedy_function_approximation_a_gradient_boosting_machine 简书上很好的一个关于GBDT的例子 GBDT一、Regression Decision Tree​    回归树总体流程类似于分类树，区别在于，回归树的每一个节点都会得一个预测值，以年">
+<meta property="og:description" content="一、什么是知识图谱？ A knowledge graph acquires and integrates information into an ontology and applies a reasoner to derive new knowledge. ​">
 <meta property="og:locale">
-<meta property="og:image" content="https://shizhenqiang.github.io/2017/07/10/GBDT/1241">
-<meta property="og:image" content="https://shizhenqiang.github.io/2017/07/10/GBDT/1240">
-<meta property="article:published_time" content="2017-07-10T08:22:54.000Z">
-<meta property="article:modified_time" content="2022-10-13T09:56:12.569Z">
+<meta property="og:image" content="https://shizhenqiang.github.io/2022/11/18/Knowledge-Graph/image-20221205153727189.png">
+<meta property="article:published_time" content="2022-11-18T01:37:46.000Z">
+<meta property="article:modified_time" content="2022-12-05T07:44:23.890Z">
 <meta property="article:author" content="Chelf">
-<meta property="article:tag" content="machine learning">
+<meta property="article:tag" content="Knowledge Graph">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://shizhenqiang.github.io/2017/07/10/GBDT/1241">
+<meta name="twitter:image" content="https://shizhenqiang.github.io/2022/11/18/Knowledge-Graph/image-20221205153727189.png">
 
 
-<link rel="canonical" href="https://shizhenqiang.github.io/2017/07/10/GBDT/">
+<link rel="canonical" href="https://shizhenqiang.github.io/2022/11/18/Knowledge-Graph/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-Hans","comments":true,"permalink":"https://shizhenqiang.github.io/2017/07/10/GBDT/","path":"2017/07/10/GBDT/","title":"GBDT"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-Hans","comments":true,"permalink":"https://shizhenqiang.github.io/2022/11/18/Knowledge-Graph/","path":"2022/11/18/Knowledge-Graph/","title":"Knowledge Graph"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>GBDT | Chelf Blog</title>
+<title>Knowledge Graph | Chelf Blog</title>
   
 
 
@@ -121,7 +120,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#GBDT"><span class="nav-number">1.</span> <span class="nav-text">GBDT</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81Regression-Decision-Tree"><span class="nav-number">1.1.</span> <span class="nav-text">一、Regression Decision Tree</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81Boosting-Decision-Tree"><span class="nav-number">1.2.</span> <span class="nav-text">二、Boosting Decision Tree</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81Gradient-Boosting-Decision-Tree"><span class="nav-number">1.3.</span> <span class="nav-text">三、Gradient Boosting Decision Tree</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">一、什么是知识图谱？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">2.</span> <span class="nav-text">二、图数据库</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -184,7 +183,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://shizhenqiang.github.io/2017/07/10/GBDT/">
+    <link itemprop="mainEntityOfPage" href="https://shizhenqiang.github.io/2022/11/18/Knowledge-Graph/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -197,12 +196,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="GBDT | Chelf Blog">
+      <meta itemprop="name" content="Knowledge Graph | Chelf Blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          GBDT
+          Knowledge Graph
         </h1>
 
         <div class="post-meta-container">
@@ -213,14 +212,14 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2017-07-10 16:22:54" itemprop="dateCreated datePublished" datetime="2017-07-10T16:22:54+08:00">2017-07-10</time>
+      <time title="Created: 2022-11-18 09:37:46" itemprop="dateCreated datePublished" datetime="2022-11-18T09:37:46+08:00">2022-11-18</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-13 17:56:12" itemprop="dateModified" datetime="2022-10-13T17:56:12+08:00">2022-10-13</time>
+      <time title="Modified: 2022-12-05 15:44:23" itemprop="dateModified" datetime="2022-12-05T15:44:23+08:00">2022-12-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -228,7 +227,7 @@
       </span>
       <span class="post-meta-item-text">In</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
+          <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
         </span>
     </span>
 
@@ -242,21 +241,23 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p><a target="_blank" rel="noopener" href="http://blog.csdn.net/yangtrees/article/details/7506052">机器学习——Gradient Boost Decision Tree(&amp;Treelink)</a></p>
-<p><a target="_blank" rel="noopener" href="http://wenku.baidu.com/link?url=dmoD5irL8vAV5NnBmoz69M4J_tm-EZg8yGIcfEkTp_ApblW52F6LEv9GdJzusCCaTafPX5HxDObAtwJH77NmxOSp106W-kHCffX8KwC_YG7">greedy_function_approximation_a_gradient_boosting_machine</a></p>
-<p><a target="_blank" rel="noopener" href="http://www.jianshu.com/p/005a4e6ac775">简书上很好的一个关于GBDT的例子</a></p>
-<h1 id="GBDT"><a href="#GBDT" class="headerlink" title="GBDT"></a>GBDT</h1><h2 id="一、Regression-Decision-Tree"><a href="#一、Regression-Decision-Tree" class="headerlink" title="一、Regression Decision Tree"></a>一、Regression Decision Tree</h2><p>​    回归树总体流程类似于分类树，区别在于，回归树的每一个节点都会得一个预测值，以年龄为例，该预测值等于属于这个节点的所有人年龄的平均值。分枝时穷举每一个feature的每个阈值找最好的分割点，但<strong>衡量最好的标准不再是最大熵，而是最小化平方误差</strong>。也就是被预测出错的人数越多，错的越离谱，平方误差就越大，通过最小化平方误差能够找到最可靠的分枝依据。分枝直到每个叶子节点上人的年龄都唯一或者达到预设的终止条件(如叶子个数上限)，若最终叶子节点上人的年龄不唯一，则以该节点上所有人的<em><strong>平均</strong></em>年龄做为该叶子节点的预测年龄。</p>
-<h2 id="二、Boosting-Decision-Tree"><a href="#二、Boosting-Decision-Tree" class="headerlink" title="二、Boosting Decision Tree"></a>二、Boosting Decision Tree</h2><p>​    提升树是迭代多颗回归树来共同决策。每一棵决策树学习的是之前所有树的结论和残差(采用平方误差损失函数时)，拟合得到一个当前的残差回归树。残差的意义：<strong>残差 &#x3D; 真实值 - 预测值</strong>；提升树，即整个迭代过程生成的回归树的累加。预测值等于所有树值的累加。</p>
-<img src="/2017/07/10/GBDT/1241" class title="model complex asset_img">
+        <h1 id="一、什么是知识图谱？"><a href="#一、什么是知识图谱？" class="headerlink" title="一、什么是知识图谱？"></a>一、什么是知识图谱？</h1><blockquote>
+<p><strong>A knowledge graph acquires and integrates information into an ontology and applies a reasoner to derive new knowledge.</strong></p>
+<p>​                                                                              —–<strong>Ehrlinger and WoB</strong></p>
+</blockquote>
+<p>知识图谱会获取信息并将其集成到一个本体中，使用一个推理器产生新的知识。</p>
+<p>知识图谱的概念其实比较多和杂，没有一个固定的统一说法。</p>
+<h1 id="二、图数据库"><a href="#二、图数据库" class="headerlink" title="二、图数据库"></a>二、图数据库</h1><p>用于存储图关系的数据库，下面简单介绍一下neo4j的用法。</p>
+<p>你可以使用doker快速安装并启动一个neo4j数据库。</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="keyword">run</span><span class="language-bash"> --name neo4j \</span></span><br><span class="line"><span class="language-bash">-d \</span></span><br><span class="line"><span class="language-bash">-p 7474:7474 \</span></span><br><span class="line"><span class="language-bash">-p 7687:7687 \</span></span><br><span class="line"><span class="language-bash">-v ./neo4j/data:/data \</span></span><br><span class="line"><span class="language-bash">-v ./neo4j/logs:/logs \</span></span><br><span class="line"><span class="language-bash">-v ./neo4j/conf:/var/lib/neo4j/conf \</span></span><br><span class="line"><span class="language-bash">-v ./neo4j/import:/var/lib/neo4j/import \</span></span><br><span class="line"><span class="language-bash">--<span class="built_in">env</span> NEO4J_AUTH=neo4j/bigdata \</span></span><br><span class="line"><span class="language-bash">neo4j:4.3.21-community</span></span><br></pre></td></tr></table></figure>
 
+<p>注意文件位置的可读可写权限。那么就可以在<a target="_blank" rel="noopener" href="http://localhost:7474/">http://localhost:7474/</a>    访问neo4j。</p>
+<img src="/2022/11/18/Knowledge-Graph/image-20221205153727189.png" class title="demo asset_img">
 
+<p>具体的插入命令，你可以去学习cypher。</p>
+<p>当然也可以学习python的包—py2neo，下面一个简单的例子。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> py2neo <span class="keyword">import</span> Graph, Node, Relationship, NodeMatcher, RelationshipMatcher</span><br><span class="line">graph = Graph(<span class="string">&quot;bolt://127.0.0.1:7687&quot;</span>, auth=(<span class="string">&quot;neo4j&quot;</span>, <span class="string">&quot;password&quot;</span>))</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_rel</span>():</span><br><span class="line">    matcher = NodeMatcher(graph)</span><br><span class="line">    rmatcher = RelationshipMatcher(graph)</span><br><span class="line">    node_model = matcher.match(<span class="string">&quot;Model&quot;</span>, name=<span class="string">&quot;A模型&quot;</span>).first()</span><br><span class="line">    node_feature = matcher.match(<span class="string">&quot;Feature&quot;</span>, name=<span class="string">&quot;C特征&quot;</span>).first()</span><br><span class="line">    r1 = rmatcher.match(&#123;node_model,node_feature&#125;).first() </span><br><span class="line">    <span class="built_in">print</span>(r1)</span><br><span class="line">    </span><br><span class="line">all_nodes = graph.run(<span class="string">&#x27;MATCH (n) RETURN n&#x27;</span>).data()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> nodes <span class="keyword">in</span> all_nodes:</span><br><span class="line">    <span class="built_in">print</span>(nodes)</span><br><span class="line"></span><br><span class="line">get_rel()</span><br></pre></td></tr></table></figure>
 
-<p>​                                                                                                           提升树算法</p>
-<h2 id="三、Gradient-Boosting-Decision-Tree"><a href="#三、Gradient-Boosting-Decision-Tree" class="headerlink" title="三、Gradient Boosting Decision Tree"></a>三、Gradient Boosting Decision Tree</h2><p>提升树利用加法模型和前向分类算法实现学习的优化过程。当损失函数平方损失和指数损失函数时，每一步的优化很简单，如平方损失函数学习残差回归树。</p>
-<p>但对于一般的损失函数，往往每一步优化没那么容易，如上图中的绝对值损失函数和Huber损失函数。针对这一问题，Freidman提出了梯度提升算法： 利用最速下降的近似方法，即利用损失函数的负梯度在当前模型的值，作为回归问题中提升树算法的残差的近似值，拟合一个回归树。</p>
-<img src="/2017/07/10/GBDT/1240" class title="model complex asset_img">
-
-<p>​    当模型越复杂时，拟合的程度就越高，模型的训练偏差就越小。但此时如果换一组数据可能模型的变化就会很大，即模型的方差很大。所以模型过于复杂的时候会导致过拟合。<br>  当模型越简单时，即使我们再换一组数据，最后得出的学习器和之前的学习器的差别就不那么大，模型的方差很小。还是因为模型简单，所以偏差会很大。</p>
 
     </div>
 
@@ -266,21 +267,18 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/machine-learning/" rel="tag"># machine learning</a>
+              <a href="/tags/Knowledge-Graph/" rel="tag"># Knowledge Graph</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2011/06/20/hello-world/" rel="prev" title="Quick Know">
-                  <i class="fa fa-chevron-left"></i> Quick Know
+                <a href="/2022/02/22/Deep-learning/" rel="prev" title="卷积神经网络简单实现及部署">
+                  <i class="fa fa-chevron-left"></i> 卷积神经网络简单实现及部署
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2018/01/09/Apriori/" rel="next" title="Apriori">
-                  Apriori <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
