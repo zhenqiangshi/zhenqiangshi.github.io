@@ -128,7 +128,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives">
-          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-count">17</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -168,6 +168,129 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://shizhenqiang.github.io/2021/07/02/docker/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chelf">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chelf Blog">
+      <meta itemprop="description" content="We used to look up at the sky and wonder at our place in the stars, now we just look down and worry about our place in the dirt.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Chelf Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/07/02/docker/" class="post-title-link" itemprop="url">docker 浅知</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-07-02 16:00:14" itemprop="dateCreated datePublished" datetime="2021-07-02T16:00:14+08:00">2021-07-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-13 17:59:52" itemprop="dateModified" datetime="2022-10-13T17:59:52+08:00">2022-10-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%BF%90%E7%BB%B4/" itemprop="url" rel="index"><span itemprop="name">运维</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="一、docker的核心概念"><a href="#一、docker的核心概念" class="headerlink" title="一、docker的核心概念"></a>一、docker的核心概念</h2><ul>
+<li><h2 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h2><p>镜像的运行实体，有运行时需要的可写文件层，并且容器中的进程属于运行状态。可初建、运行、停止、暂停和删除。</p>
+</li>
+<li><p>镜像</p>
+<p>一个只读的文件和文件夹组合。可拉取、重命名、构建、删除、查看。一个镜像，可以创建多个容器。</p>
+</li>
+<li><p>仓库</p>
+<p> 存储和分发 Docker 镜像。</p>
+</li>
+</ul>
+<h2 id="二、什么是NameSpace？"><a href="#二、什么是NameSpace？" class="headerlink" title="二、什么是NameSpace？"></a>二、什么是NameSpace？</h2><figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Namespace</span> 是 Linux 内核的一项功能，该功能对内核资源进行分区，以使一组进程看到一组资源，而另一组进程看到另一组资源。<span class="keyword">Namespace</span> 的工作方式通过为一组资源和进程设置相同的 <span class="keyword">Namespace</span> 而起作用，但是这些 <span class="keyword">Namespace</span> 引用了不同的资源。资源可能存在于多个 <span class="keyword">Namespace</span> 中。这些资源可以是进程 ID、主机名、用户 ID、文件名、与网络访问相关的名称和进程间通信。---维基百科</span><br></pre></td></tr></table></figure>
+
+<p>虽然 Linux 内核提供了8种 Namespace，但是最新版本的 Docker 只使用了其中的前6 种，分别为Mount Namespace、PID Namespace、Net Namespace、IPC Namespace、UTS Namespace、User Namespace。</p>
+<ul>
+<li><p>Mount Namespace</p>
+<p>使用 unshare 命令可以新建 Mount Namespace，并且在新建的 Mount Namespace 内 mount 是和外部完全隔离的。</p>
+</li>
+<li><p>PID Namespace</p>
+<p>隔离进程。</p>
+</li>
+<li><p>Net Namespace</p>
+<p>用来隔离网络设备、IP 地址和端口等信息的。</p>
+</li>
+<li><p>IPC Namespace</p>
+<p>隔离进程间通信的。ipcs -q 命令：用来查看系统间通信队列列表。ipcmk -Q 命令：用来创建系统间通信队列。</p>
+</li>
+<li><p>UTS Namespace</p>
+<p>隔离主机名的，它允许每个 UTS Namespace 拥有一个独立的主机名。</p>
+</li>
+<li><p>User Namespace</p>
+<p> 主要是用来隔离用户和用户组的。</p>
+</li>
+</ul>
+<p>由于使用了namespace的技术，所以才实现了容器的隔离。</p>
+<h2 id="三、什么是cgroups？"><a href="#三、什么是cgroups？" class="headerlink" title="三、什么是cgroups？"></a>三、什么是cgroups？</h2><p>​       cgroups（全称：control groups）是 Linux 内核的一个功能，它可以实现限制进程或者进程组的资源（如 CPU、内存、磁盘 IO 等）。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -643,107 +766,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://shizhenqiang.github.io/2019/05/19/kafka/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chelf">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chelf Blog">
-      <meta itemprop="description" content="We used to look up at the sky and wonder at our place in the stars, now we just look down and worry about our place in the dirt.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Chelf Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/05/19/kafka/" class="post-title-link" itemprop="url">kafka 线上问题汇总</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-05-19 11:02:36" itemprop="dateCreated datePublished" datetime="2019-05-19T11:02:36+08:00">2019-05-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-25 11:02:14" itemprop="dateModified" datetime="2022-10-25T11:02:14+08:00">2022-10-25</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="一、为什么用MQ-？"><a href="#一、为什么用MQ-？" class="headerlink" title="一、为什么用MQ ？"></a>一、为什么用MQ ？</h2><ul>
-<li>业务场景</li>
-<li>解耦、异步、削峰</li>
-</ul>
-<h2 id="二、Leader-amp-Follower-？"><a href="#二、Leader-amp-Follower-？" class="headerlink" title="二、Leader &amp; Follower ？"></a>二、Leader &amp; Follower ？</h2><ul>
-<li><p>kafka集群的leader，就是controller leader</p>
-<p>当broker启动的时候，都会创建KafkaController对象，但是集群中只能有一个leader对外提供服务，这些每个节点上的KafkaController会在指定的zookeeper路径下创建临时节点，只有第一个成功创建的节点的KafkaController才可以成为leader，其余的都是follower。当leader故障后，所有的follower会收到通知，再次竞争在该路径下创建节点从而选举新的leader</p>
-</li>
-<li><p>对于同一个partition，它所在任何一个broker，都有能扮演两种角色：leader、follower。</p>
-<p>Kafka会动态维护一个与Leader保持一致的同步副本（in-sync replicas （ISR））集合，并且会将最新的同步副本（ISR ）集合持久化到<strong>zookeeper</strong>。如果leader出现问题了，就会从该partition的followers中选举一个作为新的leader。所以在一个partition中扮演leader，在其它的partition中扮演followers。Leader是最繁忙的，要处理读写请求。这样将leader均分到不同的broker上，目的自然是要确保负载均衡。<em>注意：如果有一个broker down，那么它就不会在ISR中出现。</em></p>
-</li>
-</ul>
-<h2 id="三、重复数据-？"><a href="#三、重复数据-？" class="headerlink" title="三、重复数据 ？"></a>三、重复数据 ？</h2><p>1、offset会定期自动提交给kafkabroker，告诉kafka我已经消费了，但是有可能重启或者kill掉后，offset来不及提交，导致下次消费的时候会重复消费未提交offset的数据。</p>
-<p>2、如果消息处理逻辑过重，也即用户线程需要执行很长的时间处理消息，然后再提交offset。如果consumer的消息处理逻辑时长<strong>超过了</strong>max.poll.interval.ms ，那么此consumer提交offset就会失败。更多细节参考： <a target="_blank" rel="noopener" href="https://www.cnblogs.com/hapjin/p/10926882.html">https://www.cnblogs.com/hapjin/p/10926882.html</a> </p>
-<p>具体如何去重，还要根据业务场景具体分析。</p>
-<h2 id="四、数据丢失-？"><a href="#四、数据丢失-？" class="headerlink" title="四、数据丢失 ？"></a>四、数据丢失 ？</h2><p> 防止丢数的设置：</p>
-<p>生产者如果设置acks&#x3D;all 并且设置重试次数，就不会丢失。</p>
-<p>消费者要设置副本，防止leader宕机后还有一个follower。</p>
-<h2 id="五、消息顺序-？"><a href="#五、消息顺序-？" class="headerlink" title="五、消息顺序 ？"></a>五、消息顺序 ？</h2><p>如果按照key去划分固定一个partition的话，是顺序性的。否则如果划分到多个个partition就不会具有顺序性。</p>
-<p>消费者如果多线程处理，也有可能让消息顺序混乱。那么一个方案就是建立多个内存队列，按照key去固定的划分到内存队列面，然后一个线程处理一个内存队列。增加处理速度。</p>
-<h2 id="六、Partition-？"><a href="#六、Partition-？" class="headerlink" title="六、Partition ？"></a>六、Partition ？</h2><p>​       Consumer Groups 用于多个Consumer并行消费消息。为了防止两个消费者重复消费一条消息，Kafka不允许同一个Consumer Group中的两个Consumer读取同一个partition。</p>
-<h2 id="七、Consumer-Rebalance-？"><a href="#七、Consumer-Rebalance-？" class="headerlink" title="七、Consumer Rebalance ？"></a>七、Consumer Rebalance ？</h2><p>​       consumer group中有消费者加入或者退出都会发生Rebalance。其中如果处理逻辑过重，超时掉线，也会发生Rebalance，此时在开发中极为常见。</p>
-<p>​       更多细节参考： <a target="_blank" rel="noopener" href="https://www.cnblogs.com/hapjin/p/10926882.html">https://www.cnblogs.com/hapjin/p/10926882.html</a> </p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>1、<a target="_blank" rel="noopener" href="https://github.com/doocs/advanced-java?utm_source=gold_browser_extension">https://github.com/doocs/advanced-java?utm_source=gold_browser_extension</a></p>
-<p>2、<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/SL3P9EK2_7msxIbm2HAAlQ">https://mp.weixin.qq.com/s/SL3P9EK2_7msxIbm2HAAlQ</a></p>
-<p>3、<a target="_blank" rel="noopener" href="https://www.cnblogs.com/hapjin/p/10926882.html">https://www.cnblogs.com/hapjin/p/10926882.html</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
@@ -757,7 +779,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

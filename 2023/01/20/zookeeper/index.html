@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"shizhenqiang.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.13.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="一、什么是分布式系统？ 分布式系统是一个硬件或者软件组件分布在不同的网络计算机上，彼此之间仅仅通过消息传递进行通信和协调的系统。 ​">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ZooKeeper在大型分布式系统中的应用场景">
+<meta property="og:url" content="https://shizhenqiang.github.io/2023/01/20/zookeeper/index.html">
+<meta property="og:site_name" content="Chelf Blog">
+<meta property="og:description" content="一、什么是分布式系统？ 分布式系统是一个硬件或者软件组件分布在不同的网络计算机上，彼此之间仅仅通过消息传递进行通信和协调的系统。 ​">
+<meta property="og:locale">
+<meta property="article:published_time" content="2023-01-20T00:54:27.000Z">
+<meta property="article:modified_time" content="2023-03-09T02:13:32.938Z">
+<meta property="article:author" content="Chelf">
+<meta property="article:tag" content="DO">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://shizhenqiang.github.io/2023/01/20/zookeeper/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-Hans","comments":true,"permalink":"https://shizhenqiang.github.io/2023/01/20/zookeeper/","path":"2023/01/20/zookeeper/","title":"ZooKeeper在大型分布式系统中的应用场景"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>ZooKeeper在大型分布式系统中的应用场景 | Chelf Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Chelf Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">To let your hair down</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-archives"><a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">一、什么是分布式系统？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AFZookeeper%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">二、什么是Zookeeper？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81Yarn%E4%B8%AD%E7%9A%84Zookeeper"><span class="nav-number">3.</span> <span class="nav-text">三、Yarn中的Zookeeper</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81hbase%E4%B8%AD%E7%9A%84Zookeeper"><span class="nav-number">4.</span> <span class="nav-text">四、hbase中的Zookeeper</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81kafka%E4%B8%AD%E7%9A%84Zookeeper"><span class="nav-number">5.</span> <span class="nav-text">五、kafka中的Zookeeper</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%A8%E9%83%A8%E5%8F%82%E8%80%83"><span class="nav-number"></span> <span class="nav-text">全部参考</span></a></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chelf</p>
+  <div class="site-description" itemprop="description">We used to look up at the sky and wonder at our place in the stars, now we just look down and worry about our place in the dirt.</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives">
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://shizhenqiang.github.io/2023/01/20/zookeeper/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chelf">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chelf Blog">
+      <meta itemprop="description" content="We used to look up at the sky and wonder at our place in the stars, now we just look down and worry about our place in the dirt.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="ZooKeeper在大型分布式系统中的应用场景 | Chelf Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ZooKeeper在大型分布式系统中的应用场景
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-01-20 08:54:27" itemprop="dateCreated datePublished" datetime="2023-01-20T08:54:27+08:00">2023-01-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-03-09 10:13:32" itemprop="dateModified" datetime="2023-03-09T10:13:32+08:00">2023-03-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/" itemprop="url" rel="index"><span itemprop="name">大数据</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="一、什么是分布式系统？"><a href="#一、什么是分布式系统？" class="headerlink" title="一、什么是分布式系统？"></a>一、什么是分布式系统？</h2><blockquote>
+<p>分布式系统是一个硬件或者软件组件分布在不同的网络计算机上，彼此之间仅仅通过消息传递进行通信和协调的系统。</p>
+<p>​                                                                                                                                                    —— 《分布式系统概念与设计》</p>
+</blockquote>
+<p>分布式环境的各种问题诸多，此处只列举一些<strong>典型的问题</strong>。</p>
+<p>1、通信异常</p>
+<p>2、网络分区</p>
+<p>​       网络异常后，导致系统中节点的网络延时不断增大，导致只有部分节点能进行正常通信。</p>
+<h2 id="二、什么是Zookeeper？"><a href="#二、什么是Zookeeper？" class="headerlink" title="二、什么是Zookeeper？"></a>二、什么是Zookeeper？</h2><p>Zookeeper是一个典型的分布式协调服务，致力于高性能、高可用，且具用严格的顺序访问控制能力。</p>
+<p>在hadoop中，zookeeper主要用于实现HA（High Availability），这部分逻辑主要集中在hadoop Common的HA模块中，HDFS的NameNode与Yarn的ResouceManager都是基于此HA模块来实现自己的HA功能的。同时，在YARN中又特别提供了Zookeeper来存储应用的运行状态。</p>
+<h2 id="三、Yarn中的Zookeeper"><a href="#三、Yarn中的Zookeeper" class="headerlink" title="三、Yarn中的Zookeeper"></a>三、Yarn中的Zookeeper</h2><p>Yarn，分布式资源调度框架，支持我们常用的Mapreduce计算引擎，当然，也支持其他的计算引擎，如Spark，Storm等。</p>
+<p>此处仅介绍为何需要Zookeeper，具体架构不做细节分析。ResourceManager是Yarn的一个核心且复杂组件，负责集群所有资源的管理和分配，接受各个节点的资源汇总情况，将信息按一定策略分配给应用程序（Application Manager），但是目前一个明显的缺陷就是RM是一个单点，为解决高可用，Yarn设计了一套Active&#x2F;Standby模式的RM HA架构。运行期间，多个RM并存，但是只有一个处于Active状态，其余则为Standby状态，出现问题后，Stanby节点竞争选举产生新的Active节点。而这个时候，就是利用Zookeeper来<strong>实现RM的主备切换</strong>的过程。</p>
+<p>简单分三步：</p>
+<ul>
+<li><p>创建锁节点</p>
+<p>在Zookeeper上竞争写一个Lock的子节点（临时节点，Zookeeper上的节点分为临时和持久节点），创建成功的为Active。</p>
+</li>
+<li><p>注册监听器</p>
+<p>其余Standby节点注册节点变更的监听（Watcher），临时节点的特性，能迅速感知Active节点的运行状态。</p>
+</li>
+<li><p>主备切换</p>
+<p>当Active节点故障，Zookeeper上的Lock节点会删除，此时重复第一步。为防止“脑裂”现象（假死后的RM恢复后，认为自己还是Active。此时相当于多个Active了），创建锁节点时，携带Zookeeper的ACL信息，目的是独占该根节点，防止其他的RM对其更新。这个机制称为Fencing机制。</p>
+</li>
+</ul>
+<p>当然，RM上的一些状态信息，也会存储在Zookeeper，比如与各个Application相关的信息。HDFS的NameNode也有相似的处理。</p>
+<h2 id="四、hbase中的Zookeeper"><a href="#四、hbase中的Zookeeper" class="headerlink" title="四、hbase中的Zookeeper"></a>四、hbase中的Zookeeper</h2><p>Hbase是一个数据写入具有强一致性的高可靠、高性能、面向列、可伸缩的分布式存储系统。在Hbase的整个架构体系中，Zookeeper是串联起Hbase集群与Client的关键所在。详细读写分析可参考2019年的Hbase初探。Zookeeper在Hbase中的应用场景众多，主要分为以下五大方面。</p>
+<ul>
+<li><p>系统容错</p>
+<p>HMaster会监听在Zookeeper上的RegionServer创建的节点，这样，每一个RegionServer出现问题，Hmaster就会感知，立刻开始容错同步。这个监控交给Zookeeper，其实也缓解了Hmaster的压力，毕竟Regionserver的数量过大，对于Hmaster也有性能影响。</p>
+</li>
+<li><p>RootRegion管理</p>
+<p>可以当做一个所有数据位置的一个信息存储地点（元数据分片），客户端访问时能保证总能拿到正确的RootRegion信息。</p>
+</li>
+<li><p>Region状态管理</p>
+<p>Region是Hbase的一个物理分片，每个Regin记录全局数据的一小部分，且不同Region数据不重复。当然，系统故障、负载均衡、配置或者Regiion的分裂合并都会影响其状态，Region的状态变化也是交给Zookeeper来管理的，防止Region变化导致全局的节点无法立刻知晓。</p>
+</li>
+<li><p>分布式SplitLog任务管理</p>
+<p>SplitLog的责任就是当RegionServer发生故障进行数据迁移时，要从HLOG（保证写入可靠）恢复还在内存中的数据（还没有来的及持久化HFile中）。由于Region众多，系统想要快速恢复需要把HLOG的任务分配多台RegionServer共同处理，这个时候，Zookeeper就扮演了一个相互通信和信息持久化的角色，Hmaster会在Zookeeper上创建一个节点（splitlog），“哪个Regionserver处理哪个Region”的信息。这样由各个RegionServer来领取任务并更新该节点，通知Hmater其余的剩下的步骤。</p>
+</li>
+<li><p>Replication管理</p>
+<p>Replication是实现Hbase中主备集群的实时同步重要模块。当然也是借助Zookeeper来完成的。注册节点Replication节点，把不同的RegionServer服务器对应的HLOG记录到相应的节点上，Hmaster会将新增的数据推送给Slave集群，并同时将信息记录到Zookeeper（断点记录）。如果RS挂掉了，那么有这些断点信息就可以个协调进行复制。</p>
+</li>
+</ul>
+<h2 id="五、kafka中的Zookeeper"><a href="#五、kafka中的Zookeeper" class="headerlink" title="五、kafka中的Zookeeper"></a>五、kafka中的Zookeeper</h2><p>Kafka是一个吞吐量高、低延迟的分布式消息系统。</p>
+<p>Kafka从设计之初，就是一个大规模的分布式消息中间件，其服务端存在多个Broker，为了达到负载均衡，他将每个Topic消息分成多个分区，并分布在不同的Broker上，多个生产者能够同事发送和消费数据，Kafka使用Zookeeper作为其分布式协调框架，很好的将消息生产、消息存储、消息消费有机的结合起来。通过Zookeeper，进行Broker的注册、Topic的注册以及Watcher通知能够获取Broker和Topic的变化情况。</p>
+<p>更多的负载均衡细节可以参考《 从Paxos到Zookeeper分布式一致性原理与实践》。</p>
+<h1 id="全部参考"><a href="#全部参考" class="headerlink" title="全部参考"></a>全部参考</h1><p>[1] 从Paxos到Zookeeper分布式一致性原理与实践,</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/11/18/Knowledge-Graph/" rel="prev" title="Knowledge Graph">
+                  <i class="fa fa-chevron-left"></i> Knowledge Graph
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chelf</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":true,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

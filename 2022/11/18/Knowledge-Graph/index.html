@@ -29,7 +29,7 @@
 <meta property="og:locale">
 <meta property="og:image" content="https://shizhenqiang.github.io/2022/11/18/Knowledge-Graph/image-20221205153727189.png">
 <meta property="article:published_time" content="2022-11-18T01:37:46.000Z">
-<meta property="article:modified_time" content="2022-12-05T07:44:23.890Z">
+<meta property="article:modified_time" content="2023-03-09T02:25:34.610Z">
 <meta property="article:author" content="Chelf">
 <meta property="article:tag" content="Knowledge Graph">
 <meta name="twitter:card" content="summary">
@@ -120,7 +120,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">一、什么是知识图谱？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">2.</span> <span class="nav-text">二、图数据库</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">一、什么是知识图谱？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%BA%94%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">二、应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E4%B8%8E%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B0%8F%E4%BE%8B%E5%AD%90"><span class="nav-number">3.</span> <span class="nav-text">三、与图数据库的一个小例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E6%9C%AA%E6%9D%A5%E6%96%B9%E5%90%91"><span class="nav-number">4.</span> <span class="nav-text">四、未来方向</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E5%8F%82%E8%80%83"><span class="nav-number">5.</span> <span class="nav-text">五、参考</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -133,7 +133,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives">
-          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-count">17</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -219,7 +219,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-12-05 15:44:23" itemprop="dateModified" datetime="2022-12-05T15:44:23+08:00">2022-12-05</time>
+      <time title="Modified: 2023-03-09 10:25:34" itemprop="dateModified" datetime="2023-03-09T10:25:34+08:00">2023-03-09</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -241,13 +241,25 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="一、什么是知识图谱？"><a href="#一、什么是知识图谱？" class="headerlink" title="一、什么是知识图谱？"></a>一、什么是知识图谱？</h1><blockquote>
+        <h2 id="一、什么是知识图谱？"><a href="#一、什么是知识图谱？" class="headerlink" title="一、什么是知识图谱？"></a>一、什么是知识图谱？</h2><blockquote>
 <p><strong>A knowledge graph acquires and integrates information into an ontology and applies a reasoner to derive new knowledge.</strong></p>
 <p>​                                                                              —–<strong>Ehrlinger and WoB</strong></p>
 </blockquote>
 <p>知识图谱会获取信息并将其集成到一个本体中，使用一个推理器产生新的知识。</p>
-<p>知识图谱的概念其实比较多和杂，没有一个固定的统一说法。</p>
-<h1 id="二、图数据库"><a href="#二、图数据库" class="headerlink" title="二、图数据库"></a>二、图数据库</h1><p>用于存储图关系的数据库，下面简单介绍一下neo4j的用法。</p>
+<p>知识图谱的概念其实比较多和杂，没有一个固定的统一说法。知识图谱是一种用图模型来描述知识和建模事物之间关联关系的技术。</p>
+<p>知识图谱 (KG) 是一种用图模型来描述知识和建模事物之间关联关系的技术. 知识图谱嵌入 (KGE) 作为一种被广泛采用的知识表示方法, 其主要思想是将知识图谱中的实体和关系嵌入到连续的向量空间中, 用来简化操作, 同时保留 KG 的固有结构. 可以使得多种下游任务受益, 例如 KG 补全和关系提取等. 首先对现有的知识图谱嵌入技术进行全面回顾, 不仅包括使用 KG 中观察到的事实进行嵌入的技术, 还包括添加时间维度的动态 KG 嵌入方法, 以及融合多源信息的 KG 嵌入技术. 对相关模型从实体嵌入、关系嵌入、评分函数等方面进行分析、对比与总结. 然后简要介绍 KG 嵌入技术在下游任务中的典型应用, 包括问答系统、推荐系统和关系提取等. 最后阐述知识图谱嵌入面临的挑战, 对未来的研究方向进行展望.</p>
+<h2 id="二、应用"><a href="#二、应用" class="headerlink" title="二、应用"></a>二、应用</h2><ul>
+<li><p>基于知识图谱嵌入的问答</p>
+<p>随着大规模知识图谱的兴起, 基于知识图谱的问答 (QA) 成为重要的研究方向, 引起了人们的广泛关注. 现实世界的领域中通常包含数百万到数十亿个事实, 其庞大的数据量和复杂的数据结构使得用户很难访问其中有价值的知识. 为了缓解这个问题, 提出了基于知识图谱的问答 (QA-KG).</p>
+</li>
+<li><p>推荐系统</p>
+<p>在过去的几年中, 利用知识图谱的推荐系统已被证明与最先进的协作过滤系统具有竞争力, 能有效地解决新项目和数据稀疏性等问题 . 最近, KGE 的流行促进了利用 KGE 捕获实体语义进行推荐这一研究热点, 使用KGE 已被证明对推荐系统有效.</p>
+</li>
+<li><p>关系提取</p>
+<p>关系提取 (relation extraction, RE) 是信息提取中的一项重要任务, 旨在根据两个给定实体的上下文来提取它们之间的关系. 由于 RE 具有提取文本信息的能力, 并使许多自然语言处理应用受益 (例如: 信息检索, 对话生成,问答等), 因此受到很多研究者的青睐.</p>
+</li>
+</ul>
+<h2 id="三、与图数据库的一个小例子"><a href="#三、与图数据库的一个小例子" class="headerlink" title="三、与图数据库的一个小例子"></a>三、与图数据库的一个小例子</h2><p>用于存储图关系的数据库，下面简单介绍一下neo4j的用法。</p>
 <p>你可以使用doker快速安装并启动一个neo4j数据库。</p>
 <figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="keyword">run</span><span class="language-bash"> --name neo4j \</span></span><br><span class="line"><span class="language-bash">-d \</span></span><br><span class="line"><span class="language-bash">-p 7474:7474 \</span></span><br><span class="line"><span class="language-bash">-p 7687:7687 \</span></span><br><span class="line"><span class="language-bash">-v ./neo4j/data:/data \</span></span><br><span class="line"><span class="language-bash">-v ./neo4j/logs:/logs \</span></span><br><span class="line"><span class="language-bash">-v ./neo4j/conf:/var/lib/neo4j/conf \</span></span><br><span class="line"><span class="language-bash">-v ./neo4j/import:/var/lib/neo4j/import \</span></span><br><span class="line"><span class="language-bash">--<span class="built_in">env</span> NEO4J_AUTH=neo4j/bigdata \</span></span><br><span class="line"><span class="language-bash">neo4j:4.3.21-community</span></span><br></pre></td></tr></table></figure>
 
@@ -258,6 +270,19 @@
 <p>当然也可以学习python的包—py2neo，下面一个简单的例子。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> py2neo <span class="keyword">import</span> Graph, Node, Relationship, NodeMatcher, RelationshipMatcher</span><br><span class="line">graph = Graph(<span class="string">&quot;bolt://127.0.0.1:7687&quot;</span>, auth=(<span class="string">&quot;neo4j&quot;</span>, <span class="string">&quot;password&quot;</span>))</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_rel</span>():</span><br><span class="line">    matcher = NodeMatcher(graph)</span><br><span class="line">    rmatcher = RelationshipMatcher(graph)</span><br><span class="line">    node_model = matcher.match(<span class="string">&quot;Model&quot;</span>, name=<span class="string">&quot;A模型&quot;</span>).first()</span><br><span class="line">    node_feature = matcher.match(<span class="string">&quot;Feature&quot;</span>, name=<span class="string">&quot;C特征&quot;</span>).first()</span><br><span class="line">    r1 = rmatcher.match(&#123;node_model,node_feature&#125;).first() </span><br><span class="line">    <span class="built_in">print</span>(r1)</span><br><span class="line">    </span><br><span class="line">all_nodes = graph.run(<span class="string">&#x27;MATCH (n) RETURN n&#x27;</span>).data()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> nodes <span class="keyword">in</span> all_nodes:</span><br><span class="line">    <span class="built_in">print</span>(nodes)</span><br><span class="line"></span><br><span class="line">get_rel()</span><br></pre></td></tr></table></figure>
 
+<h2 id="四、未来方向"><a href="#四、未来方向" class="headerlink" title="四、未来方向"></a>四、未来方向</h2><ul>
+<li><p>统一框架</p>
+</li>
+<li><p>可解释性</p>
+<p>知识表示的可解释性是知识获取和实际应用中的关键问题. 现有方法已为可解释性作出了初步努力.ITransF 采用稀疏向量进行知识迁移, 通过注意力可视化进行解释.等等， 探索了知识图谱的解释方案. 然而, 这些神经模型在透明度和可解释性方面受到了限制, 一些方法结合逻辑规则来提高互操作性, 从而将黑盒神经模型与符号推理相结合. 因此, 应该进一步研究可解释性并提高预测知识的可靠性.</p>
+</li>
+<li><p>可扩展性</p>
+</li>
+<li><p>自动构建</p>
+<p>当前的 KG 高度依赖于人工构建, 这是劳动密集且昂贵的. 知识图谱在不同认知智能领域的广泛应用需要从<br>大规模的非结构化内容中自动构建知识图谱. 最近的研究主要是在现有知识图的监督下进行半自动构建. 面对多<br>模态, 异构性和大规模应用, 自动构建仍然是未来亟待解决的重要问题.</p>
+</li>
+</ul>
+<h2 id="五、参考"><a href="#五、参考" class="headerlink" title="五、参考"></a>五、参考</h2><p>1、知识图谱嵌入技术研究综述，软件学报，张天成 , 田 雪 , 孙相会 , 于明鹤 , 孙艳红  , 于 戈 </p>
 
     </div>
 
@@ -279,6 +304,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2023/01/20/zookeeper/" rel="next" title="ZooKeeper在大型分布式系统中的应用场景">
+                  ZooKeeper在大型分布式系统中的应用场景 <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>
@@ -299,7 +327,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

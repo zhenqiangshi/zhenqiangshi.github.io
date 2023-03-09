@@ -128,7 +128,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives">
-          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-count">17</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -168,6 +168,105 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://shizhenqiang.github.io/2017/07/10/GBDT/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chelf">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chelf Blog">
+      <meta itemprop="description" content="We used to look up at the sky and wonder at our place in the stars, now we just look down and worry about our place in the dirt.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Chelf Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2017/07/10/GBDT/" class="post-title-link" itemprop="url">GBDT</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-07-10 16:22:54" itemprop="dateCreated datePublished" datetime="2017-07-10T16:22:54+08:00">2017-07-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-13 17:56:12" itemprop="dateModified" datetime="2022-10-13T17:56:12+08:00">2022-10-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a target="_blank" rel="noopener" href="http://blog.csdn.net/yangtrees/article/details/7506052">机器学习——Gradient Boost Decision Tree(&amp;Treelink)</a></p>
+<p><a target="_blank" rel="noopener" href="http://wenku.baidu.com/link?url=dmoD5irL8vAV5NnBmoz69M4J_tm-EZg8yGIcfEkTp_ApblW52F6LEv9GdJzusCCaTafPX5HxDObAtwJH77NmxOSp106W-kHCffX8KwC_YG7">greedy_function_approximation_a_gradient_boosting_machine</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.jianshu.com/p/005a4e6ac775">简书上很好的一个关于GBDT的例子</a></p>
+<h1 id="GBDT"><a href="#GBDT" class="headerlink" title="GBDT"></a>GBDT</h1><h2 id="一、Regression-Decision-Tree"><a href="#一、Regression-Decision-Tree" class="headerlink" title="一、Regression Decision Tree"></a>一、Regression Decision Tree</h2><p>​    回归树总体流程类似于分类树，区别在于，回归树的每一个节点都会得一个预测值，以年龄为例，该预测值等于属于这个节点的所有人年龄的平均值。分枝时穷举每一个feature的每个阈值找最好的分割点，但<strong>衡量最好的标准不再是最大熵，而是最小化平方误差</strong>。也就是被预测出错的人数越多，错的越离谱，平方误差就越大，通过最小化平方误差能够找到最可靠的分枝依据。分枝直到每个叶子节点上人的年龄都唯一或者达到预设的终止条件(如叶子个数上限)，若最终叶子节点上人的年龄不唯一，则以该节点上所有人的<em><strong>平均</strong></em>年龄做为该叶子节点的预测年龄。</p>
+<h2 id="二、Boosting-Decision-Tree"><a href="#二、Boosting-Decision-Tree" class="headerlink" title="二、Boosting Decision Tree"></a>二、Boosting Decision Tree</h2><p>​    提升树是迭代多颗回归树来共同决策。每一棵决策树学习的是之前所有树的结论和残差(采用平方误差损失函数时)，拟合得到一个当前的残差回归树。残差的意义：<strong>残差 &#x3D; 真实值 - 预测值</strong>；提升树，即整个迭代过程生成的回归树的累加。预测值等于所有树值的累加。</p>
+<img src="/2017/07/10/GBDT/1241" class title="model complex asset_img">
+
+
+
+<p>​                                                                                                           提升树算法</p>
+<h2 id="三、Gradient-Boosting-Decision-Tree"><a href="#三、Gradient-Boosting-Decision-Tree" class="headerlink" title="三、Gradient Boosting Decision Tree"></a>三、Gradient Boosting Decision Tree</h2><p>提升树利用加法模型和前向分类算法实现学习的优化过程。当损失函数平方损失和指数损失函数时，每一步的优化很简单，如平方损失函数学习残差回归树。</p>
+<p>但对于一般的损失函数，往往每一步优化没那么容易，如上图中的绝对值损失函数和Huber损失函数。针对这一问题，Freidman提出了梯度提升算法： 利用最速下降的近似方法，即利用损失函数的负梯度在当前模型的值，作为回归问题中提升树算法的残差的近似值，拟合一个回归树。</p>
+<img src="/2017/07/10/GBDT/1240" class title="model complex asset_img">
+
+<p>​    当模型越复杂时，拟合的程度就越高，模型的训练偏差就越小。但此时如果换一组数据可能模型的变化就会很大，即模型的方差很大。所以模型过于复杂的时候会导致过拟合。<br>  当模型越简单时，即使我们再换一组数据，最后得出的学习器和之前的学习器的差别就不那么大，模型的方差很小。还是因为模型简单，所以偏差会很大。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -271,7 +370,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

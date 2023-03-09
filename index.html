@@ -128,7 +128,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives">
-          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-count">17</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -177,6 +177,137 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://shizhenqiang.github.io/2023/01/20/zookeeper/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chelf">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chelf Blog">
+      <meta itemprop="description" content="We used to look up at the sky and wonder at our place in the stars, now we just look down and worry about our place in the dirt.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Chelf Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/01/20/zookeeper/" class="post-title-link" itemprop="url">ZooKeeper在大型分布式系统中的应用场景</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-01-20 08:54:27" itemprop="dateCreated datePublished" datetime="2023-01-20T08:54:27+08:00">2023-01-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-03-09 10:13:32" itemprop="dateModified" datetime="2023-03-09T10:13:32+08:00">2023-03-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/" itemprop="url" rel="index"><span itemprop="name">大数据</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="一、什么是分布式系统？"><a href="#一、什么是分布式系统？" class="headerlink" title="一、什么是分布式系统？"></a>一、什么是分布式系统？</h2><blockquote>
+<p>分布式系统是一个硬件或者软件组件分布在不同的网络计算机上，彼此之间仅仅通过消息传递进行通信和协调的系统。</p>
+<p>​                                                                                                                                                    —— 《分布式系统概念与设计》</p>
+</blockquote>
+<p>分布式环境的各种问题诸多，此处只列举一些<strong>典型的问题</strong>。</p>
+<p>1、通信异常</p>
+<p>2、网络分区</p>
+<p>​       网络异常后，导致系统中节点的网络延时不断增大，导致只有部分节点能进行正常通信。</p>
+<h2 id="二、什么是Zookeeper？"><a href="#二、什么是Zookeeper？" class="headerlink" title="二、什么是Zookeeper？"></a>二、什么是Zookeeper？</h2><p>Zookeeper是一个典型的分布式协调服务，致力于高性能、高可用，且具用严格的顺序访问控制能力。</p>
+<p>在hadoop中，zookeeper主要用于实现HA（High Availability），这部分逻辑主要集中在hadoop Common的HA模块中，HDFS的NameNode与Yarn的ResouceManager都是基于此HA模块来实现自己的HA功能的。同时，在YARN中又特别提供了Zookeeper来存储应用的运行状态。</p>
+<h2 id="三、Yarn中的Zookeeper"><a href="#三、Yarn中的Zookeeper" class="headerlink" title="三、Yarn中的Zookeeper"></a>三、Yarn中的Zookeeper</h2><p>Yarn，分布式资源调度框架，支持我们常用的Mapreduce计算引擎，当然，也支持其他的计算引擎，如Spark，Storm等。</p>
+<p>此处仅介绍为何需要Zookeeper，具体架构不做细节分析。ResourceManager是Yarn的一个核心且复杂组件，负责集群所有资源的管理和分配，接受各个节点的资源汇总情况，将信息按一定策略分配给应用程序（Application Manager），但是目前一个明显的缺陷就是RM是一个单点，为解决高可用，Yarn设计了一套Active&#x2F;Standby模式的RM HA架构。运行期间，多个RM并存，但是只有一个处于Active状态，其余则为Standby状态，出现问题后，Stanby节点竞争选举产生新的Active节点。而这个时候，就是利用Zookeeper来<strong>实现RM的主备切换</strong>的过程。</p>
+<p>简单分三步：</p>
+<ul>
+<li><p>创建锁节点</p>
+<p>在Zookeeper上竞争写一个Lock的子节点（临时节点，Zookeeper上的节点分为临时和持久节点），创建成功的为Active。</p>
+</li>
+<li><p>注册监听器</p>
+<p>其余Standby节点注册节点变更的监听（Watcher），临时节点的特性，能迅速感知Active节点的运行状态。</p>
+</li>
+<li><p>主备切换</p>
+<p>当Active节点故障，Zookeeper上的Lock节点会删除，此时重复第一步。为防止“脑裂”现象（假死后的RM恢复后，认为自己还是Active。此时相当于多个Active了），创建锁节点时，携带Zookeeper的ACL信息，目的是独占该根节点，防止其他的RM对其更新。这个机制称为Fencing机制。</p>
+</li>
+</ul>
+<p>当然，RM上的一些状态信息，也会存储在Zookeeper，比如与各个Application相关的信息。HDFS的NameNode也有相似的处理。</p>
+<h2 id="四、hbase中的Zookeeper"><a href="#四、hbase中的Zookeeper" class="headerlink" title="四、hbase中的Zookeeper"></a>四、hbase中的Zookeeper</h2><p>Hbase是一个数据写入具有强一致性的高可靠、高性能、面向列、可伸缩的分布式存储系统。在Hbase的整个架构体系中，Zookeeper是串联起Hbase集群与Client的关键所在。详细读写分析可参考2019年的Hbase初探。Zookeeper在Hbase中的应用场景众多，主要分为以下五大方面。</p>
+<ul>
+<li><p>系统容错</p>
+<p>HMaster会监听在Zookeeper上的RegionServer创建的节点，这样，每一个RegionServer出现问题，Hmaster就会感知，立刻开始容错同步。这个监控交给Zookeeper，其实也缓解了Hmaster的压力，毕竟Regionserver的数量过大，对于Hmaster也有性能影响。</p>
+</li>
+<li><p>RootRegion管理</p>
+<p>可以当做一个所有数据位置的一个信息存储地点（元数据分片），客户端访问时能保证总能拿到正确的RootRegion信息。</p>
+</li>
+<li><p>Region状态管理</p>
+<p>Region是Hbase的一个物理分片，每个Regin记录全局数据的一小部分，且不同Region数据不重复。当然，系统故障、负载均衡、配置或者Regiion的分裂合并都会影响其状态，Region的状态变化也是交给Zookeeper来管理的，防止Region变化导致全局的节点无法立刻知晓。</p>
+</li>
+<li><p>分布式SplitLog任务管理</p>
+<p>SplitLog的责任就是当RegionServer发生故障进行数据迁移时，要从HLOG（保证写入可靠）恢复还在内存中的数据（还没有来的及持久化HFile中）。由于Region众多，系统想要快速恢复需要把HLOG的任务分配多台RegionServer共同处理，这个时候，Zookeeper就扮演了一个相互通信和信息持久化的角色，Hmaster会在Zookeeper上创建一个节点（splitlog），“哪个Regionserver处理哪个Region”的信息。这样由各个RegionServer来领取任务并更新该节点，通知Hmater其余的剩下的步骤。</p>
+</li>
+<li><p>Replication管理</p>
+<p>Replication是实现Hbase中主备集群的实时同步重要模块。当然也是借助Zookeeper来完成的。注册节点Replication节点，把不同的RegionServer服务器对应的HLOG记录到相应的节点上，Hmaster会将新增的数据推送给Slave集群，并同时将信息记录到Zookeeper（断点记录）。如果RS挂掉了，那么有这些断点信息就可以个协调进行复制。</p>
+</li>
+</ul>
+<h2 id="五、kafka中的Zookeeper"><a href="#五、kafka中的Zookeeper" class="headerlink" title="五、kafka中的Zookeeper"></a>五、kafka中的Zookeeper</h2><p>Kafka是一个吞吐量高、低延迟的分布式消息系统。</p>
+<p>Kafka从设计之初，就是一个大规模的分布式消息中间件，其服务端存在多个Broker，为了达到负载均衡，他将每个Topic消息分成多个分区，并分布在不同的Broker上，多个生产者能够同事发送和消费数据，Kafka使用Zookeeper作为其分布式协调框架，很好的将消息生产、消息存储、消息消费有机的结合起来。通过Zookeeper，进行Broker的注册、Topic的注册以及Watcher通知能够获取Broker和Topic的变化情况。</p>
+<p>更多的负载均衡细节可以参考《 从Paxos到Zookeeper分布式一致性原理与实践》。</p>
+<h1 id="全部参考"><a href="#全部参考" class="headerlink" title="全部参考"></a>全部参考</h1><p>[1] 从Paxos到Zookeeper分布式一致性原理与实践,</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://shizhenqiang.github.io/2022/11/18/Knowledge-Graph/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -213,7 +344,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-12-05 15:44:23" itemprop="dateModified" datetime="2022-12-05T15:44:23+08:00">2022-12-05</time>
+      <time title="Modified: 2023-03-09 10:25:34" itemprop="dateModified" datetime="2023-03-09T10:25:34+08:00">2023-03-09</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -235,13 +366,25 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="一、什么是知识图谱？"><a href="#一、什么是知识图谱？" class="headerlink" title="一、什么是知识图谱？"></a>一、什么是知识图谱？</h1><blockquote>
+          <h2 id="一、什么是知识图谱？"><a href="#一、什么是知识图谱？" class="headerlink" title="一、什么是知识图谱？"></a>一、什么是知识图谱？</h2><blockquote>
 <p><strong>A knowledge graph acquires and integrates information into an ontology and applies a reasoner to derive new knowledge.</strong></p>
 <p>​                                                                              —–<strong>Ehrlinger and WoB</strong></p>
 </blockquote>
 <p>知识图谱会获取信息并将其集成到一个本体中，使用一个推理器产生新的知识。</p>
-<p>知识图谱的概念其实比较多和杂，没有一个固定的统一说法。</p>
-<h1 id="二、图数据库"><a href="#二、图数据库" class="headerlink" title="二、图数据库"></a>二、图数据库</h1><p>用于存储图关系的数据库，下面简单介绍一下neo4j的用法。</p>
+<p>知识图谱的概念其实比较多和杂，没有一个固定的统一说法。知识图谱是一种用图模型来描述知识和建模事物之间关联关系的技术。</p>
+<p>知识图谱 (KG) 是一种用图模型来描述知识和建模事物之间关联关系的技术. 知识图谱嵌入 (KGE) 作为一种被广泛采用的知识表示方法, 其主要思想是将知识图谱中的实体和关系嵌入到连续的向量空间中, 用来简化操作, 同时保留 KG 的固有结构. 可以使得多种下游任务受益, 例如 KG 补全和关系提取等. 首先对现有的知识图谱嵌入技术进行全面回顾, 不仅包括使用 KG 中观察到的事实进行嵌入的技术, 还包括添加时间维度的动态 KG 嵌入方法, 以及融合多源信息的 KG 嵌入技术. 对相关模型从实体嵌入、关系嵌入、评分函数等方面进行分析、对比与总结. 然后简要介绍 KG 嵌入技术在下游任务中的典型应用, 包括问答系统、推荐系统和关系提取等. 最后阐述知识图谱嵌入面临的挑战, 对未来的研究方向进行展望.</p>
+<h2 id="二、应用"><a href="#二、应用" class="headerlink" title="二、应用"></a>二、应用</h2><ul>
+<li><p>基于知识图谱嵌入的问答</p>
+<p>随着大规模知识图谱的兴起, 基于知识图谱的问答 (QA) 成为重要的研究方向, 引起了人们的广泛关注. 现实世界的领域中通常包含数百万到数十亿个事实, 其庞大的数据量和复杂的数据结构使得用户很难访问其中有价值的知识. 为了缓解这个问题, 提出了基于知识图谱的问答 (QA-KG).</p>
+</li>
+<li><p>推荐系统</p>
+<p>在过去的几年中, 利用知识图谱的推荐系统已被证明与最先进的协作过滤系统具有竞争力, 能有效地解决新项目和数据稀疏性等问题 . 最近, KGE 的流行促进了利用 KGE 捕获实体语义进行推荐这一研究热点, 使用KGE 已被证明对推荐系统有效.</p>
+</li>
+<li><p>关系提取</p>
+<p>关系提取 (relation extraction, RE) 是信息提取中的一项重要任务, 旨在根据两个给定实体的上下文来提取它们之间的关系. 由于 RE 具有提取文本信息的能力, 并使许多自然语言处理应用受益 (例如: 信息检索, 对话生成,问答等), 因此受到很多研究者的青睐.</p>
+</li>
+</ul>
+<h2 id="三、与图数据库的一个小例子"><a href="#三、与图数据库的一个小例子" class="headerlink" title="三、与图数据库的一个小例子"></a>三、与图数据库的一个小例子</h2><p>用于存储图关系的数据库，下面简单介绍一下neo4j的用法。</p>
 <p>你可以使用doker快速安装并启动一个neo4j数据库。</p>
 <figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="keyword">run</span><span class="language-bash"> --name neo4j \</span></span><br><span class="line"><span class="language-bash">-d \</span></span><br><span class="line"><span class="language-bash">-p 7474:7474 \</span></span><br><span class="line"><span class="language-bash">-p 7687:7687 \</span></span><br><span class="line"><span class="language-bash">-v ./neo4j/data:/data \</span></span><br><span class="line"><span class="language-bash">-v ./neo4j/logs:/logs \</span></span><br><span class="line"><span class="language-bash">-v ./neo4j/conf:/var/lib/neo4j/conf \</span></span><br><span class="line"><span class="language-bash">-v ./neo4j/import:/var/lib/neo4j/import \</span></span><br><span class="line"><span class="language-bash">--<span class="built_in">env</span> NEO4J_AUTH=neo4j/bigdata \</span></span><br><span class="line"><span class="language-bash">neo4j:4.3.21-community</span></span><br></pre></td></tr></table></figure>
 
@@ -252,6 +395,19 @@
 <p>当然也可以学习python的包—py2neo，下面一个简单的例子。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> py2neo <span class="keyword">import</span> Graph, Node, Relationship, NodeMatcher, RelationshipMatcher</span><br><span class="line">graph = Graph(<span class="string">&quot;bolt://127.0.0.1:7687&quot;</span>, auth=(<span class="string">&quot;neo4j&quot;</span>, <span class="string">&quot;password&quot;</span>))</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_rel</span>():</span><br><span class="line">    matcher = NodeMatcher(graph)</span><br><span class="line">    rmatcher = RelationshipMatcher(graph)</span><br><span class="line">    node_model = matcher.match(<span class="string">&quot;Model&quot;</span>, name=<span class="string">&quot;A模型&quot;</span>).first()</span><br><span class="line">    node_feature = matcher.match(<span class="string">&quot;Feature&quot;</span>, name=<span class="string">&quot;C特征&quot;</span>).first()</span><br><span class="line">    r1 = rmatcher.match(&#123;node_model,node_feature&#125;).first() </span><br><span class="line">    <span class="built_in">print</span>(r1)</span><br><span class="line">    </span><br><span class="line">all_nodes = graph.run(<span class="string">&#x27;MATCH (n) RETURN n&#x27;</span>).data()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> nodes <span class="keyword">in</span> all_nodes:</span><br><span class="line">    <span class="built_in">print</span>(nodes)</span><br><span class="line"></span><br><span class="line">get_rel()</span><br></pre></td></tr></table></figure>
 
+<h2 id="四、未来方向"><a href="#四、未来方向" class="headerlink" title="四、未来方向"></a>四、未来方向</h2><ul>
+<li><p>统一框架</p>
+</li>
+<li><p>可解释性</p>
+<p>知识表示的可解释性是知识获取和实际应用中的关键问题. 现有方法已为可解释性作出了初步努力.ITransF 采用稀疏向量进行知识迁移, 通过注意力可视化进行解释.等等， 探索了知识图谱的解释方案. 然而, 这些神经模型在透明度和可解释性方面受到了限制, 一些方法结合逻辑规则来提高互操作性, 从而将黑盒神经模型与符号推理相结合. 因此, 应该进一步研究可解释性并提高预测知识的可靠性.</p>
+</li>
+<li><p>可扩展性</p>
+</li>
+<li><p>自动构建</p>
+<p>当前的 KG 高度依赖于人工构建, 这是劳动密集且昂贵的. 知识图谱在不同认知智能领域的广泛应用需要从<br>大规模的非结构化内容中自动构建知识图谱. 最近的研究主要是在现有知识图的监督下进行半自动构建. 面对多<br>模态, 异构性和大规模应用, 自动构建仍然是未来亟待解决的重要问题.</p>
+</li>
+</ul>
+<h2 id="五、参考"><a href="#五、参考" class="headerlink" title="五、参考"></a>五、参考</h2><p>1、知识图谱嵌入技术研究综述，软件学报，张天成 , 田 雪 , 孙相会 , 于明鹤 , 孙艳红  , 于 戈 </p>
 
       
     </div>
@@ -739,129 +895,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://shizhenqiang.github.io/2021/07/02/docker/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chelf">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chelf Blog">
-      <meta itemprop="description" content="We used to look up at the sky and wonder at our place in the stars, now we just look down and worry about our place in the dirt.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Chelf Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/07/02/docker/" class="post-title-link" itemprop="url">docker 浅知</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-07-02 16:00:14" itemprop="dateCreated datePublished" datetime="2021-07-02T16:00:14+08:00">2021-07-02</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-13 17:59:52" itemprop="dateModified" datetime="2022-10-13T17:59:52+08:00">2022-10-13</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E8%BF%90%E7%BB%B4/" itemprop="url" rel="index"><span itemprop="name">运维</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="一、docker的核心概念"><a href="#一、docker的核心概念" class="headerlink" title="一、docker的核心概念"></a>一、docker的核心概念</h2><ul>
-<li><h2 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h2><p>镜像的运行实体，有运行时需要的可写文件层，并且容器中的进程属于运行状态。可初建、运行、停止、暂停和删除。</p>
-</li>
-<li><p>镜像</p>
-<p>一个只读的文件和文件夹组合。可拉取、重命名、构建、删除、查看。一个镜像，可以创建多个容器。</p>
-</li>
-<li><p>仓库</p>
-<p> 存储和分发 Docker 镜像。</p>
-</li>
-</ul>
-<h2 id="二、什么是NameSpace？"><a href="#二、什么是NameSpace？" class="headerlink" title="二、什么是NameSpace？"></a>二、什么是NameSpace？</h2><figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Namespace</span> 是 Linux 内核的一项功能，该功能对内核资源进行分区，以使一组进程看到一组资源，而另一组进程看到另一组资源。<span class="keyword">Namespace</span> 的工作方式通过为一组资源和进程设置相同的 <span class="keyword">Namespace</span> 而起作用，但是这些 <span class="keyword">Namespace</span> 引用了不同的资源。资源可能存在于多个 <span class="keyword">Namespace</span> 中。这些资源可以是进程 ID、主机名、用户 ID、文件名、与网络访问相关的名称和进程间通信。---维基百科</span><br></pre></td></tr></table></figure>
-
-<p>虽然 Linux 内核提供了8种 Namespace，但是最新版本的 Docker 只使用了其中的前6 种，分别为Mount Namespace、PID Namespace、Net Namespace、IPC Namespace、UTS Namespace、User Namespace。</p>
-<ul>
-<li><p>Mount Namespace</p>
-<p>使用 unshare 命令可以新建 Mount Namespace，并且在新建的 Mount Namespace 内 mount 是和外部完全隔离的。</p>
-</li>
-<li><p>PID Namespace</p>
-<p>隔离进程。</p>
-</li>
-<li><p>Net Namespace</p>
-<p>用来隔离网络设备、IP 地址和端口等信息的。</p>
-</li>
-<li><p>IPC Namespace</p>
-<p>隔离进程间通信的。ipcs -q 命令：用来查看系统间通信队列列表。ipcmk -Q 命令：用来创建系统间通信队列。</p>
-</li>
-<li><p>UTS Namespace</p>
-<p>隔离主机名的，它允许每个 UTS Namespace 拥有一个独立的主机名。</p>
-</li>
-<li><p>User Namespace</p>
-<p> 主要是用来隔离用户和用户组的。</p>
-</li>
-</ul>
-<p>由于使用了namespace的技术，所以才实现了容器的隔离。</p>
-<h2 id="三、什么是cgroups？"><a href="#三、什么是cgroups？" class="headerlink" title="三、什么是cgroups？"></a>三、什么是cgroups？</h2><p>​       cgroups（全称：control groups）是 Linux 内核的一个功能，它可以实现限制进程或者进程组的资源（如 CPU、内存、磁盘 IO 等）。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
@@ -875,7 +908,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
