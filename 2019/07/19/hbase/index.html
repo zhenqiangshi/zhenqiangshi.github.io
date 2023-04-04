@@ -20,18 +20,18 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"shizhenqiang.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.13.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="HBase基于LSM树模型实现，所有的数据写入操作首先会顺序写入日志HLog，再写入MemStore，当MemStore中数据大小超过阈值之后再将这些数据批量写入磁盘，生成一个新的HFile文件。LSM树架构有如下几个非常明显的优势：  这种写入方式将一次随机IO写入转换成一个顺序IO写入（HLog顺序写入）加上一次内存写入（MemStore写入），使得写入性能得到极大提升。 HFile中KeyV">
+    <meta name="description" content="HBase系统中一张表会被水平切分成多个Region，每个Region负责自己区域的数据读写请求。水平切分意味着每个Region会包含所有的列簇数据，HBase将不同列簇的数据存储在不同的Store中，每个Store由一个MemStore和一系列HFile组成。 HBase基于LSM树模型实现，所有的数据写入操作首先会顺序写入日志HLog，再写入MemStore，当MemStore中数据大小超过阈">
 <meta property="og:type" content="article">
 <meta property="og:title" content="hbase 初探">
 <meta property="og:url" content="https://shizhenqiang.github.io/2019/07/19/hbase/index.html">
 <meta property="og:site_name" content="Chelf Blog">
-<meta property="og:description" content="HBase基于LSM树模型实现，所有的数据写入操作首先会顺序写入日志HLog，再写入MemStore，当MemStore中数据大小超过阈值之后再将这些数据批量写入磁盘，生成一个新的HFile文件。LSM树架构有如下几个非常明显的优势：  这种写入方式将一次随机IO写入转换成一个顺序IO写入（HLog顺序写入）加上一次内存写入（MemStore写入），使得写入性能得到极大提升。 HFile中KeyV">
+<meta property="og:description" content="HBase系统中一张表会被水平切分成多个Region，每个Region负责自己区域的数据读写请求。水平切分意味着每个Region会包含所有的列簇数据，HBase将不同列簇的数据存储在不同的Store中，每个Store由一个MemStore和一系列HFile组成。 HBase基于LSM树模型实现，所有的数据写入操作首先会顺序写入日志HLog，再写入MemStore，当MemStore中数据大小超过阈">
 <meta property="og:locale">
 <meta property="og:image" content="https://shizhenqiang.github.io/2019/07/19/hbase/2022-08-10_11.08.43.png">
 <meta property="og:image" content="https://shizhenqiang.github.io/2019/07/19/hbase/image-20220810110112338.png">
 <meta property="og:image" content="https://shizhenqiang.github.io/2019/07/19/hbase/read_hbase.png">
 <meta property="article:published_time" content="2019-07-19T03:02:56.000Z">
-<meta property="article:modified_time" content="2022-10-25T07:43:24.625Z">
+<meta property="article:modified_time" content="2023-03-24T07:58:49.607Z">
 <meta property="article:author" content="Chelf">
 <meta property="article:tag" content="hbase">
 <meta name="twitter:card" content="summary">
@@ -122,7 +122,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#RegionServer"><span class="nav-number">1.</span> <span class="nav-text">RegionServer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%86%99"><span class="nav-number">2.</span> <span class="nav-text">一、写</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BulkLoad%E6%98%AF%E5%87%8F%E5%B0%91%E4%BA%86%E5%93%AA%E4%B8%80%E6%AD%A5%EF%BC%9F"><span class="nav-number">2.1.</span> <span class="nav-text">BulkLoad是减少了哪一步？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E8%AF%BB"><span class="nav-number">3.</span> <span class="nav-text">二、读</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#RegionServer"><span class="nav-number">1.</span> <span class="nav-text">RegionServer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%86%99"><span class="nav-number">2.</span> <span class="nav-text">一、写</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BulkLoad%E6%98%AF%E5%87%8F%E5%B0%91%E4%BA%86%E5%93%AA%E4%B8%80%E6%AD%A5%EF%BC%9F"><span class="nav-number">2.1.</span> <span class="nav-text">BulkLoad是减少了哪一步？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E8%AF%BB"><span class="nav-number">3.</span> <span class="nav-text">二、读</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81Region"><span class="nav-number">4.</span> <span class="nav-text">三、Region</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -135,7 +135,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives">
-          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -221,7 +221,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-25 15:43:24" itemprop="dateModified" datetime="2022-10-25T15:43:24+08:00">2022-10-25</time>
+      <time title="Modified: 2023-03-24 15:58:49" itemprop="dateModified" datetime="2023-03-24T15:58:49+08:00">2023-03-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -243,13 +243,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>HBase基于LSM树模型实现，所有的数据写入操作首先会顺序写入日志HLog，再写入MemStore，当MemStore中数据大小超过阈值之后再将这些数据批量写入磁盘，生成一个新的HFile文件。LSM树架构有如下几个非常明显的优势：</p>
+        <p>HBase系统中一张表会被水平切分成多个Region，每个Region负责自己区域的数据读写请求。水平切分意味着每个Region会包含所有的列簇数据，HBase将不同列簇的数据存储在不同的Store中，每个Store由一个MemStore和一系列HFile组成。</p>
+<p>HBase基于LSM树模型实现，所有的数据写入操作首先会顺序写入日志HLog，再写入MemStore，当MemStore中数据大小超过阈值之后再将这些数据批量写入磁盘，生成一个新的HFile文件。LSM树架构有如下几个非常明显的优势：</p>
 <ul>
 <li>这种写入方式将一次随机IO写入转换成一个顺序IO写入（HLog顺序写入）加上一次内存写入（MemStore写入），使得<strong>写入性能</strong>得到极大提升。</li>
 <li>HFile中KeyValue数据需要按照Key排序，排序之后可以在文件级别根据有序的Key建立索引树，极大提升数据<strong>读取性能</strong>。然而HDFS本身只允许顺序读写，不能更新，因此需要数据在落盘生成HFile之前就完成排序工作，<strong>MemStore就是KeyValue数据排序的实际执行者。</strong></li>
 <li>MemStore作为一个缓存级的存储组件，总是缓存着最近写入的数据。</li>
 <li>在数据写入HFile之前，可以在内存中对KeyValue数据进行很多更高级的优化。比如，MemStore在将数据写入HFile之前实际上可以丢弃老版本数据，仅保留最新版本数据。</li>
 </ul>
+<p>这里重点说一下RegionServer。</p>
 <h2 id="RegionServer"><a href="#RegionServer" class="headerlink" title="RegionServer"></a>RegionServer</h2><img src="/2019/07/19/hbase/2022-08-10_11.08.43.png" class title="HBASE WRITE">
 
 <p>一个RegionServer由一个（或多个）HLog、一个BlockCache以及多个Region组成。其中，HLog用来保证数据写入的可靠性；BlockCache可以将数据块缓存在内存中以提升数据读取性能；Region是HBase中数据表的一个数据分片，一个RegionServer上通常会负责多个Region的数据读写。一个Region由多个Store组成，每个Store存放对应列簇的数据，比如一个表中有两个列簇，这个表的所有Region就都会包含两个Store。每个Store包含一个MemStore和多个HFile，用户数据写入时会将对应列簇数据写入相应的MemStore，一旦写入数据的内存大小超过设定阈值，系统就会将MemStore中的数据落盘形成HFile文件。HFile存放在HDFS上，是一种定制化格式的数据存储文件，方便用户进行数据读取。</p>
@@ -273,6 +275,8 @@
 <img src="/2019/07/19/hbase/read_hbase.png" class title="HBASE READ">
 
 <p>注：<code>META</code> 表是 HBase 中一张特殊的表，它保存了所有 Region 的位置信息，META 表自己的位置信息则存储在 ZooKeeper 上。</p>
+<h2 id="三、Region"><a href="#三、Region" class="headerlink" title="三、Region"></a>三、Region</h2><p>1、Regin分裂</p>
+<p>HBase对于分裂点的定义为：整个Region中最大Store中的最大文件中最中心的一个Block的首个rowkey。另外，HBase还规定，如果定位到的rowkey是整个文件的首个rowkey或者最后一个rowkey，则认为没有分裂点。</p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
 <li>书名：HBase原理与实践作者：胡争，范欣欣出版社：机械工业出版社出版时间：2019-08ISBN：9787111634959</li>
 <li><a target="_blank" rel="noopener" href="https://github.com/heibaiying/BigData-Notes/blob/master/notes/Hbase%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%8F%8A%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.md">https://github.com/heibaiying/BigData-Notes/blob/master/notes/Hbase%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%8F%8A%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.md</a></li>

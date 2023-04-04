@@ -128,7 +128,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives">
-          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -274,6 +274,98 @@
 </ul>
 <p>由于使用了namespace的技术，所以才实现了容器的隔离。</p>
 <h2 id="三、什么是cgroups？"><a href="#三、什么是cgroups？" class="headerlink" title="三、什么是cgroups？"></a>三、什么是cgroups？</h2><p>​       cgroups（全称：control groups）是 Linux 内核的一个功能，它可以实现限制进程或者进程组的资源（如 CPU、内存、磁盘 IO 等）。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://shizhenqiang.github.io/2021/03/23/index/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chelf">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chelf Blog">
+      <meta itemprop="description" content="We used to look up at the sky and wonder at our place in the stars, now we just look down and worry about our place in the dirt.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Chelf Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/03/23/index/" class="post-title-link" itemprop="url">索引小记</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-03-23 17:14:45" itemprop="dateCreated datePublished" datetime="2021-03-23T17:14:45+08:00">2021-03-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-04-04 14:18:01" itemprop="dateModified" datetime="2023-04-04T14:18:01+08:00">2023-04-04</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>索引</p>
+<h2 id="哈希索引"><a href="#哈希索引" class="headerlink" title="哈希索引"></a>哈希索引</h2><p>基于哈希表实现，只有精确匹配索引所有列的查询才有效，对于每一行数据，存储引擎都会对所有的索引列计算一个哈希码，哈希码是一个较小的值，并且不同键值的行计算出来的哈希码也不一样。哈希码索引将所有的哈希码存储在索引中，同时在哈希表中保存指向每个数据行的指针。</p>
+<h2 id="B-树"><a href="#B-树" class="headerlink" title="B+树"></a>B+树</h2><ul>
+<li>B+树叶子和非叶子结点的数据页都是16k，且数据结构一致，区别在于叶子节点放的是真实的行数据，而非叶子结点放的是主键和下一个页的地址。</li>
+<li>B+树一般有两到三层，由于其高扇出，三层就能支持2kw以上的数据，且一次查询最多1~3次磁盘IO，性能也还行。</li>
+<li>存储同样量级的数据，B树比B+树层级更高，因此磁盘IO也更多，所以B+树更适合成为mysql索引。</li>
+<li>索引结构不会影响单表最大行数，2kw也只是推荐值，超过了这个值可能会导致B+树层级更高，影响查询性能。</li>
+<li>单表最大值还受主键大小和磁盘大小限制。</li>
+</ul>
+<h2 id="红黑树"><a href="#红黑树" class="headerlink" title="红黑树"></a>红黑树</h2><p>一种二叉搜索树，但在每个结点上增加一个存储位表示结点的颜色，可以是Red或Black。 通过任何一条从根到叶子的路径上各个结点着色方式的限制，红黑树确保没有一条路径会比其他路径长出俩倍，因而是接近平衡的。不追求绝对平衡，只需保证最长路径不超过最短路径的2倍，相对而言，降低了插入和旋转的次数，所以在经常进行增删的结构中性能比AVL树更优，而且红黑树实现比较简单，所以实际运用中红黑树更多。</p>
+<h2 id="R-Tree索引"><a href="#R-Tree索引" class="headerlink" title="R-Tree索引"></a>R-Tree索引</h2><p>用来做空间数据存储的树状数据结构。采用了B树分割空间思想，并在添加、删除操作时采用合并、分解节点的方法，保证树的平衡性。</p>
+<h2 id="跳跃表"><a href="#跳跃表" class="headerlink" title="跳跃表"></a>跳跃表</h2><p>跳跃表（SkipList）是一种能高效实现<strong>插入</strong>、删除、查找的内存数据结构，这些操作的期望复杂度都是O(logN)。与红黑树以及其他的二分查找树相比，跳跃表的优势在于实现简单，而且在并发场景下加锁粒度更小，从而可以实现更高的并发性。正因为这些优点，跳跃表广泛使用于KV数据库中，诸如Redis、LevelDB、HBase都把跳跃表作为一种维护有序数据集合的基础数据结构。</p>
+<h2 id="布隆过滤器"><a href="#布隆过滤器" class="headerlink" title="布隆过滤器"></a>布隆过滤器</h2><p>由于布隆过滤器只需<strong>占用极小的空间</strong>，便可给出“可能存在”和“肯定不存在”的存在性判断，因此可以提前过滤掉很多不必要的数据块，从而节省了大量的磁盘IO。HBase的Get操作就是通过运用低成本高效率的布隆过滤器来过滤大量无效数据块的，从而节省大量磁盘IO。redis中也有布隆过滤器的应用。</p>
+<h2 id="LSM树"><a href="#LSM树" class="headerlink" title="LSM树"></a>LSM树</h2><p>LSM树的索引结构本质是将写入操作全部转化成磁盘的顺序写入，极大地提高了写入操作的性能。但是，这种设计对读取操作是非常不利的，因为需要在读取的过程中，通过归并所有文件来读取所对应的KV，这是非常消耗IO资源的。因此，在<em>HBase</em>中设计了异步的compaction来降低文件个数，达到提高读取性能的目的。由于HDFS只支持文件的顺序写，不支持文件的随机写，而且HDFS擅长的场景是大文件存储而非小文件，所以上层HBase选择LSM树这种索引结构是最合适的。</p>
+<p>参考：</p>
+<p>1、微信公众号，小白，《为什么大家说mysql数据库单表最大两千万？依据是啥？》</p>
+<p>2、HBase原理与实践作者，胡争，范欣欣，机械工业出版社</p>
 
       
     </div>
@@ -525,7 +617,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-25 15:43:24" itemprop="dateModified" datetime="2022-10-25T15:43:24+08:00">2022-10-25</time>
+      <time title="Modified: 2023-03-24 15:58:49" itemprop="dateModified" datetime="2023-03-24T15:58:49+08:00">2023-03-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -547,13 +639,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>HBase基于LSM树模型实现，所有的数据写入操作首先会顺序写入日志HLog，再写入MemStore，当MemStore中数据大小超过阈值之后再将这些数据批量写入磁盘，生成一个新的HFile文件。LSM树架构有如下几个非常明显的优势：</p>
+          <p>HBase系统中一张表会被水平切分成多个Region，每个Region负责自己区域的数据读写请求。水平切分意味着每个Region会包含所有的列簇数据，HBase将不同列簇的数据存储在不同的Store中，每个Store由一个MemStore和一系列HFile组成。</p>
+<p>HBase基于LSM树模型实现，所有的数据写入操作首先会顺序写入日志HLog，再写入MemStore，当MemStore中数据大小超过阈值之后再将这些数据批量写入磁盘，生成一个新的HFile文件。LSM树架构有如下几个非常明显的优势：</p>
 <ul>
 <li>这种写入方式将一次随机IO写入转换成一个顺序IO写入（HLog顺序写入）加上一次内存写入（MemStore写入），使得<strong>写入性能</strong>得到极大提升。</li>
 <li>HFile中KeyValue数据需要按照Key排序，排序之后可以在文件级别根据有序的Key建立索引树，极大提升数据<strong>读取性能</strong>。然而HDFS本身只允许顺序读写，不能更新，因此需要数据在落盘生成HFile之前就完成排序工作，<strong>MemStore就是KeyValue数据排序的实际执行者。</strong></li>
 <li>MemStore作为一个缓存级的存储组件，总是缓存着最近写入的数据。</li>
 <li>在数据写入HFile之前，可以在内存中对KeyValue数据进行很多更高级的优化。比如，MemStore在将数据写入HFile之前实际上可以丢弃老版本数据，仅保留最新版本数据。</li>
 </ul>
+<p>这里重点说一下RegionServer。</p>
 <h2 id="RegionServer"><a href="#RegionServer" class="headerlink" title="RegionServer"></a>RegionServer</h2><img src="/2019/07/19/hbase/2022-08-10_11.08.43.png" class title="HBASE WRITE">
 
 <p>一个RegionServer由一个（或多个）HLog、一个BlockCache以及多个Region组成。其中，HLog用来保证数据写入的可靠性；BlockCache可以将数据块缓存在内存中以提升数据读取性能；Region是HBase中数据表的一个数据分片，一个RegionServer上通常会负责多个Region的数据读写。一个Region由多个Store组成，每个Store存放对应列簇的数据，比如一个表中有两个列簇，这个表的所有Region就都会包含两个Store。每个Store包含一个MemStore和多个HFile，用户数据写入时会将对应列簇数据写入相应的MemStore，一旦写入数据的内存大小超过设定阈值，系统就会将MemStore中的数据落盘形成HFile文件。HFile存放在HDFS上，是一种定制化格式的数据存储文件，方便用户进行数据读取。</p>
@@ -577,177 +671,12 @@
 <img src="/2019/07/19/hbase/read_hbase.png" class title="HBASE READ">
 
 <p>注：<code>META</code> 表是 HBase 中一张特殊的表，它保存了所有 Region 的位置信息，META 表自己的位置信息则存储在 ZooKeeper 上。</p>
+<h2 id="三、Region"><a href="#三、Region" class="headerlink" title="三、Region"></a>三、Region</h2><p>1、Regin分裂</p>
+<p>HBase对于分裂点的定义为：整个Region中最大Store中的最大文件中最中心的一个Block的首个rowkey。另外，HBase还规定，如果定位到的rowkey是整个文件的首个rowkey或者最后一个rowkey，则认为没有分裂点。</p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
 <li>书名：HBase原理与实践作者：胡争，范欣欣出版社：机械工业出版社出版时间：2019-08ISBN：9787111634959</li>
 <li><a target="_blank" rel="noopener" href="https://github.com/heibaiying/BigData-Notes/blob/master/notes/Hbase%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%8F%8A%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.md">https://github.com/heibaiying/BigData-Notes/blob/master/notes/Hbase%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%8F%8A%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.md</a></li>
 </ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://shizhenqiang.github.io/2019/07/16/About-hadoop/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chelf">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chelf Blog">
-      <meta itemprop="description" content="We used to look up at the sky and wonder at our place in the stars, now we just look down and worry about our place in the dirt.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Chelf Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/07/16/About-hadoop/" class="post-title-link" itemprop="url">Mapreduce</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-07-16 17:06:57" itemprop="dateCreated datePublished" datetime="2019-07-16T17:06:57+08:00">2019-07-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-25 15:43:19" itemprop="dateModified" datetime="2022-10-25T15:43:19+08:00">2022-10-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/" itemprop="url" rel="index"><span itemprop="name">大数据</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%A6%BB%E7%BA%BF%E8%AE%A1%E7%AE%97/" itemprop="url" rel="index"><span itemprop="name">离线计算</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="一、什么是hadoop"><a href="#一、什么是hadoop" class="headerlink" title="一、什么是hadoop"></a><strong>一、什么是hadoop</strong></h2><p>​    hadoop是一个开源的分布式计算和存储的框架。</p>
-<h2 id="二、什么是mapreduce？"><a href="#二、什么是mapreduce？" class="headerlink" title="二、什么是mapreduce？"></a><strong>二、什么是mapreduce？</strong></h2><p>​        MapReduce是一个可用于数据处理的编程模型。</p>
-<p>​       从总体上来讲，MapReduce主要包括三个阶段，map阶段， shuffle阶段， reduce阶段，如果大家对我前面讲的HDFS还有印象，应该能知道split这个过程，其实是HDFS帮我们做了，下面我从map的输入开始，剖析一下整个MapReduce的过程<img src="/2019/07/16/About-hadoop/529698-20180708160630717-1928465583.png" class title="MAPREDUCE asset_img"></p>
-<ul>
-<li><p>​      SPLIT</p>
-<p>​       一个Split分片的内容主要包括Path file、Long start、Long length和String[] hosts。从这四个可以看出Split分片并没有实际的数据，分片其实只是对一个文 件进行<strong>逻辑</strong>上的分片，数据还是按照Block的方式保存在<strong>HDFS</strong>中，<strong>物理上的分片</strong>，而一个Split分片的主要记录了该分片是从文件的那个位置开始，长度是多少，这些数据的位  置在哪里这些信息，在读取分片数据的时候，是根据FileSplit类中的信息去读取相应的Block的数据。这也是为什么分片最好和Block大小相同的原因，如果一个FileSplit的大小大于一个Block的大小，则该分片可能会需要从其他节点的Block读取数据，这样就会造成不必要的网络传输，导致处理时间增长。</p>
-<ul>
-<li>数据块：Block是HDFS物理上把数据分成一块一块。</li>
-<li>切片：数据切片只是在逻辑上对输入进行分片，并不会在磁盘上将其切分成片进行存储。</li>
-<li><strong>一个切片split对应一个maptask任务，切片的数量就等于并行度</strong></li>
-</ul>
-<p> 部分摘自：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/380602829">https://zhuanlan.zhihu.com/p/380602829</a></p>
-</li>
-<li><p>​      MAP</p>
-<p>  Map 函数拿到数据以后，会根据用户自定义的逻辑对数据进行处理，然后产生输出。</p>
-</li>
-<li><p>​     SHUFFLE</p>
-<p>  因为重要独立一节来说。</p>
-</li>
-<li><p>​     REDUCE</p>
-<p>对已排序输入中的每个键调用Reduce函数，并将结果写到HDFS。至此整个MapReduce工作原理部分就结束了。</p>
-</li>
-</ul>
-<p>​            </p>
-<h2 id="三、什么是shuttle？"><a href="#三、什么是shuttle？" class="headerlink" title="三、什么是shuttle？"></a><strong>三、什么是shuttle？</strong></h2><img src="/2019/07/16/About-hadoop/529698-20180708163222772-1584131492.png" class title="shuttle asset_img">     
-
-<p>在整个MapReduce的生命周期中，纯粹的Map阶段和过程的reduce过程，其实只占了很小的一部分，整个MapReduce的核心其实是Shuffle过程，也被称为奇迹发生的地方。</p>
-<h3 id="3-1-概况"><a href="#3-1-概况" class="headerlink" title="3.1 概况"></a>3.1 概况</h3><p> 从map task输出到reduce task输入的这段过程都是shuffle，把map输出端的结果有序的传递给reduce的输入端。 从上面这个图可以看出，整个shuffle阶段，横跨了Map过程与Reduce过程，所以shuffle阶段又可分为map阶段的shuffle， map-shuffle 和 reduce 阶段的shuffle， reduce-shuffle， 在map-shuffle阶段主要完成了spill这个过程，在reduce-shuffle阶段，主要完成了copy和sort这个过程。 先来看map-shuffle 阶段的 spill 过程 ，Spill过程简单来说就是把Map任务输出的中间结果写到本地磁盘上。以后供Reduce调用，做为Reduce端的输入。 因为写磁盘的过程中既要考虑到写入的性能，因为不能出一个结果就写一次磁盘，出一个结果就写一次磁盘，这样效率会很低，又要考虑到为后续传递给reduce做准备。因为在实际使用中，一般会不止一个Reduce，而一个Map的输出，最后通常会传递给多个Reduce，如果我们能事先对Map的输出进行分区，或者说的更通俗一点就是把将来要传递给同一个reduce数据都有序的放在一起，这样就可以大大提升接下来从Map输出端拷贝输出结果到Reduce输入端的效率。</p>
-<ul>
-<li>完整地从map task端拉取数据到reduce 端。</li>
-<li>在跨节点拉取数据时，尽可能地减少对带宽的不必要消耗。</li>
-<li>减少磁盘IO对task执行的影响。</li>
-</ul>
-<h3 id="3-2-过程总结"><a href="#3-2-过程总结" class="headerlink" title="3.2 过程总结"></a>3.2 过程总结</h3><p><strong>Map阶段</strong></p>
-<ul>
-<li><strong>首先MapTask所处理的数据是对数据处理后的某一个切片</strong></li>
-</ul>
-<p><img src="https://pic3.zhimg.com/80/v2-beed5273f00195f81bc05842da5feb9e_720w.webp" alt="img"></p>
-<ul>
-<li><strong>Map方法执行完成后，</strong>context.write(), 直接输出我们的Key-value</li>
-<li>此时写出数据，然后到环形缓冲区（大小100M），默认溢写的阈值是80%，也就是写满80M进行溢写；</li>
-<li>溢写过程会按照key进行分区，默认分区的规则是key的hashcode值%reducetasks的值（可手动设定）</li>
-</ul>
-<p><img src="https://pic2.zhimg.com/80/v2-147794941f5e1394541011bfaeab8a09_720w.webp" alt="img"></p>
-<ul>
-<li>每个分区内会进行快速排序</li>
-<li>溢写会生成一个文件</li>
-<li>第二次溢写生成第二个文件</li>
-<li>第n次溢写生成第n个文件。。。。</li>
-<li>导致某一个map task 输出多个文件，为了方便reduce task拉取，MR阶段会对数据进行合并</li>
-<li>溢写文件合并会保留分区，同时进行归并排序，最终得到一个文件，且带有分区编号（此reduce阶段还未启动）</li>
-</ul>
-<p><img src="https://pic3.zhimg.com/80/v2-8f5a0bb8a84e8baa6dfc872a25146db6_720w.webp" alt="img"></p>
-<p><strong>reduce阶段启动</strong></p>
-<ul>
-<li><strong>reduce阶段启动时会先进行copy，根据分区编号，拉取所有map输出的同个分区的数据到reduce端，加载到内存来进行合并—-merge阶段（来自多个分区的数据进行合并）</strong></li>
-</ul>
-<p><img src="https://pic1.zhimg.com/80/v2-162217fecb2fbe9f4711ad9842196a40_720w.webp" alt="img"></p>
-<ul>
-<li>merge过程，内存不够就会溢写到磁盘</li>
-<li>多次溢写，生成多个文件，进行归并排序</li>
-<li>排序后分组（分组排序），按照key相同的进行分组，一组一组地调用reduce方法</li>
-</ul>
-<p><img src="https://pic3.zhimg.com/80/v2-9d24dc0875dbb41bc3dfcbb52cabd71a_720w.webp" alt="img"></p>
-<h2 id="四、-什么是YARN？"><a href="#四、-什么是YARN？" class="headerlink" title="四、 什么是YARN？"></a><strong>四、 什么是YARN？</strong></h2><p>​    Yarn的定义是 Yet Another Resource Negotiator，另一种资源协调者。 因为在Hadoop刚出来的时候，那时候还没有Yarn，Hadoop的工作调度都是由JobTracker和TaskTracker来做的，但是JobTracker和TaskTracker在设计上存在缺陷，主要问题是，单点压力过大最多只能支持近4000台机器，而且容易造成单点故障问题，所以慢慢的被弃用了，后来就出现了Yarn，Yarn在设计上更具有一般性，实际上MapReduce只是Yarn上的一个应用而已，Yarn上不但能支撑MapReduce，还能支撑自打出生以来就火的不要不要的内存计算并行计算框架Saprk，流式计算框架Storm 等等 … Yarn 由五个独立的实体组成。</p>
-<ul>
-<li><p>​    <strong>Client：用来提交（ MapReduce ）Job；</strong></p>
-</li>
-<li><p>​    <strong>ResourcesManager：用来管理协调分配集群中的资源；</strong></p>
-</li>
-<li><p>​    <strong>NodeManager：用来启动和监控本地计算机资源单位Container的利用情况；</strong></p>
-</li>
-<li><p>​    <strong>Application Master：用来协调（ MapReduce ）Job下的Task的运行；</strong></p>
-</li>
-<li><p>​    <strong>HDFS：用来在其他实体之间共享作业文件。</strong></p>
-</li>
-</ul>
-<p>参考</p>
-<p>1、<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/380602829">https://zhuanlan.zhihu.com/p/380602829</a></p>
 
       
     </div>

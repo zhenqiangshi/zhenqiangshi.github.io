@@ -20,28 +20,28 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"shizhenqiang.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.13.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="一、为什么用MQ ？ 业务场景 解耦、异步、削峰  二、Leader &amp; Follower ？ kafka集群的leader，就是controller leader 当broker启动的时候，都会创建KafkaController对象，但是集群中只能有一个leader对外提供服务，这些每个节点上的KafkaController会在指定的zookeeper路径下创建临时节点，只有第一个成功创">
+    <meta name="description" content="索引 哈希索引基于哈希表实现，只有精确匹配索引所有列的查询才有效，对于每一行数据，存储引擎都会对所有的索引列计算一个哈希码，哈希码是一个较小的值，并且不同键值的行计算出来的哈希码也不一样。哈希码索引将所有的哈希码存储在索引中，同时在哈希表中保存指向每个数据行的指针。 B+树 B+树叶子和非叶子结点的数据页都是16k，且数据结构一致，区别在于叶子节点放的是真实的行数据，而非叶子结点放的是主键和下一个">
 <meta property="og:type" content="article">
-<meta property="og:title" content="kafka 线上问题汇总">
-<meta property="og:url" content="https://shizhenqiang.github.io/2019/05/19/kafka/index.html">
+<meta property="og:title" content="索引小记">
+<meta property="og:url" content="https://shizhenqiang.github.io/2021/03/23/index/index.html">
 <meta property="og:site_name" content="Chelf Blog">
-<meta property="og:description" content="一、为什么用MQ ？ 业务场景 解耦、异步、削峰  二、Leader &amp; Follower ？ kafka集群的leader，就是controller leader 当broker启动的时候，都会创建KafkaController对象，但是集群中只能有一个leader对外提供服务，这些每个节点上的KafkaController会在指定的zookeeper路径下创建临时节点，只有第一个成功创">
+<meta property="og:description" content="索引 哈希索引基于哈希表实现，只有精确匹配索引所有列的查询才有效，对于每一行数据，存储引擎都会对所有的索引列计算一个哈希码，哈希码是一个较小的值，并且不同键值的行计算出来的哈希码也不一样。哈希码索引将所有的哈希码存储在索引中，同时在哈希表中保存指向每个数据行的指针。 B+树 B+树叶子和非叶子结点的数据页都是16k，且数据结构一致，区别在于叶子节点放的是真实的行数据，而非叶子结点放的是主键和下一个">
 <meta property="og:locale">
-<meta property="article:published_time" content="2019-05-19T03:02:36.000Z">
-<meta property="article:modified_time" content="2022-10-25T03:02:14.828Z">
+<meta property="article:published_time" content="2021-03-23T09:14:45.000Z">
+<meta property="article:modified_time" content="2023-04-04T06:18:01.778Z">
 <meta property="article:author" content="Chelf">
-<meta property="article:tag" content="MQ">
+<meta property="article:tag" content="DO">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://shizhenqiang.github.io/2019/05/19/kafka/">
+<link rel="canonical" href="https://shizhenqiang.github.io/2021/03/23/index/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-Hans","comments":true,"permalink":"https://shizhenqiang.github.io/2019/05/19/kafka/","path":"2019/05/19/kafka/","title":"kafka 线上问题汇总"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-Hans","comments":true,"permalink":"https://shizhenqiang.github.io/2021/03/23/index/","path":"2021/03/23/index/","title":"索引小记"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>kafka 线上问题汇总 | Chelf Blog</title>
+<title>索引小记 | Chelf Blog</title>
   
 
 
@@ -118,7 +118,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E7%94%A8MQ-%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">一、为什么用MQ ？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81Leader-amp-Follower-%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">二、Leader &amp; Follower ？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E9%87%8D%E5%A4%8D%E6%95%B0%E6%8D%AE-%EF%BC%9F"><span class="nav-number">3.</span> <span class="nav-text">三、重复数据 ？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E6%95%B0%E6%8D%AE%E4%B8%A2%E5%A4%B1-%EF%BC%9F"><span class="nav-number">4.</span> <span class="nav-text">四、数据丢失 ？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E6%B6%88%E6%81%AF%E9%A1%BA%E5%BA%8F-%EF%BC%9F"><span class="nav-number">5.</span> <span class="nav-text">五、消息顺序 ？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81Partition-%EF%BC%9F"><span class="nav-number">6.</span> <span class="nav-text">六、Partition ？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81Consumer-Rebalance-%EF%BC%9F"><span class="nav-number">7.</span> <span class="nav-text">七、Consumer Rebalance ？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">8.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%93%88%E5%B8%8C%E7%B4%A2%E5%BC%95"><span class="nav-number">1.</span> <span class="nav-text">哈希索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-%E6%A0%91"><span class="nav-number">2.</span> <span class="nav-text">B+树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%A2%E9%BB%91%E6%A0%91"><span class="nav-number">3.</span> <span class="nav-text">红黑树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#R-Tree%E7%B4%A2%E5%BC%95"><span class="nav-number">4.</span> <span class="nav-text">R-Tree索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%B3%E8%B7%83%E8%A1%A8"><span class="nav-number">5.</span> <span class="nav-text">跳跃表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8"><span class="nav-number">6.</span> <span class="nav-text">布隆过滤器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LSM%E6%A0%91"><span class="nav-number">7.</span> <span class="nav-text">LSM树</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -181,7 +181,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://shizhenqiang.github.io/2019/05/19/kafka/">
+    <link itemprop="mainEntityOfPage" href="https://shizhenqiang.github.io/2021/03/23/index/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -194,12 +194,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="kafka 线上问题汇总 | Chelf Blog">
+      <meta itemprop="name" content="索引小记 | Chelf Blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          kafka 线上问题汇总
+          索引小记
         </h1>
 
         <div class="post-meta-container">
@@ -210,14 +210,14 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2019-05-19 11:02:36" itemprop="dateCreated datePublished" datetime="2019-05-19T11:02:36+08:00">2019-05-19</time>
+      <time title="Created: 2021-03-23 17:14:45" itemprop="dateCreated datePublished" datetime="2021-03-23T17:14:45+08:00">2021-03-23</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-25 11:02:14" itemprop="dateModified" datetime="2022-10-25T11:02:14+08:00">2022-10-25</time>
+      <time title="Modified: 2023-04-04 14:18:01" itemprop="dateModified" datetime="2023-04-04T14:18:01+08:00">2023-04-04</time>
     </span>
 
   
@@ -230,32 +230,23 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="一、为什么用MQ-？"><a href="#一、为什么用MQ-？" class="headerlink" title="一、为什么用MQ ？"></a>一、为什么用MQ ？</h2><ul>
-<li>业务场景</li>
-<li>解耦、异步、削峰</li>
+        <p>索引</p>
+<h2 id="哈希索引"><a href="#哈希索引" class="headerlink" title="哈希索引"></a>哈希索引</h2><p>基于哈希表实现，只有精确匹配索引所有列的查询才有效，对于每一行数据，存储引擎都会对所有的索引列计算一个哈希码，哈希码是一个较小的值，并且不同键值的行计算出来的哈希码也不一样。哈希码索引将所有的哈希码存储在索引中，同时在哈希表中保存指向每个数据行的指针。</p>
+<h2 id="B-树"><a href="#B-树" class="headerlink" title="B+树"></a>B+树</h2><ul>
+<li>B+树叶子和非叶子结点的数据页都是16k，且数据结构一致，区别在于叶子节点放的是真实的行数据，而非叶子结点放的是主键和下一个页的地址。</li>
+<li>B+树一般有两到三层，由于其高扇出，三层就能支持2kw以上的数据，且一次查询最多1~3次磁盘IO，性能也还行。</li>
+<li>存储同样量级的数据，B树比B+树层级更高，因此磁盘IO也更多，所以B+树更适合成为mysql索引。</li>
+<li>索引结构不会影响单表最大行数，2kw也只是推荐值，超过了这个值可能会导致B+树层级更高，影响查询性能。</li>
+<li>单表最大值还受主键大小和磁盘大小限制。</li>
 </ul>
-<h2 id="二、Leader-amp-Follower-？"><a href="#二、Leader-amp-Follower-？" class="headerlink" title="二、Leader &amp; Follower ？"></a>二、Leader &amp; Follower ？</h2><ul>
-<li><p>kafka集群的leader，就是controller leader</p>
-<p>当broker启动的时候，都会创建KafkaController对象，但是集群中只能有一个leader对外提供服务，这些每个节点上的KafkaController会在指定的zookeeper路径下创建临时节点，只有第一个成功创建的节点的KafkaController才可以成为leader，其余的都是follower。当leader故障后，所有的follower会收到通知，再次竞争在该路径下创建节点从而选举新的leader</p>
-</li>
-<li><p>对于同一个partition，它所在任何一个broker，都有能扮演两种角色：leader、follower。</p>
-<p>Kafka会动态维护一个与Leader保持一致的同步副本（in-sync replicas （ISR））集合，并且会将最新的同步副本（ISR ）集合持久化到<strong>zookeeper</strong>。如果leader出现问题了，就会从该partition的followers中选举一个作为新的leader。所以在一个partition中扮演leader，在其它的partition中扮演followers。Leader是最繁忙的，要处理读写请求。这样将leader均分到不同的broker上，目的自然是要确保负载均衡。<em>注意：如果有一个broker down，那么它就不会在ISR中出现。</em></p>
-</li>
-</ul>
-<h2 id="三、重复数据-？"><a href="#三、重复数据-？" class="headerlink" title="三、重复数据 ？"></a>三、重复数据 ？</h2><p>1、offset会定期自动提交给kafkabroker，告诉kafka我已经消费了，但是有可能重启或者kill掉后，offset来不及提交，导致下次消费的时候会重复消费未提交offset的数据。</p>
-<p>2、如果消息处理逻辑过重，也即用户线程需要执行很长的时间处理消息，然后再提交offset。如果consumer的消息处理逻辑时长<strong>超过了</strong>max.poll.interval.ms ，那么此consumer提交offset就会失败。更多细节参考： <a target="_blank" rel="noopener" href="https://www.cnblogs.com/hapjin/p/10926882.html">https://www.cnblogs.com/hapjin/p/10926882.html</a> </p>
-<p>具体如何去重，还要根据业务场景具体分析。</p>
-<h2 id="四、数据丢失-？"><a href="#四、数据丢失-？" class="headerlink" title="四、数据丢失 ？"></a>四、数据丢失 ？</h2><p> 防止丢数的设置：</p>
-<p>生产者如果设置acks&#x3D;all 并且设置重试次数，就不会丢失。</p>
-<p>消费者要设置副本，防止leader宕机后还有一个follower。</p>
-<h2 id="五、消息顺序-？"><a href="#五、消息顺序-？" class="headerlink" title="五、消息顺序 ？"></a>五、消息顺序 ？</h2><p>如果按照key去划分固定一个partition的话，是顺序性的。否则如果划分到多个个partition就不会具有顺序性。</p>
-<p>消费者如果多线程处理，也有可能让消息顺序混乱。那么一个方案就是建立多个内存队列，按照key去固定的划分到内存队列面，然后一个线程处理一个内存队列。增加处理速度。</p>
-<h2 id="六、Partition-？"><a href="#六、Partition-？" class="headerlink" title="六、Partition ？"></a>六、Partition ？</h2><p>​       Consumer Groups 用于多个Consumer并行消费消息。为了防止两个消费者重复消费一条消息，Kafka不允许同一个Consumer Group中的两个Consumer读取同一个partition。</p>
-<h2 id="七、Consumer-Rebalance-？"><a href="#七、Consumer-Rebalance-？" class="headerlink" title="七、Consumer Rebalance ？"></a>七、Consumer Rebalance ？</h2><p>​       consumer group中有消费者加入或者退出都会发生Rebalance。其中如果处理逻辑过重，超时掉线，也会发生Rebalance，此时在开发中极为常见。</p>
-<p>​       更多细节参考： <a target="_blank" rel="noopener" href="https://www.cnblogs.com/hapjin/p/10926882.html">https://www.cnblogs.com/hapjin/p/10926882.html</a> </p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>1、<a target="_blank" rel="noopener" href="https://github.com/doocs/advanced-java?utm_source=gold_browser_extension">https://github.com/doocs/advanced-java?utm_source=gold_browser_extension</a></p>
-<p>2、<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/SL3P9EK2_7msxIbm2HAAlQ">https://mp.weixin.qq.com/s/SL3P9EK2_7msxIbm2HAAlQ</a></p>
-<p>3、<a target="_blank" rel="noopener" href="https://www.cnblogs.com/hapjin/p/10926882.html">https://www.cnblogs.com/hapjin/p/10926882.html</a></p>
+<h2 id="红黑树"><a href="#红黑树" class="headerlink" title="红黑树"></a>红黑树</h2><p>一种二叉搜索树，但在每个结点上增加一个存储位表示结点的颜色，可以是Red或Black。 通过任何一条从根到叶子的路径上各个结点着色方式的限制，红黑树确保没有一条路径会比其他路径长出俩倍，因而是接近平衡的。不追求绝对平衡，只需保证最长路径不超过最短路径的2倍，相对而言，降低了插入和旋转的次数，所以在经常进行增删的结构中性能比AVL树更优，而且红黑树实现比较简单，所以实际运用中红黑树更多。</p>
+<h2 id="R-Tree索引"><a href="#R-Tree索引" class="headerlink" title="R-Tree索引"></a>R-Tree索引</h2><p>用来做空间数据存储的树状数据结构。采用了B树分割空间思想，并在添加、删除操作时采用合并、分解节点的方法，保证树的平衡性。</p>
+<h2 id="跳跃表"><a href="#跳跃表" class="headerlink" title="跳跃表"></a>跳跃表</h2><p>跳跃表（SkipList）是一种能高效实现<strong>插入</strong>、删除、查找的内存数据结构，这些操作的期望复杂度都是O(logN)。与红黑树以及其他的二分查找树相比，跳跃表的优势在于实现简单，而且在并发场景下加锁粒度更小，从而可以实现更高的并发性。正因为这些优点，跳跃表广泛使用于KV数据库中，诸如Redis、LevelDB、HBase都把跳跃表作为一种维护有序数据集合的基础数据结构。</p>
+<h2 id="布隆过滤器"><a href="#布隆过滤器" class="headerlink" title="布隆过滤器"></a>布隆过滤器</h2><p>由于布隆过滤器只需<strong>占用极小的空间</strong>，便可给出“可能存在”和“肯定不存在”的存在性判断，因此可以提前过滤掉很多不必要的数据块，从而节省了大量的磁盘IO。HBase的Get操作就是通过运用低成本高效率的布隆过滤器来过滤大量无效数据块的，从而节省大量磁盘IO。redis中也有布隆过滤器的应用。</p>
+<h2 id="LSM树"><a href="#LSM树" class="headerlink" title="LSM树"></a>LSM树</h2><p>LSM树的索引结构本质是将写入操作全部转化成磁盘的顺序写入，极大地提高了写入操作的性能。但是，这种设计对读取操作是非常不利的，因为需要在读取的过程中，通过归并所有文件来读取所对应的KV，这是非常消耗IO资源的。因此，在<em>HBase</em>中设计了异步的compaction来降低文件个数，达到提高读取性能的目的。由于HDFS只支持文件的顺序写，不支持文件的随机写，而且HDFS擅长的场景是大文件存储而非小文件，所以上层HBase选择LSM树这种索引结构是最合适的。</p>
+<p>参考：</p>
+<p>1、微信公众号，小白，《为什么大家说mysql数据库单表最大两千万？依据是啥？》</p>
+<p>2、HBase原理与实践作者，胡争，范欣欣，机械工业出版社</p>
 
     </div>
 
@@ -264,21 +255,18 @@
     
 
     <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/MQ/" rel="tag"># MQ</a>
-          </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2018/10/28/LogisticRegression/" rel="prev" title="逻辑回归">
-                  <i class="fa fa-chevron-left"></i> 逻辑回归
+                <a href="/2020/08/12/Python-Tips/" rel="prev" title="Python Tips">
+                  <i class="fa fa-chevron-left"></i> Python Tips
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2019/07/16/About-hadoop/" rel="next" title="Mapreduce">
-                  Mapreduce <i class="fa fa-chevron-right"></i>
+                <a href="/2021/07/02/docker/" rel="next" title="docker 浅知">
+                  docker 浅知 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
