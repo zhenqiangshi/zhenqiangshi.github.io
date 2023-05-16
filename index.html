@@ -213,7 +213,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-03-09 10:13:32" itemprop="dateModified" datetime="2023-03-09T10:13:32+08:00">2023-03-09</time>
+      <time title="Modified: 2023-04-20 15:56:50" itemprop="dateModified" datetime="2023-04-20T15:56:50+08:00">2023-04-20</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -240,12 +240,32 @@
 <p>​                                                                                                                                                    —— 《分布式系统概念与设计》</p>
 </blockquote>
 <p>分布式环境的各种问题诸多，此处只列举一些<strong>典型的问题</strong>。</p>
-<p>1、通信异常</p>
-<p>2、网络分区</p>
-<p>​       网络异常后，导致系统中节点的网络延时不断增大，导致只有部分节点能进行正常通信。</p>
+<ol>
+<li><p>通信异常</p>
+</li>
+<li><p>网络分区</p>
+<p> 网络异常后，导致系统中节点的网络延时不断增大，导致只有部分节点能进行正常通信。</p>
+</li>
+<li><p>三态</p>
+<p> 由于网络原因导致的失败、成功、超时状态。</p>
+</li>
+<li><p>节点故障</p>
+</li>
+</ol>
 <h2 id="二、什么是Zookeeper？"><a href="#二、什么是Zookeeper？" class="headerlink" title="二、什么是Zookeeper？"></a>二、什么是Zookeeper？</h2><p>Zookeeper是一个典型的分布式协调服务，致力于高性能、高可用，且具用严格的顺序访问控制能力。</p>
 <p>在hadoop中，zookeeper主要用于实现HA（High Availability），这部分逻辑主要集中在hadoop Common的HA模块中，HDFS的NameNode与Yarn的ResouceManager都是基于此HA模块来实现自己的HA功能的。同时，在YARN中又特别提供了Zookeeper来存储应用的运行状态。</p>
-<h2 id="三、Yarn中的Zookeeper"><a href="#三、Yarn中的Zookeeper" class="headerlink" title="三、Yarn中的Zookeeper"></a>三、Yarn中的Zookeeper</h2><p>Yarn，分布式资源调度框架，支持我们常用的Mapreduce计算引擎，当然，也支持其他的计算引擎，如Spark，Storm等。</p>
+<h2 id="三、ZAB协议"><a href="#三、ZAB协议" class="headerlink" title="三、ZAB协议"></a>三、ZAB协议</h2><p>分布式协调服务Zookeeper专门设计的一种支持崩溃恢复的原子广播协议。协议的目标是致力于构建一个高可用的分布式数据主备系统。所有的事务请求必须由一个全局唯一的服务器协调处理，这样的服务器称之为Leader，而其余则为Follower。<br>整个ZAB协议主要包括消息广播和崩溃恢复两个过程，但是细分为三个阶段：</p>
+<ol>
+<li><p>发现 </p>
+<p>主要是leader选举。通常哪台服务器上的数据越新，越容易成为leader，因为数据越新，ZXID（事务ID）越大。</p>
+</li>
+<li><p>同步 </p>
+<p>保证leader在新的周期中提交事务proposal之前，所有的follower都完成了之前的事务proposal。而只有通过同步，准leader才真正成为新的<strong>主进程周期中</strong>的leader.</p>
+</li>
+<li><p>广播</p>
+</li>
+</ol>
+<h2 id="四、典型应用场景"><a href="#四、典型应用场景" class="headerlink" title="四、典型应用场景"></a>四、典型应用场景</h2><h3 id="1、Yarn中的Zookeeper"><a href="#1、Yarn中的Zookeeper" class="headerlink" title="1、Yarn中的Zookeeper"></a>1、Yarn中的Zookeeper</h3><p>Yarn，分布式资源调度框架，支持我们常用的Mapreduce计算引擎，当然，也支持其他的计算引擎，如Spark，Storm等。</p>
 <p>此处仅介绍为何需要Zookeeper，具体架构不做细节分析。ResourceManager是Yarn的一个核心且复杂组件，负责集群所有资源的管理和分配，接受各个节点的资源汇总情况，将信息按一定策略分配给应用程序（Application Manager），但是目前一个明显的缺陷就是RM是一个单点，为解决高可用，Yarn设计了一套Active&#x2F;Standby模式的RM HA架构。运行期间，多个RM并存，但是只有一个处于Active状态，其余则为Standby状态，出现问题后，Stanby节点竞争选举产生新的Active节点。而这个时候，就是利用Zookeeper来<strong>实现RM的主备切换</strong>的过程。</p>
 <p>简单分三步：</p>
 <ul>
@@ -260,7 +280,7 @@
 </li>
 </ul>
 <p>当然，RM上的一些状态信息，也会存储在Zookeeper，比如与各个Application相关的信息。HDFS的NameNode也有相似的处理。</p>
-<h2 id="四、hbase中的Zookeeper"><a href="#四、hbase中的Zookeeper" class="headerlink" title="四、hbase中的Zookeeper"></a>四、hbase中的Zookeeper</h2><p>Hbase是一个数据写入具有强一致性的高可靠、高性能、面向列、可伸缩的分布式存储系统。在Hbase的整个架构体系中，Zookeeper是串联起Hbase集群与Client的关键所在。详细读写分析可参考2019年的Hbase初探。Zookeeper在Hbase中的应用场景众多，主要分为以下五大方面。</p>
+<h3 id="2、hbase中的Zookeeper"><a href="#2、hbase中的Zookeeper" class="headerlink" title="2、hbase中的Zookeeper"></a>2、hbase中的Zookeeper</h3><p>Hbase是一个数据写入具有强一致性的高可靠、高性能、面向列、可伸缩的分布式存储系统。在Hbase的整个架构体系中，Zookeeper是串联起Hbase集群与Client的关键所在。详细读写分析可参考2019年的Hbase初探。Zookeeper在Hbase中的应用场景众多，主要分为以下五大方面。</p>
 <ul>
 <li><p>系统容错</p>
 <p>HMaster会监听在Zookeeper上的RegionServer创建的节点，这样，每一个RegionServer出现问题，Hmaster就会感知，立刻开始容错同步。这个监控交给Zookeeper，其实也缓解了Hmaster的压力，毕竟Regionserver的数量过大，对于Hmaster也有性能影响。</p>
@@ -278,7 +298,7 @@
 <p>Replication是实现Hbase中主备集群的实时同步重要模块。当然也是借助Zookeeper来完成的。注册节点Replication节点，把不同的RegionServer服务器对应的HLOG记录到相应的节点上，Hmaster会将新增的数据推送给Slave集群，并同时将信息记录到Zookeeper（断点记录）。如果RS挂掉了，那么有这些断点信息就可以个协调进行复制。</p>
 </li>
 </ul>
-<h2 id="五、kafka中的Zookeeper"><a href="#五、kafka中的Zookeeper" class="headerlink" title="五、kafka中的Zookeeper"></a>五、kafka中的Zookeeper</h2><p>Kafka是一个吞吐量高、低延迟的分布式消息系统。</p>
+<h3 id="4、kafka中的Zookeeper"><a href="#4、kafka中的Zookeeper" class="headerlink" title="4、kafka中的Zookeeper"></a>4、kafka中的Zookeeper</h3><p>Kafka是一个吞吐量高、低延迟的分布式消息系统。</p>
 <p>Kafka从设计之初，就是一个大规模的分布式消息中间件，其服务端存在多个Broker，为了达到负载均衡，他将每个Topic消息分成多个分区，并分布在不同的Broker上，多个生产者能够同事发送和消费数据，Kafka使用Zookeeper作为其分布式协调框架，很好的将消息生产、消息存储、消息消费有机的结合起来。通过Zookeeper，进行Broker的注册、Topic的注册以及Watcher通知能够获取Broker和Topic的变化情况。</p>
 <p>更多的负载均衡细节可以参考《 从Paxos到Zookeeper分布式一致性原理与实践》。</p>
 <h1 id="全部参考"><a href="#全部参考" class="headerlink" title="全部参考"></a>全部参考</h1><p>[1] 从Paxos到Zookeeper分布式一致性原理与实践,</p>
@@ -761,7 +781,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-12-05 15:29:45" itemprop="dateModified" datetime="2022-12-05T15:29:45+08:00">2022-12-05</time>
+      <time title="Modified: 2023-04-19 15:38:35" itemprop="dateModified" datetime="2023-04-19T15:38:35+08:00">2023-04-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -871,7 +891,17 @@
 <p>1、可以直接在 ResultPartition 层实现反压，而不用将压力流经过多层传递，层层反馈。提高了反压效率，降低了延迟；<br>2、不会把底层socket打满，从而阻碍网络数据传输，不会让单个 Task 的瓶颈成为整个TaskManager 的瓶颈；</p>
 <p>具体的反压流程可参考：<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg2ODAyNTgyMQ==&mid=2247485234&idx=1&sn=4f25023fc4dd224cc8b4ee25c57ea8ea&chksm=ceb3d380f9c45a964c646a4d2189b08ba24d7a5549e355dd753b4cd34e184957b5936b5f1630&mpshare=1&scene=1&srcid=1031kqX74jmXHqZRFzPWY8dM&sharer_sharetime=1667201424602&sharer_shareid=f59adca26e8157d4646f4becf01a5c87&version=3.1.20.6008&platform=win#rd">Flink反压原理深入浅出及解决思路</a></p>
 <h2 id="九、远程提交YARN"><a href="#九、远程提交YARN" class="headerlink" title="九、远程提交YARN"></a>九、远程提交YARN</h2><p>   注意：指定flink_conf.yaml加载yarn其路径下面的配置文件如yarn_site.yaml</p>
-<h2 id="十、CLI"><a href="#十、CLI" class="headerlink" title="十、CLI"></a>十、CLI</h2><p>SavePoint:</p>
+<h2 id="十、CLI"><a href="#十、CLI" class="headerlink" title="十、CLI"></a>十、CLI</h2><p>Per-Job Mode</p>
+<blockquote>
+<p>Aiming at providing better resource isolation guarantees, the <em>Per-Job</em> mode uses the available resource provider framework (e.g. YARN, Kubernetes) to spin up a cluster for each submitted job</p>
+</blockquote>
+<p>​       资源隔离，与其他的job不共享资源，适合长期运行的实时服务。任务完成后，销毁，生产推荐使用。</p>
+<p>Session Mode</p>
+<blockquote>
+<p><em>Session mode</em> assumes an already running cluster and uses the resources of that cluster to execute any submitted application. Applications executed in the same (session) cluster use, and consequently compete for, the same resources.</p>
+</blockquote>
+<p>​         与集群共用资源。</p>
+<p>SavePoint:</p>
 <p>手动保存，用于重启，更改jar包，并行度等。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flink savepoint -m yarn-cluster &lt;jobId&gt; [savepointDirectory] -yid [yarnAppId]</span><br></pre></td></tr></table></figure>
 

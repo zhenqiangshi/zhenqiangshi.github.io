@@ -213,7 +213,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-13 17:59:52" itemprop="dateModified" datetime="2022-10-13T17:59:52+08:00">2022-10-13</time>
+      <time title="Modified: 2023-04-21 13:56:36" itemprop="dateModified" datetime="2023-04-21T13:56:36+08:00">2023-04-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -240,7 +240,8 @@
     
     <div class="post-body" itemprop="articleBody">
           <h2 id="一、docker的核心概念"><a href="#一、docker的核心概念" class="headerlink" title="一、docker的核心概念"></a>一、docker的核心概念</h2><ul>
-<li><h2 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h2><p>镜像的运行实体，有运行时需要的可写文件层，并且容器中的进程属于运行状态。可初建、运行、停止、暂停和删除。</p>
+<li><p>容器</p>
+<p>镜像的运行实体，有运行时需要的可写文件层，并且容器中的进程属于运行状态。可初建、运行、停止、暂停和删除。</p>
 </li>
 <li><p>镜像</p>
 <p>一个只读的文件和文件夹组合。可拉取、重命名、构建、删除、查看。一个镜像，可以创建多个容器。</p>
@@ -273,7 +274,7 @@
 </li>
 </ul>
 <p>由于使用了namespace的技术，所以才实现了容器的隔离。</p>
-<h2 id="三、什么是cgroups？"><a href="#三、什么是cgroups？" class="headerlink" title="三、什么是cgroups？"></a>三、什么是cgroups？</h2><p>​       cgroups（全称：control groups）是 Linux 内核的一个功能，它可以实现限制进程或者进程组的资源（如 CPU、内存、磁盘 IO 等）。</p>
+<h2 id="三、什么是cgroups？"><a href="#三、什么是cgroups？" class="headerlink" title="三、什么是cgroups？"></a>三、什么是cgroups？</h2><p>​       cgroups（全称：control groups）是 Linux 内核的一个功能，它可以实现限制进程或者进程组的资源（如 CPU、内存、磁盘 IO 等）。Cgroup是control group，又称为控制组，它主要是做资源控制。原理是将一组进程放在放在一个控制组里，通过给这个控制组分配指定的可用资源，达到控制这一组进程可用资源的目的。</p>
 
       
     </div>

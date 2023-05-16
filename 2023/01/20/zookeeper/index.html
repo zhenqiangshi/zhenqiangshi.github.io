@@ -28,7 +28,7 @@
 <meta property="og:description" content="一、什么是分布式系统？ 分布式系统是一个硬件或者软件组件分布在不同的网络计算机上，彼此之间仅仅通过消息传递进行通信和协调的系统。 ​">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-01-20T00:54:27.000Z">
-<meta property="article:modified_time" content="2023-03-09T02:13:32.938Z">
+<meta property="article:modified_time" content="2023-04-20T07:56:50.104Z">
 <meta property="article:author" content="Chelf">
 <meta property="article:tag" content="DO">
 <meta name="twitter:card" content="summary">
@@ -118,7 +118,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">一、什么是分布式系统？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AFZookeeper%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">二、什么是Zookeeper？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81Yarn%E4%B8%AD%E7%9A%84Zookeeper"><span class="nav-number">3.</span> <span class="nav-text">三、Yarn中的Zookeeper</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81hbase%E4%B8%AD%E7%9A%84Zookeeper"><span class="nav-number">4.</span> <span class="nav-text">四、hbase中的Zookeeper</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81kafka%E4%B8%AD%E7%9A%84Zookeeper"><span class="nav-number">5.</span> <span class="nav-text">五、kafka中的Zookeeper</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%A8%E9%83%A8%E5%8F%82%E8%80%83"><span class="nav-number"></span> <span class="nav-text">全部参考</span></a></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">一、什么是分布式系统？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AFZookeeper%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">二、什么是Zookeeper？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81ZAB%E5%8D%8F%E8%AE%AE"><span class="nav-number">3.</span> <span class="nav-text">三、ZAB协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%85%B8%E5%9E%8B%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">4.</span> <span class="nav-text">四、典型应用场景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81Yarn%E4%B8%AD%E7%9A%84Zookeeper"><span class="nav-number">4.1.</span> <span class="nav-text">1、Yarn中的Zookeeper</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81hbase%E4%B8%AD%E7%9A%84Zookeeper"><span class="nav-number">4.2.</span> <span class="nav-text">2、hbase中的Zookeeper</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81kafka%E4%B8%AD%E7%9A%84Zookeeper"><span class="nav-number">4.3.</span> <span class="nav-text">4、kafka中的Zookeeper</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%A8%E9%83%A8%E5%8F%82%E8%80%83"><span class="nav-number"></span> <span class="nav-text">全部参考</span></a></div>
         </div>
         <!--/noindex-->
 
@@ -217,7 +217,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-03-09 10:13:32" itemprop="dateModified" datetime="2023-03-09T10:13:32+08:00">2023-03-09</time>
+      <time title="Modified: 2023-04-20 15:56:50" itemprop="dateModified" datetime="2023-04-20T15:56:50+08:00">2023-04-20</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -244,12 +244,32 @@
 <p>​                                                                                                                                                    —— 《分布式系统概念与设计》</p>
 </blockquote>
 <p>分布式环境的各种问题诸多，此处只列举一些<strong>典型的问题</strong>。</p>
-<p>1、通信异常</p>
-<p>2、网络分区</p>
-<p>​       网络异常后，导致系统中节点的网络延时不断增大，导致只有部分节点能进行正常通信。</p>
+<ol>
+<li><p>通信异常</p>
+</li>
+<li><p>网络分区</p>
+<p> 网络异常后，导致系统中节点的网络延时不断增大，导致只有部分节点能进行正常通信。</p>
+</li>
+<li><p>三态</p>
+<p> 由于网络原因导致的失败、成功、超时状态。</p>
+</li>
+<li><p>节点故障</p>
+</li>
+</ol>
 <h2 id="二、什么是Zookeeper？"><a href="#二、什么是Zookeeper？" class="headerlink" title="二、什么是Zookeeper？"></a>二、什么是Zookeeper？</h2><p>Zookeeper是一个典型的分布式协调服务，致力于高性能、高可用，且具用严格的顺序访问控制能力。</p>
 <p>在hadoop中，zookeeper主要用于实现HA（High Availability），这部分逻辑主要集中在hadoop Common的HA模块中，HDFS的NameNode与Yarn的ResouceManager都是基于此HA模块来实现自己的HA功能的。同时，在YARN中又特别提供了Zookeeper来存储应用的运行状态。</p>
-<h2 id="三、Yarn中的Zookeeper"><a href="#三、Yarn中的Zookeeper" class="headerlink" title="三、Yarn中的Zookeeper"></a>三、Yarn中的Zookeeper</h2><p>Yarn，分布式资源调度框架，支持我们常用的Mapreduce计算引擎，当然，也支持其他的计算引擎，如Spark，Storm等。</p>
+<h2 id="三、ZAB协议"><a href="#三、ZAB协议" class="headerlink" title="三、ZAB协议"></a>三、ZAB协议</h2><p>分布式协调服务Zookeeper专门设计的一种支持崩溃恢复的原子广播协议。协议的目标是致力于构建一个高可用的分布式数据主备系统。所有的事务请求必须由一个全局唯一的服务器协调处理，这样的服务器称之为Leader，而其余则为Follower。<br>整个ZAB协议主要包括消息广播和崩溃恢复两个过程，但是细分为三个阶段：</p>
+<ol>
+<li><p>发现 </p>
+<p>主要是leader选举。通常哪台服务器上的数据越新，越容易成为leader，因为数据越新，ZXID（事务ID）越大。</p>
+</li>
+<li><p>同步 </p>
+<p>保证leader在新的周期中提交事务proposal之前，所有的follower都完成了之前的事务proposal。而只有通过同步，准leader才真正成为新的<strong>主进程周期中</strong>的leader.</p>
+</li>
+<li><p>广播</p>
+</li>
+</ol>
+<h2 id="四、典型应用场景"><a href="#四、典型应用场景" class="headerlink" title="四、典型应用场景"></a>四、典型应用场景</h2><h3 id="1、Yarn中的Zookeeper"><a href="#1、Yarn中的Zookeeper" class="headerlink" title="1、Yarn中的Zookeeper"></a>1、Yarn中的Zookeeper</h3><p>Yarn，分布式资源调度框架，支持我们常用的Mapreduce计算引擎，当然，也支持其他的计算引擎，如Spark，Storm等。</p>
 <p>此处仅介绍为何需要Zookeeper，具体架构不做细节分析。ResourceManager是Yarn的一个核心且复杂组件，负责集群所有资源的管理和分配，接受各个节点的资源汇总情况，将信息按一定策略分配给应用程序（Application Manager），但是目前一个明显的缺陷就是RM是一个单点，为解决高可用，Yarn设计了一套Active&#x2F;Standby模式的RM HA架构。运行期间，多个RM并存，但是只有一个处于Active状态，其余则为Standby状态，出现问题后，Stanby节点竞争选举产生新的Active节点。而这个时候，就是利用Zookeeper来<strong>实现RM的主备切换</strong>的过程。</p>
 <p>简单分三步：</p>
 <ul>
@@ -264,7 +284,7 @@
 </li>
 </ul>
 <p>当然，RM上的一些状态信息，也会存储在Zookeeper，比如与各个Application相关的信息。HDFS的NameNode也有相似的处理。</p>
-<h2 id="四、hbase中的Zookeeper"><a href="#四、hbase中的Zookeeper" class="headerlink" title="四、hbase中的Zookeeper"></a>四、hbase中的Zookeeper</h2><p>Hbase是一个数据写入具有强一致性的高可靠、高性能、面向列、可伸缩的分布式存储系统。在Hbase的整个架构体系中，Zookeeper是串联起Hbase集群与Client的关键所在。详细读写分析可参考2019年的Hbase初探。Zookeeper在Hbase中的应用场景众多，主要分为以下五大方面。</p>
+<h3 id="2、hbase中的Zookeeper"><a href="#2、hbase中的Zookeeper" class="headerlink" title="2、hbase中的Zookeeper"></a>2、hbase中的Zookeeper</h3><p>Hbase是一个数据写入具有强一致性的高可靠、高性能、面向列、可伸缩的分布式存储系统。在Hbase的整个架构体系中，Zookeeper是串联起Hbase集群与Client的关键所在。详细读写分析可参考2019年的Hbase初探。Zookeeper在Hbase中的应用场景众多，主要分为以下五大方面。</p>
 <ul>
 <li><p>系统容错</p>
 <p>HMaster会监听在Zookeeper上的RegionServer创建的节点，这样，每一个RegionServer出现问题，Hmaster就会感知，立刻开始容错同步。这个监控交给Zookeeper，其实也缓解了Hmaster的压力，毕竟Regionserver的数量过大，对于Hmaster也有性能影响。</p>
@@ -282,7 +302,7 @@
 <p>Replication是实现Hbase中主备集群的实时同步重要模块。当然也是借助Zookeeper来完成的。注册节点Replication节点，把不同的RegionServer服务器对应的HLOG记录到相应的节点上，Hmaster会将新增的数据推送给Slave集群，并同时将信息记录到Zookeeper（断点记录）。如果RS挂掉了，那么有这些断点信息就可以个协调进行复制。</p>
 </li>
 </ul>
-<h2 id="五、kafka中的Zookeeper"><a href="#五、kafka中的Zookeeper" class="headerlink" title="五、kafka中的Zookeeper"></a>五、kafka中的Zookeeper</h2><p>Kafka是一个吞吐量高、低延迟的分布式消息系统。</p>
+<h3 id="4、kafka中的Zookeeper"><a href="#4、kafka中的Zookeeper" class="headerlink" title="4、kafka中的Zookeeper"></a>4、kafka中的Zookeeper</h3><p>Kafka是一个吞吐量高、低延迟的分布式消息系统。</p>
 <p>Kafka从设计之初，就是一个大规模的分布式消息中间件，其服务端存在多个Broker，为了达到负载均衡，他将每个Topic消息分成多个分区，并分布在不同的Broker上，多个生产者能够同事发送和消费数据，Kafka使用Zookeeper作为其分布式协调框架，很好的将消息生产、消息存储、消息消费有机的结合起来。通过Zookeeper，进行Broker的注册、Topic的注册以及Watcher通知能够获取Broker和Topic的变化情况。</p>
 <p>更多的负载均衡细节可以参考《 从Paxos到Zookeeper分布式一致性原理与实践》。</p>
 <h1 id="全部参考"><a href="#全部参考" class="headerlink" title="全部参考"></a>全部参考</h1><p>[1] 从Paxos到Zookeeper分布式一致性原理与实践,</p>
