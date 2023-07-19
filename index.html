@@ -490,7 +490,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-04-04 14:20:03" itemprop="dateModified" datetime="2023-04-04T14:20:03+08:00">2023-04-04</time>
+      <time title="Modified: 2023-07-19 10:53:38" itemprop="dateModified" datetime="2023-07-19T10:53:38+08:00">2023-07-19</time>
     </span>
 
   
@@ -525,6 +525,7 @@
 <h1 id="概念认知"><a href="#概念认知" class="headerlink" title="概念认知"></a>概念认知</h1><h2 id="张量"><a href="#张量" class="headerlink" title="张量"></a>张量</h2><blockquote>
 <p>就像向量是标量的推广，矩阵是向量的推广一样，我们可以构建具有更多轴的数据结构。 张量（本小节中的“张量”指代数对象）为我们提供了描述具有任意数量轴的n维数组的通用方法。 例如，向量是一阶张量，矩阵是二阶张量。</p>
 </blockquote>
+<p>卷积神经网络通常由3个部分构成：卷积层，池化层，全连接层。简单来说，卷积层负责提取图像中的局部及全局特征；池化层用来大幅降低参数量级(降维)；全连接层用于处理“压缩的图像信息”并输出结果。<strong>卷积运算的本质性总结：过滤器(g)对图片(f)执行逐步的乘法并求和，以提取特征的过程</strong>。</p>
 <h2 id="池化层"><a href="#池化层" class="headerlink" title="池化层"></a>池化层</h2><blockquote>
 <p>对图像进行降采样的过程，对于每一次滑动窗口中的所有值，输出其中的最大值（MaxPooling）、均值或其他方法产生的值。例如，对于一个三通道的 16×16 图像（即一个 <code>16*16*3</code> 的张量），经过感受野为 2×2，滑动步长为 2 的池化层，则得到一个 <code>8*8*3</code> 的张量。</p>
 </blockquote>
@@ -546,9 +547,13 @@
 <li>共同训练解冻的这些层和新添加的部分。</li>
 </ol>
 <p>卷积神经网络是用于计算机视觉任务的最佳机器学习模型。即使在非常小的数据集上从头开始训练一个卷积神经网络，也可以得到不错的结果。卷积神经网络通过学习模块化模式和概念的层次结构来表示视觉世界。模型在小型数据集上的主要问题是过拟合。在处理图像数据时，数据增强是降低过拟合的强大方法。利用特征提取，可以很容易地将现有的卷积神经网络复用于新的数据集。对于小型图像数据集，这是一种很有用的方法。作为特征提取的补充，你还可以使用微调技术，将现有模型之前学到的一些数据表示应用于新问题。这种方法可以进一步提高模型性能。</p>
+<h1 id="现代卷积神经网络"><a href="#现代卷积神经网络" class="headerlink" title="现代卷积神经网络"></a>现代卷积神经网络</h1><p>LeNet、AlexNet和VGG都有一个共同的设计模式：通过一系列的卷积层与汇聚层来提取空间结构特征；然后通过全连接层对特征的表征进行处理。 AlexNet和VGG对LeNet的改进主要在于如何扩大和加深这两个模块。 或者，可以想象在这个过程的早期使用全连接层。然而，如果使用了全连接层，可能会完全放弃表征的空间结构。 <em>网络中的网络</em>（<em>NiN</em>）提供了一个非常简单的解决方案：在每个像素的通道上分别使用多层感知机 。</p>
+<p>NiN和AlexNet之间的一个显著区别是NiN完全取消了全连接层。 相反，NiN使用一个NiN块，其输出通道数等于标签类别的数量。最后放一个<em>全局平均汇聚层</em>（global average pooling layer），生成一个对数几率 （logits）。NiN设计的一个优点是，它显著减少了模型所需参数的数量。然而，在实践中，这种设计有时会增加训练模型的时间。</p>
+<p>在2014年的ImageNet图像识别挑战赛中，一个名叫<em>GoogLeNet</em> (<a target="_blank" rel="noopener" href="https://zh.d2l.ai/chapter_references/zreferences.html#id162">Szegedy <em>et al.</em>, 2015</a>)的网络架构大放异彩。 GoogLeNet吸收了NiN中串联网络的思想，并在此基础上做了改进。 这篇论文的一个重点是解决了什么样大小的卷积核最合适的问题。 毕竟，以前流行的网络使用小到1×1，大到11×11的卷积核。 本文的一个观点是，有时使用不同大小的卷积核组合是有利的。</p>
 <h1 id="学习地址"><a href="#学习地址" class="headerlink" title="学习地址"></a><strong>学习地址</strong></h1><p><a target="_blank" rel="noopener" href="https://tf.wiki/zh_hans/appendix/tfds.html"><a target="_blank" rel="noopener" href="https://tf.wiki/zh_hans"> 简单粗暴 TensorFlow 2</a></a></p>
 <p><a target="_blank" rel="noopener" href="https://zh.d2l.ai/chapter_preliminaries/index.html">动手学深度学习</a></p>
 <p>Python深度学习（第2版）作者：[美]弗朗索瓦·肖莱（François Chollet）译者：张亮出版社：人民邮电出版社</p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/GdjTF20pq8v4O2YEwCnTRA">https://mp.weixin.qq.com/s/GdjTF20pq8v4O2YEwCnTRA</a> </p>
 
       
     </div>
