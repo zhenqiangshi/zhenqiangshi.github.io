@@ -29,7 +29,7 @@
 <meta property="og:locale">
 <meta property="og:image" content="https://shizhenqiang.github.io/about/my.jpg">
 <meta property="article:published_time" content="2011-06-20T08:22:54.000Z">
-<meta property="article:modified_time" content="2023-05-11T06:43:49.455Z">
+<meta property="article:modified_time" content="2023-08-31T03:10:14.197Z">
 <meta property="article:author" content="Chelf">
 <meta property="article:tag" content="DO">
 <meta name="twitter:card" content="summary">
@@ -249,7 +249,7 @@
 <h1 id="项目经历"><a href="#项目经历" class="headerlink" title="项目经历"></a><strong>项目经历</strong></h1><hr>
 <p>主要负责大数据金融风控模型、客户私有云定制及部署、车联网数据分析等ToB产品研发。</p>
 <h2 id="金融风控数据系统"><a href="#金融风控数据系统" class="headerlink" title="金融风控数据系统"></a><kbd>金融风控数据系统</kbd></h2><blockquote>
-<p>金融风控评分卡模型是金融风控数据系统的核心服务，是贷中车辆风险评估的一个综合模型，主要以车联网数据（千万级车辆GPS定位）为核心，为金融保险、汽车租赁等客户提供车辆的风险分数及等级，帮助客户实现有效的风险预判，及时规避风险。<br>一、模型开发<br>本人带领团队实现了全平台车辆（千万级）风控评分模型的落地，负责核心功能的开发，配合saas层完成了风控产品的升级。其中，使用Mapreduce计算框架，完成了全量车辆里程、聚集等核心离线计算；使用python完成了黑区、跨区等多个实时预警分析。最后整合模型，完成了全平台车辆的风控评分计算，经过迭代升级，稳定持续的服务其相应业务部门，成为风控数据系统的核心数据。另外，主动与运营人员沟通，设计并开发了客户（1000+）报表，节省运营人员80%的手工操作，提高了工作效率，节省了人力成本。<br>二、私有云部署<br>负责风控评分模型所有的依赖服务（20+）的客户定制化私有云部署，已经为平安金融租赁、吉致、安吉等公司部署完成。主要负责所有服务的依赖梳理、代码规范、配置规范、链接规范及个性化定制开发内容。通过前期沟通、规范设置、客户需求与服务梳理，使得团队人员快速交付客户的私有云部署。<br>三、其他<br>团队协作管理、多部门数据流转协调、应用部门(saas)数据对接等。</p>
+<p>金融风控评分卡模型是金融风控数据系统的核心服务，是贷中车辆风险评估的一个综合模型，主要以车联网数据（千万级车辆GPS定位）为核心，为金融保险、汽车租赁等客户提供车辆的风险分数及等级，帮助客户实现有效的风险预判，及时规避风险。<br>一、模型开发<br>本人带领团队实现了全平台车辆（千万级）风控评分模型的落地，负责大数据流转、特征分析、建模、验证等工作，完成了风控产品的升级。其中，使用Mapreduce计算框架，完成了全量车辆里程、聚集等核心算法的离线计算；使用python完成了黑区、跨区等多个实时预警分析。通过对算法与规则进行整合，完成了全平台车辆的风控评分模型，经过迭代升级，稳定持续的服务其相应业务部门，成为风控数据系统的核心数据。另外，主动与运营人员沟通，设计并开发了客户（1000+）报表，节省运营人员80%的手工操作，提高了工作效率，节省了人力成本。<br>二、私有云部署<br>负责风控评分模型所有的依赖服务（20+）的客户定制化私有云部署，已经为平安金融租赁、吉致、安吉等公司部署完成。主要负责所有服务的依赖梳理、代码规范、配置规范、链接规范及个性化定制开发内容。通过前期沟通、规范设置、客户需求与服务梳理，使得团队人员快速交付客户的私有云部署。<br>三、其他<br>团队协作管理、多部门数据流转协调、应用部门(saas)数据对接等。</p>
 </blockquote>
 <h2 id="亿咖通车联网数据分析项目"><a href="#亿咖通车联网数据分析项目" class="headerlink" title="亿咖通车联网数据分析项目"></a><kbd>亿咖通车联网数据分析项目</kbd></h2><blockquote>
 <p>吉利下属子公司亿咖通的车辆数据分析项目，根据车辆上报信息，分析车辆的风险情况。目前也是公司在金融风控领域里，一个可供借鉴的行业应用典型案例。依托阿里云DataWorks来构建实时数据仓库和离线数仓，利用MaxCompute和Flink计算亿咖通车辆数据的特征及风险，方便客户借助结果数据进行研究及运营。其中使用MaxCompute离线特征计算，hive做离线存储，flink进行实时事件侦测，flink-sql将实时事件落库到实时数仓（hologres），使用dataflow工具进行数据同步，最终业务系统通过接口调用hologres中的数据进行产品应用。<br>作为技术负责人，负责整体架构落地，设计开发Flink实时计算核心模块。根据重要程度、耦合度、逻辑变更频率、上线影响范围等因素，对于26+个侦测事件（如爆胎、拖车、漏油等）进行分类设计并开发，节省FLink资源的同时，减少因变更产生的风险。因数据异常问题过多，多次自主试错反馈产品完善需求；负责协调团队成员的离线数据计算模块开发，根据数据流转拆解任务，团队成员可并行开发，协调上下游数据计算的时间及人员调度。项目上线后运行平稳，验收过程顺利，所需资源及设计均符合架构要求；另外，负责数据流转、部署及阶段性交付演示和最终交付演示等工作。</p>
@@ -265,21 +265,20 @@
 </blockquote>
 <h1 id="自我评价"><a href="#自我评价" class="headerlink" title="自我评价"></a><strong>自我评价</strong></h1><hr>
 <h2 id="技能"><a href="#技能" class="headerlink" title="技能"></a><strong>技能</strong></h2><ul>
-<li><strong>Python: 熟悉</strong></li>
-<li><strong>Linux: 熟练操作</strong></li>
-<li><strong>Flink: 熟悉</strong></li>
-<li><strong>Mapreduce：熟悉</strong></li>
-<li><strong>大数据组件、消息中间件: 熟练使用</strong></li>
-<li><strong>机器学习:  熟悉</strong></li>
-<li><strong>Java: 熟悉</strong></li>
+<li><strong>掌握python语言，熟悉java</strong></li>
+<li><strong>熟练操作linux</strong></li>
+<li><strong>熟悉大数据（hadoop）组件，消息队列（kafka），实时计算框架（Flink），离线计算框架（mapreduce）</strong></li>
+<li><strong>熟悉机器学习，熟练掌握数据挖掘的基本处理方式及算法</strong></li>
+<li><strong>了解docker，k8s等</strong></li>
+<li><strong>了解tensorflow，深度学习</strong></li>
 </ul>
 <hr>
 <h2 id="软实力"><a href="#软实力" class="headerlink" title="软实力"></a><strong>软实力</strong></h2><ul>
+<li><strong>业务理解能力</strong>、<strong>系统设计能力</strong></li>
 <li><strong>数据挖掘思维</strong></li>
-<li><strong>数据分析能力</strong></li>
-<li><strong>业务理解能力</strong></li>
+<li><strong>项目管理能力</strong></li>
 <li><strong>责任心强</strong></li>
-<li><strong>有一定的学习能力及沟通能力</strong></li>
+<li><strong>学习能力及沟通能力</strong></li>
 </ul>
 
       </div>
